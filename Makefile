@@ -1,5 +1,5 @@
 # Makefile для HSE LaTeX cheatsheet проекта
-# Автор: [Ваше имя]
+# Автор: werserk
 # Дата: $(shell date +%Y-%m-%d)
 
 # Переменные
@@ -63,11 +63,11 @@ clean:
 	@find . -name "*.lol" -delete
 	@echo "Очистка завершена."
 
-# Очистка только PDF файлов
+# Очистка PDF, созданных из .tex (не трогаем сторонние PDF, напр. exam-variants)
 clean-pdf:
-	@echo "Удаление PDF файлов..."
-	@find . -name "*.pdf" -delete
-	@echo "PDF файлы удалены."
+	@echo "Удаление PDF, соответствующих .tex..."
+	@find . -name "*.tex" -exec sh -c 'f="{}"; pdf="${f%.tex}.pdf"; [ -f "$$pdf" ] && rm -f "$$pdf"' \;
+	@echo "PDF, созданные из .tex, удалены."
 
 # Показать справку
 help:
@@ -76,11 +76,11 @@ help:
 	@echo "  cheatsheets - Собрать только cheatsheet'ы"
 	@echo "  templates  - Собрать только шаблоны"
 	@echo "  clean      - Удалить все временные файлы"
-	@echo "  clean-pdf  - Удалить все PDF файлы"
+	@echo "  clean-pdf  - Удалить PDF, созданные из .tex"
 	@echo "  help       - Показать эту справку"
 	@echo ""
 	@echo "Примеры использования:"
-	@echo "  make cheatsheets/math/differential-equations.pdf"
+	@echo "  make cheatsheets/math/differential-equations/differential-equations.pdf"
 	@echo "  make templates/basic-cheatsheet.pdf"
 
 # Создать директорию build если её нет

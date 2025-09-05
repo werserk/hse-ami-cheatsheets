@@ -1,0 +1,89 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+\begin{document}
+
+\begin{center}
+\textbf{Вариант $\varphi$}
+\end{center}
+
+\begin{enumerate}
+\item Решите нелинейную систему уравнений, предварительно найдя оба первых интеграла (их независимость подлежит проверке)
+\[
+\begin{cases}
+\dot x = y,\\[2pt]
+\dot y = -x,\\[2pt]
+\dot z = y^{2} - x^{2},
+\end{cases}
+\qquad
+\text{Система рассматривается в области } y > x > z > 0.
+\]
+
+\item Решите задачу Коши для уравнения в частных производных первого порядка
+\[
+x\,\frac{\partial u}{\partial x}
++ 2y\,\frac{\partial u}{\partial y}
++ \bigl(x^{2}y+z\bigr)\,\frac{\partial u}{\partial z}=0,
+\qquad
+u = x^{3}\ \text{при}\ z = x.
+\]
+
+\item Пусть $P(a,b,c)$ однородный многочлен от трёх переменных. Рассмотрите уравнение второго порядка
+\[
+P\bigl(y,\,y',\,y''\bigr)=0.
+\]
+Докажите, что введение вспомогательной функции $z$, согласно формуле $y=e^{z}$, понижает порядок этого уравнения на единицу.
+
+\item Дана система разностных уравнений второго порядка
+\[
+\begin{pmatrix}
+x_{t+1}\\[2pt]
+y_{T+1}
+\end{pmatrix}
+=
+A
+\begin{pmatrix}
+x_{t}\\[2pt]
+y_{t}
+\end{pmatrix}
++
+\begin{pmatrix}
+1\\[2pt]
+-1
+\end{pmatrix},
+\qquad
+A=
+\begin{pmatrix}
+0 & -1\\
+-1 & 0
+\end{pmatrix}.
+\]
+\begin{enumerate}
+\item[а)] Найдите фундаментальную матрицу этой системы $\Phi_{t}$.
+\item[б)] Чтобы найти решение неоднородной системы, воспользуйтесь методом вариации постоянных, полагая
+\[
+\begin{pmatrix}
+x_{t}\\[2pt]
+y_{t}
+\end{pmatrix}
+=
+\Phi_{t}
+\begin{pmatrix}
+c_{1}^{\,t}\\[2pt]
+c_{2}^{\,t}
+\end{pmatrix}.
+\]
+Выпишите уравнения, которым удовлетворяют последовательности $c_{1}^{\,t}$ и $c_{2}^{\,t}$, не решая их.
+\end{enumerate}
+
+\item Решите разностное уравнение
+\[
+y_{t+2}+2y_{t+1}-3y_{t}=25t \cdot 2^{t}+4.
+\]
+\end{enumerate}
+
+\end{document}

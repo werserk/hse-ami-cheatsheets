@@ -1,4 +1,4 @@
-# HSE Cheatsheets Repository
+# HSE Cheatsheets — by werserk
 
 Репозиторий для хранения и организации различных cheatsheet'ов, оформленных в LaTeX.
 
@@ -11,8 +11,11 @@
 ├── cheatsheets/       # Готовые cheatsheet'ы
 │   ├── math/          # Математические справочники
 │   │   └── */         # Каждая тема в отдельной папке
-│   │       ├── *.tex  # LaTeX исходник
-│   │       └── *.pdf  # Собранный PDF
+│   │       ├── *.tex              # LaTeX исходник
+│   │       ├── *.pdf              # Собранный PDF
+│   │       └── exam-variants/     # Варианты экзаменов
+│   │           └── YYYY/          # Год (например, 2025)
+│   │               └── name.pdf   # Стандартизированное имя (kebab-case)
 │   ├── programming/   # Программирование
 │   └── other/         # Прочие темы
 ├── assets/            # Общие ресурсы (изображения, стили)
@@ -34,7 +37,7 @@ make all
 
 ### Сборка конкретного cheatsheet
 ```bash
-make cheatsheets/math/differential-equations.pdf
+make cheatsheets/math/differential-equations/differential-equations.pdf
 ```
 
 ### Очистка временных файлов
@@ -75,6 +78,12 @@ make clean
 2. Разместите в соответствующей директории `cheatsheets/`
 3. Отредактируйте содержимое
 4. Соберите с помощью `make`
+
+## Соглашения по структуре и именам
+
+- Темы: каталоги в kebab-case, напр. `differential-equations`
+- Файлы: `topic-name.tex` и `topic-name.pdf` рядом
+- Экзамены: `exam-variants/YYYY/*.pdf` (имя файла — kebab-case без года)
 
 ## Лицензия
 
