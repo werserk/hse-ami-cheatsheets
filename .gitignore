@@ -1,0 +1,58 @@
+# LaTeX временные файлы
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bbl
+*.blg
+*.idx
+*.ind
+*.ilg
+*.lol
+*.nav
+*.snm
+*.vrb
+*.run.xml
+*.bcf
+*.figlist
+*.makefile
+*.fls
+*.fdb_latexmk
+
+# PDF файлы (раскомментируйте если не хотите отслеживать PDF)
+# *.pdf
+
+# Директория сборки
+build/
+_build/
+
+# Временные файлы редакторов
+*~
+*.swp
+*.swo
+*#
+.#*
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE файлы
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Резервные копии
+*.bak
+*.backup
+*.orig
+
+# Локальные настройки
+local_settings.tex

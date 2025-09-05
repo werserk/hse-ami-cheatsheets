@@ -1,0 +1,133 @@
+\documentclass[10pt,landscape,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{parskip}
+
+% Настройка страницы
+\geometry{margin=1.5cm}
+\setlength{\columnsep}{1.5cm}
+\setlength{\columnseprule}{0.8pt}
+
+% Настройка заголовков
+\titleformat{\section}{\Large\bfseries\color{green!70!black}}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries\color{green!50!black}}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{green!30!black}}{\thesubsubsection}{1em}{}
+
+% Убираем номера страниц
+\pagestyle{empty}
+
+% Настройка списков
+\setlist[itemize]{leftmargin=*,noitemsep,topsep=0pt}
+\setlist[enumerate]{leftmargin=*,noitemsep,topsep=0pt}
+
+% Настройка отступов между параграфами
+\setlength{\parskip}{0.3em}
+
+\begin{document}
+
+% Заголовок
+\begin{center}
+    {\Huge\bfseries Двухколоночный Cheatsheet}\\[0.5cm]
+    {\large Оптимизированный для плотной информации}\\[0.3cm]
+    \rule{\textwidth}{1pt}
+\end{center}
+
+\begin{multicols}{2}
+
+\section{Левая колонка}
+
+\subsection{Основные понятия}
+\begin{itemize}
+    \item \textbf{Термин 1:} Краткое определение
+    \item \textbf{Термин 2:} Краткое определение
+    \item \textbf{Термин 3:} Краткое определение
+\end{itemize}
+
+\subsection{Формулы}
+\begin{align}
+    y &= ax + b \\
+    z &= \sqrt{x^2 + y^2} \\
+    f(x) &= \int_0^x g(t) dt
+\end{align}
+
+\subsection{Таблица данных}
+\begin{center}
+\small
+\begin{tabular}{@{}ll@{}}
+\toprule
+Параметр & Значение \\
+\midrule
+$\alpha$ & 0.05 \\
+$\beta$ & 0.95 \\
+$\gamma$ & 1.4 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Список правил}
+\begin{enumerate}
+    \item Правило 1
+    \item Правило 2
+    \item Правило 3
+    \item Правило 4
+\end{enumerate}
+
+\section{Правая колонка}
+
+\subsection{Дополнительные формулы}
+\begin{align}
+    E &= \frac{1}{2}mv^2 \\
+    P &= \frac{V^2}{R} \\
+    \nabla \cdot \vec{E} &= \frac{\rho}{\varepsilon_0}
+\end{align}
+
+\subsection{Важные константы}
+\begin{itemize}
+    \item $\pi \approx 3.14159$
+    \item $e \approx 2.71828$
+    \item $c = 299,792,458$ м/с
+    \item $h = 6.626 \times 10^{-34}$ Дж·с
+\end{itemize}
+
+\subsection{Методы решения}
+\begin{enumerate}
+    \item Метод 1: Описание
+    \item Метод 2: Описание
+    \item Метод 3: Описание
+\end{enumerate}
+
+\subsection{Полезные тождества}
+\begin{align}
+    \sin^2 x + \cos^2 x &= 1 \\
+    e^{i\pi} + 1 &= 0 \\
+    \sum_{k=1}^n k &= \frac{n(n+1)}{2}
+\end{align}
+
+\section{Общие замечания}
+
+\subsection{Применение}
+Краткое описание области применения...
+
+\subsection{Ограничения}
+Важные ограничения и условия...
+
+\subsection{Ссылки}
+\begin{itemize}
+    \item Дополнительная литература
+    \item Полезные ресурсы
+\end{itemize}
+
+\end{multicols}
+
+\end{document}

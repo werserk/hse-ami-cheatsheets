@@ -1,0 +1,163 @@
+\documentclass[10pt,landscape,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{mathtools}
+
+% Настройка страницы
+\geometry{margin=1cm}
+\setlength{\columnsep}{1cm}
+\setlength{\columnseprule}{0.5pt}
+
+% Настройка заголовков
+\titleformat{\section}{\Large\bfseries\color{red!70!black}}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries\color{red!50!black}}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{red!30!black}}{\thesubsubsection}{1em}{}
+
+% Убираем номера страниц
+\pagestyle{empty}
+
+% Настройка списков
+\setlist[itemize]{leftmargin=*,noitemsep,topsep=0pt}
+\setlist[enumerate]{leftmargin=*,noitemsep,topsep=0pt}
+
+% Математические операторы
+\DeclareMathOperator{\grad}{grad}
+\DeclareMathOperator{\divergence}{div}
+\DeclareMathOperator{\curl}{curl}
+\DeclareMathOperator{\laplacian}{\Delta}
+
+\begin{document}
+
+% Заголовок
+\begin{center}
+    {\Huge\bfseries Математические Формулы}\\[0.5cm]
+    {\large Справочник по основным математическим формулам}\\[0.3cm]
+    \rule{\textwidth}{1pt}
+\end{center}
+
+\begin{multicols}{2}
+
+\section{Алгебра}
+
+\subsection{Квадратные уравнения}
+\begin{align}
+    ax^2 + bx + c &= 0 \\
+    x_{1,2} &= \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} \\
+    D &= b^2 - 4ac
+\end{align}
+
+\subsection{Логарифмы}
+\begin{align}
+    \log_a(xy) &= \log_a x + \log_a y \\
+    \log_a\left(\frac{x}{y}\right) &= \log_a x - \log_a y \\
+    \log_a(x^n) &= n \log_a x \\
+    \log_a a &= 1, \quad \log_a 1 = 0
+\end{align}
+
+\section{Тригонометрия}
+
+\subsection{Основные тождества}
+\begin{align}
+    \sin^2 x + \cos^2 x &= 1 \\
+    \tan x &= \frac{\sin x}{\cos x} \\
+    \cot x &= \frac{\cos x}{\sin x} \\
+    1 + \tan^2 x &= \sec^2 x \\
+    1 + \cot^2 x &= \csc^2 x
+\end{align}
+
+\subsection{Формулы сложения}
+\begin{align}
+    \sin(a \pm b) &= \sin a \cos b \pm \cos a \sin b \\
+    \cos(a \pm b) &= \cos a \cos b \mp \sin a \sin b \\
+    \tan(a \pm b) &= \frac{\tan a \pm \tan b}{1 \mp \tan a \tan b}
+\end{align}
+
+\section{Дифференциальное исчисление}
+
+\subsection{Производные}
+\begin{align}
+    \frac{d}{dx}(c) &= 0 \\
+    \frac{d}{dx}(x^n) &= nx^{n-1} \\
+    \frac{d}{dx}(e^x) &= e^x \\
+    \frac{d}{dx}(\ln x) &= \frac{1}{x} \\
+    \frac{d}{dx}(\sin x) &= \cos x \\
+    \frac{d}{dx}(\cos x) &= -\sin x
+\end{align}
+
+\subsection{Правила дифференцирования}
+\begin{align}
+    (f \pm g)' &= f' \pm g' \\
+    (fg)' &= f'g + fg' \\
+    \left(\frac{f}{g}\right)' &= \frac{f'g - fg'}{g^2} \\
+    (f(g(x)))' &= f'(g(x)) \cdot g'(x)
+\end{align}
+
+\section{Интегральное исчисление}
+
+\subsection{Основные интегралы}
+\begin{align}
+    \int k \, dx &= kx + C \\
+    \int x^n \, dx &= \frac{x^{n+1}}{n+1} + C \quad (n \neq -1) \\
+    \int e^x \, dx &= e^x + C \\
+    \int \frac{1}{x} \, dx &= \ln|x| + C \\
+    \int \sin x \, dx &= -\cos x + C \\
+    \int \cos x \, dx &= \sin x + C
+\end{align}
+
+\subsection{Методы интегрирования}
+\begin{align}
+    \int f(g(x))g'(x) \, dx &= F(g(x)) + C \\
+    \int u \, dv &= uv - \int v \, du \\
+    \int_a^b f(x) \, dx &= F(b) - F(a)
+\end{align}
+
+\section{Векторная алгебра}
+
+\subsection{Скалярное произведение}
+\begin{align}
+    \vec{a} \cdot \vec{b} &= |\vec{a}||\vec{b}|\cos\theta \\
+    \vec{a} \cdot \vec{b} &= a_1b_1 + a_2b_2 + a_3b_3
+\end{align}
+
+\subsection{Векторное произведение}
+\begin{align}
+    \vec{a} \times \vec{b} &= |\vec{a}||\vec{b}|\sin\theta \hat{n} \\
+    \vec{a} \times \vec{b} &= \begin{vmatrix}
+        \hat{i} & \hat{j} & \hat{k} \\
+        a_1 & a_2 & a_3 \\
+        b_1 & b_2 & b_3
+    \end{vmatrix}
+\end{align}
+
+\section{Комплексные числа}
+
+\subsection{Основные операции}
+\begin{align}
+    z &= a + bi \\
+    |z| &= \sqrt{a^2 + b^2} \\
+    \overline{z} &= a - bi \\
+    z_1 + z_2 &= (a_1 + a_2) + i(b_1 + b_2) \\
+    z_1 \cdot z_2 &= (a_1a_2 - b_1b_2) + i(a_1b_2 + a_2b_1)
+\end{align}
+
+\subsection{Тригонометрическая форма}
+\begin{align}
+    z &= r(\cos\theta + i\sin\theta) \\
+    z^n &= r^n(\cos(n\theta) + i\sin(n\theta)) \\
+    \sqrt[n]{z} &= \sqrt[n]{r}\left(\cos\frac{\theta + 2k\pi}{n} + i\sin\frac{\theta + 2k\pi}{n}\right)
+\end{align}
+
+\end{multicols}
+
+\end{document}

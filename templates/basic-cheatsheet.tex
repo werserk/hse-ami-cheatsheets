@@ -1,0 +1,102 @@
+\documentclass[10pt,landscape,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+
+% Настройка страницы
+\geometry{margin=1cm}
+\setlength{\columnsep}{1cm}
+\setlength{\columnseprule}{0.5pt}
+
+% Настройка заголовков
+\titleformat{\section}{\Large\bfseries\color{blue!70!black}}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries\color{blue!50!black}}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{blue!30!black}}{\thesubsubsection}{1em}{}
+
+% Убираем номера страниц
+\pagestyle{empty}
+
+% Настройка списков
+\setlist[itemize]{leftmargin=*,noitemsep,topsep=0pt}
+\setlist[enumerate]{leftmargin=*,noitemsep,topsep=0pt}
+
+\begin{document}
+
+% Заголовок
+\begin{center}
+    {\Huge\bfseries Название Cheatsheet}\\[0.5cm]
+    {\large Краткое описание темы}\\[0.3cm]
+    \rule{\textwidth}{1pt}
+\end{center}
+
+\begin{multicols}{2}
+
+\section{Основные понятия}
+
+\subsection{Определения}
+\begin{itemize}
+    \item \textbf{Понятие 1:} Определение...
+    \item \textbf{Понятие 2:} Определение...
+\end{itemize}
+
+\subsection{Формулы}
+\begin{align}
+    E &= mc^2 \\
+    F &= ma \\
+    \int_a^b f(x) dx &= F(b) - F(a)
+\end{align}
+
+\section{Практические примеры}
+
+\subsection{Пример 1}
+Описание примера...
+
+\subsection{Пример 2}
+Описание примера...
+
+\section{Таблицы и списки}
+
+\subsection{Важные значения}
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Параметр & Значение \\
+\midrule
+$\pi$ & 3.14159... \\
+$e$ & 2.71828... \\
+$c$ & 299,792,458 м/с \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Список формул}
+\begin{enumerate}
+    \item Формула 1: $y = mx + b$
+    \item Формула 2: $a^2 + b^2 = c^2$
+    \item Формула 3: $\sin^2(x) + \cos^2(x) = 1$
+\end{enumerate}
+
+\section{Дополнительная информация}
+
+\subsection{Полезные ссылки}
+\begin{itemize}
+    \item Ссылка 1
+    \item Ссылка 2
+\end{itemize}
+
+\subsection{Примечания}
+Дополнительные замечания и комментарии...
+
+\end{multicols}
+
+\end{document}
