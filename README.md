@@ -34,7 +34,7 @@ make all
 
 ### Сборка конкретного cheatsheet
 ```bash
-make cheatsheets/math/differential-equations.pdf
+make cheatsheets/math/differential-equations/differential-equations.pdf
 ```
 
 ### Очистка временных файлов

@@ -11,10 +11,10 @@
 
 ## Использование
 
-В LaTeX документах используйте относительные пути:
+В LaTeX документах используйте относительные пути (пример из каталога темы в `cheatsheets/.../your-topic/`):
 ```latex
-\includegraphics{../assets/images/diagram.pdf}
-\input{../assets/styles/custom.sty}
+\includegraphics{../../assets/images/diagram.pdf}
+\input{../../assets/styles/custom.sty}
 ```
 
 ## Форматы файлов
