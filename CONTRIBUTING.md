@@ -25,6 +25,11 @@
 - Основа — шаблоны из `templates/`.
 - Изображения — в `assets/images/` (предпочтительно векторные: SVG/PDF).
 
+Соглашения по именам и структуре:
+- Темы: каталоги в kebab-case, напр. `differential-equations`.
+- Основные файлы: `topic-name.tex` и `topic-name.pdf` рядом.
+- Экзамены: `exam-variants/YYYY/*.pdf` (имя файла — kebab-case без года).
+
 Пример:
 ```
 cheatsheets/math/your-topic/
