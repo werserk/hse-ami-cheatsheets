@@ -1,4 +1,4 @@
-# HSE Cheatsheets Repository
+# HSE Cheatsheets — by werserk
 
 Репозиторий для хранения и организации различных cheatsheet'ов, оформленных в LaTeX.
 
