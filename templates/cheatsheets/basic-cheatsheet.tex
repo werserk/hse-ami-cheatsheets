@@ -21,11 +21,13 @@
 
 % Акцентный цвет
 \definecolor{accent}{HTML}{FF7517}
+% Цвета ссылок
+\hypersetup{colorlinks=true, linkcolor=accent, urlcolor=accent, citecolor=accent}
 
-% Настройка заголовков
-\titleformat{\section}{\Large\bfseries\color{accent}}{\thesection}{1em}{}
-\titleformat{\subsection}{\large\bfseries\color{accent}}{\thesubsection}{1em}{}
-\titleformat{\subsubsection}{\normalsize\bfseries\color{accent}}{\thesubsubsection}{1em}{}
+% Настройка заголовков (без акцентного цвета)
+\titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{1em}{}
 
 % Убираем номера страниц
 \pagestyle{empty}
@@ -110,6 +112,6 @@ $c$ & 299,792,458 м/с \\
 \end{multicols}
 
 % Неброский футер с автором и вкладчиками (мелкий шрифт внизу страницы)
-{\noindent\color{accent}\tiny by \textbf{werserk} \hfill contributors: \texttt{\contributors}}
+{\noindent\tiny by \textbf{werserk} \hfill contributors: \texttt{\contributors}}
 
 \end{document}
