@@ -19,10 +19,13 @@
 \setlength{\columnsep}{1cm}
 \setlength{\columnseprule}{0.5pt}
 
+% Акцентный цвет
+\definecolor{accent}{HTML}{FF7517}
+
 % Настройка заголовков
-\titleformat{\section}{\Large\bfseries\color{blue!70!black}}{\thesection}{1em}{}
-\titleformat{\subsection}{\large\bfseries\color{blue!50!black}}{\thesubsection}{1em}{}
-\titleformat{\subsubsection}{\normalsize\bfseries\color{blue!30!black}}{\thesubsubsection}{1em}{}
+\titleformat{\section}{\Large\bfseries\color{accent}}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries\color{accent}}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{accent}}{\thesubsubsection}{1em}{}
 
 % Убираем номера страниц
 \pagestyle{empty}
@@ -37,11 +40,7 @@
 \begin{center}
     {\Huge\bfseries Название Cheatsheet}\\[0.5cm]
     {\large Краткое описание темы}\\[0.3cm]
-    \vspace{0.2cm}
-    {\small Автор: {\bfseries werserk} \textbar{} \href{https://werserk.com}{werserk.com}}
-    \par\vspace{0.1cm}
-    {\small Соавторы/источники данных: \texttt{\\contributors}}
-    \par\vspace{0.3cm}
+    \vspace{0.3cm}
     \rule{\textwidth}{1pt}
 \end{center}
 
@@ -109,5 +108,8 @@ $c$ & 299,792,458 м/с \\
 Дополнительные замечания и комментарии...
 
 \end{multicols}
+
+% Неброский футер с автором и вкладчиками (мелкий шрифт внизу страницы)
+{\noindent\color{accent}\tiny by \textbf{werserk} \hfill contributors: \texttt{\contributors}}
 
 \end{document}

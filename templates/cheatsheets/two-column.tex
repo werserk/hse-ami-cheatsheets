@@ -20,10 +20,13 @@
 \setlength{\columnsep}{1.5cm}
 \setlength{\columnseprule}{0.8pt}
 
+% Акцентный цвет
+\definecolor{accent}{HTML}{FF7517}
+
 % Настройка заголовков
-\titleformat{\section}{\Large\bfseries\color{green!70!black}}{\thesection}{1em}{}
-\titleformat{\subsection}{\large\bfseries\color{green!50!black}}{\thesubsection}{1em}{}
-\titleformat{\subsubsection}{\normalsize\bfseries\color{green!30!black}}{\thesubsubsection}{1em}{}
+\titleformat{\section}{\Large\bfseries\color{accent}}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries\color{accent}}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{accent}}{\thesubsubsection}{1em}{}
 
 % Убираем номера страниц
 \pagestyle{empty}
@@ -41,11 +44,7 @@
 \begin{center}
     {\Huge\bfseries Двухколоночный Cheatsheet}\\[0.5cm]
     {\large Оптимизированный для плотной информации}\\[0.3cm]
-    \vspace{0.2cm}
-    {\small Автор: {\bfseries werserk} \textbar{} \href{https://werserk.com}{werserk.com}}
-    \par\vspace{0.1cm}
-    {\small Соавторы/источники данных: \texttt{\\contributors}}
-    \par\vspace{0.3cm}
+    \vspace{0.3cm}
     \rule{\textwidth}{1pt}
 \end{center}
 
@@ -140,5 +139,8 @@ $\gamma$ & 1.4 \\
 \end{itemize}
 
 \end{multicols}
+
+% Неброский футер с автором и вкладчиками (мелкий шрифт внизу страницы)
+{\noindent\color{accent}\tiny by \textbf{werserk} \hfill contributors: \texttt{\contributors}}
 
 \end{document}
