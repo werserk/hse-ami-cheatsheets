@@ -10,12 +10,14 @@ TEMPLATES_DIR = templates
 CHEATSHEETS_DIR = cheatsheets
 
 # Найти все .tex файлы в директории cheatsheets
-TEX_FILES = $(shell find $(CHEATSHEETS_DIR) -name "*.tex")
-PDF_FILES = $(TEX_FILES:.tex=.pdf)
+# Исключаем файлы внутри каталогов topics/ (части тем), собираем только верхнеуровневые .tex
+TEX_FILES = $(shell find $(CHEATSHEETS_DIR) -name "*.tex" -not -path "*/topics/*")
 
 # Найти все .tex файлы в директории templates
-TEMPLATE_FILES = $(shell find $(TEMPLATES_DIR) -name "*.tex")
+# Исключаем файлы внутри каталогов topics/ (части тем)
+TEMPLATE_FILES = $(shell find $(TEMPLATES_DIR) -name "*.tex" -not -path "*/topics/*")
 TEMPLATE_PDFS = $(TEMPLATE_FILES:.tex=.pdf)
+PDF_FILES = $(TEX_FILES:.tex=.pdf)
 
 # Основные цели
 .PHONY: all clean templates cheatsheets help clean-pdf
