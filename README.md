@@ -15,27 +15,31 @@ MIT License.
 ## Структура
 ```
 .
-├── assets/                 # Общие ресурсы (изображения, стили, шрифты)
-│   ├── images/
-│   ├── styles/
-│   └── fonts/
-├── cheatsheets/            # Тематические материалы
-│   ├── math/
-│   │   └── differential-equations/   # Пример темы
-│   │       ├── differential-equations.tex   # исходник
-│   │       ├── differential-equations.pdf   # собранный PDF
-│   │       └── exam-variants/
-│   │           └── YYYY/                    # год (напр., 2025)
-│   │               └── name.pdf             # файл в kebab-case
-│   ├── programming/
-│   └── other/
-├── templates/              # Шаблоны LaTeX
-│   ├── basic-cheatsheet.tex / .pdf
-│   ├── math-formulas.tex / .pdf
-│   └── two-column.tex / .pdf
-├── Makefile                # Сборка PDF
-├── setup-hooks.sh          # Установка git-hook’ов
-├── CONTRIBUTING.md         # Как добавить материалы
-├── LICENSE
-└── README.md
+├── cheatsheets/                          # Тематические материалы (каждая тема в своей папке)
+│   ├── math/                             # Математика
+│   │   └── differential-equations/       # Пример темы
+│   │       ├── differential-equations.tex   # исходник темы (LaTeX)
+│   │       ├── differential-equations.pdf   # собранный PDF темы
+│   │       └── exam-variants/               # варианты экзаменов
+│   │           └── YYYY/                    # год (например, 2025)
+│   │               ├── var-omega.pdf        # файл в kebab-case (без года)
+│   │               └── demo-var-a.pdf       # и т.д.
+│   ├── programming/                        # Программирование (заглушка)
+│   └── other/                              # Прочие темы (заглушка)
+│
+├── templates/                              # Шаблоны LaTeX (единый стиль проекта)
+│   ├── basic-cheatsheet.tex / .pdf         # базовый
+│   ├── math-formulas.tex / .pdf            # формулы
+│   └── two-column.tex / .pdf               # двухколоночный
+│
+├── assets/                                 # Общие ресурсы
+│   ├── images/                             # изображения (желательно PDF/SVG)
+│   ├── styles/                             # .sty файлы
+│   └── fonts/                              # шрифты (при необходимости)
+│
+├── Makefile                                # команды сборки (make all/clean и др.)
+├── setup-hooks.sh                          # установка git pre-commit hook
+├── CONTRIBUTING.md                         # как добавить материалы и правила именования
+├── LICENSE                                 # лицензия (MIT)
+└── README.md                               # этот файл
 ```
