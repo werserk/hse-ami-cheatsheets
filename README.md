@@ -64,6 +64,39 @@ make clean
 - LaTeX дистрибутив (TeX Live, MiKTeX)
 - Make (для автоматизации сборки)
 
+## Быстрый старт (установка зависимостей)
+
+На Linux/macOS вы можете установить все необходимые пакеты одной командой:
+
+```bash
+./scripts/install_deps.sh
+```
+
+Скрипт автоматически определит ваш пакетный менеджер (`apt`, `dnf`, `pacman`, `zypper`, `brew`) и установит:
+
+- `pdflatex`/`bibtex` (через TeX Live),
+- необходимые LaTeX-пакеты: `amsmath`, `amsfonts`, `amssymb`, `geometry`, `multicol`, `graphicx`, `xcolor`, `titlesec`, `enumitem`, `booktabs`, `array`, `parskip`, `mathtools`,
+- поддержку кириллицы: `babel` с `russian`,
+- `latexmk` (для интеграции с VS Code),
+- `make`.
+
+Если скрипт не поддерживает вашу систему — установите эквиваленты вручную.
+
+## Рекомендуемые расширения VS Code
+
+Рекомендуемые расширения описаны в `.vscode/extensions.json`. Установить их можно автоматически:
+
+```bash
+./scripts/install_vscode_exts.sh
+```
+
+Или поставьте вручную:
+
+- James-Yu.latex-workshop — сборка, предпросмотр, рецепты
+- streetsidesoftware.code-spell-checker — проверка правописания
+- streetsidesoftware.code-spell-checker-russian — словарь RU для проверщика
+- valentjn.vscode-ltex — продвинутая грамматика и стиль (опционально)
+
 ## Шаблоны
 
 В директории `templates/` находятся готовые шаблоны для:
