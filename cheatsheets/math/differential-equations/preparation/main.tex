@@ -6,6 +6,11 @@
 \usepackage{parskip}
 \usepackage{hyperref}
 
+% Акцентный цвет и цвета ссылок
+\usepackage{xcolor}
+\definecolor{accent}{HTML}{FF7517}
+\hypersetup{colorlinks=true, linkcolor=accent, urlcolor=accent, citecolor=accent}
+
 \geometry{margin=1.8cm}
 \pagestyle{empty}
 
@@ -26,6 +31,12 @@
 \input{\topicsBase/02-second-order}
 % \input{\topicsBase/03-systems}
 % \input{\topicsBase/04-numerical}
+
+% Опционально: список вкладчиков (по умолчанию пустой)
+\providecommand{\contributors}{}
+
+% Неброский футер (мелкий шрифт внизу страницы)
+{\noindent\tiny by \textbf{werserk} \hfill contributors: \texttt{\contributors}}
 
 \end{document}
 
