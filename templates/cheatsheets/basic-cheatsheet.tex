@@ -50,6 +50,13 @@
 % \newcommand{\contributors}{Ivan Petrov; Botkin DS; @nick}
 % По умолчанию оставлено пустым
 \providecommand{\contributors}{}
+% Отображение вкладчиков или прочерка, если пусто
+\newcommand{\contributorsDisplay}{%
+  \if\relax\detokenize{\contributors}\relax
+    ---
+  \else
+    \texttt{\contributors}
+  \fi}
 
 \begin{multicols}{2}
 
@@ -112,6 +119,6 @@ $c$ & 299,792,458 м/с \\
 \end{multicols}
 
 % Футер: by werserk (ссылка, акцентный цвет) + contributors
-{\noindent by \href{https://werserk.com}{\textcolor{accent}{\textbf{werserk}}} \hfill contributors: \texttt{\contributors}}
+{\noindent \href{https://werserk.com}{\textcolor{accent}{by \textbf{werserk}}} \hfill contributors: \contributorsDisplay}
 
 \end{document}
