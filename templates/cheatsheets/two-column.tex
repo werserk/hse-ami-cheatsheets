@@ -13,6 +13,7 @@
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{parskip}
+\usepackage{hyperref}
 
 % Настройка страницы
 \geometry{margin=1.5cm}
@@ -40,8 +41,18 @@
 \begin{center}
     {\Huge\bfseries Двухколоночный Cheatsheet}\\[0.5cm]
     {\large Оптимизированный для плотной информации}\\[0.3cm]
+    \vspace{0.2cm}
+    {\small Автор: {\bfseries werserk} \textbar{} \href{https://werserk.com}{werserk.com}}
+    \par\vspace{0.1cm}
+    {\small Соавторы/источники данных: \texttt{\\contributors}}
+    \par\vspace{0.3cm}
     \rule{\textwidth}{1pt}
 \end{center}
+
+% Опционально: перед сборкой можно определить список вкладчиков, например:
+% \newcommand{\contributors}{Ivan Petrov; Botkin DS; @nick}
+% По умолчанию оставлено пустым
+\providecommand{\contributors}{}
 
 \begin{multicols}{2}
 

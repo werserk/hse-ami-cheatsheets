@@ -83,7 +83,8 @@ help:
 	@echo ""
 	@echo "Примеры использования:"
 	@echo "  make cheatsheets/math/differential-equations/differential-equations.pdf"
-	@echo "  make templates/basic-cheatsheet.pdf"
+	@echo "  make templates/cheatsheets/basic-cheatsheet.pdf"
+	@echo "  make templates/kits/modular-preparation/main-preparation.pdf"
 
 # Создать директорию build если её нет
 $(BUILD_DIR):
