@@ -1,0 +1,50 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath, amsfonts, amssymb}
+\usepackage{geometry}
+\usepackage{parskip}
+\usepackage{hyperref}
+
+% Акцентный цвет и цвета ссылок
+\usepackage{xcolor}
+\definecolor{accent}{HTML}{FF7517}
+\hypersetup{colorlinks=true, linkcolor=accent, urlcolor=accent, citecolor=accent}
+
+\geometry{margin=1.8cm}
+\pagestyle{empty}
+
+% --- Каталог тем для этого предмета ---
+\newcommand{\topicsBase}{cheatsheets/math/differential-equations/preparation/topics}
+
+\begin{document}
+
+\begin{center}
+  {\Huge Подготовка: Дифференциальные уравнения}\\[0.4cm]
+  {\large Полная версия с разборами тем и ссылками}\\[0.2cm]
+  \rule{\textwidth}{0.6pt}
+\end{center}
+
+% --- Подключайте темы ниже ---
+% Примеры (создайте соответствующие файлы в preparation/topics/):
+\input{\topicsBase/01-first-order}
+\input{\topicsBase/02-second-order}
+% \input{\topicsBase/03-systems}
+% \input{\topicsBase/04-numerical}
+
+% Опционально: список вкладчиков (по умолчанию пустой)
+\providecommand{\contributors}{}
+% Отображение вкладчиков или прочерка, если пусто
+\newcommand{\contributorsDisplay}{%
+  \if\relax\detokenize{\contributors}\relax
+    ---
+  \else
+    \texttt{\contributors}
+  \fi}
+
+% Футер: by werserk (ссылка, акцентный цвет) + contributors
+{\noindent \href{https://werserk.com}{\textcolor{accent}{\textbf{by werserk}}} \hfill contributors: \contributorsDisplay}
+
+\end{document}
+
+
