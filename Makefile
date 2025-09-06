@@ -1,4 +1,4 @@
-# Makefile для HSE LaTeX cheatsheet проекта
+# Makefile для HSE AMI LaTeX cheatsheet проекта
 # Автор: werserk
 # Дата: $(shell date +%Y-%m-%d)
 
