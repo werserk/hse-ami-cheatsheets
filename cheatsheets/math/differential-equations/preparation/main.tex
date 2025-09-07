@@ -5,17 +5,20 @@
 \usepackage{geometry}
 \usepackage{parskip}
 \usepackage{hyperref}
+\usepackage{fancyhdr}
 
-% Акцентный цвет и цвета ссылок
+% Цвета ссылок (чёрные)
 \usepackage{xcolor}
-\definecolor{accent}{HTML}{FF7517}
-\hypersetup{colorlinks=true, linkcolor=accent, urlcolor=accent, citecolor=accent}
+\hypersetup{colorlinks=true, linkcolor=black, urlcolor=black, citecolor=black}
 
 \geometry{margin=1.8cm}
-\pagestyle{empty}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
 
 % --- Каталог тем для этого предмета ---
-\newcommand{\topicsBase}{cheatsheets/math/differential-equations/preparation/topics}
+\newcommand{\topicsBase}{topics}
 
 \begin{document}
 
@@ -25,6 +28,23 @@
   \rule{\textwidth}{0.6pt}
 \end{center}
 
+\vspace{0.5cm}
+
+% --- Оглавление ---
+\begin{center}
+{\Large \textbf{Содержание}}
+\end{center}
+
+\vspace{0.5cm}
+
+\begin{center}
+\begin{tabular}{ll}
+\hyperref[sec:homogeneous]{\textbf{1. Однородные линейные разностные уравнения}} & \pageref{sec:homogeneous} \\
+\end{tabular}
+\end{center}
+
+\vspace{0.5cm}
+
 % --- Подключайте темы ниже ---
 % Примеры (создайте соответствующие файлы в preparation/topics/):
 \input{\topicsBase/01-first-order}
@@ -32,18 +52,17 @@
 % \input{\topicsBase/03-systems}
 % \input{\topicsBase/04-numerical}
 
-% Опционально: список вкладчиков (по умолчанию пустой)
-\providecommand{\contributors}{}
-% Отображение вкладчиков или прочерка, если пусто
-\newcommand{\contributorsDisplay}{%
-  \if\relax\detokenize{\contributors}\relax
-    ---
-  \else
-    \texttt{\contributors}
-  \fi}
+% Команда для отображения by werserk (чёрный цвет, без ссылки)
+\newcommand{\byWerserk}{\textbf{by werserk}}
 
-% Футер: by werserk (ссылка, акцентный цвет) + contributors
-{\noindent \href{https://werserk.com}{\textcolor{accent}{\textbf{by werserk}}} \hfill contributors: \contributorsDisplay}
+% Футер с разделительной линией (только на последней странице)
+\thispagestyle{fancy}
+\fancyfoot[L]{\byWerserk}
+\fancyfoot[R]{\thepage}
+\vspace{1cm}
+\rule{\textwidth}{0.4pt}
+\vspace{0.3cm}
+{\noindent \byWerserk}
 
 \end{document}
 
