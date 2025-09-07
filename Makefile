@@ -8,6 +8,7 @@ BIBTEX = bibtex
 BUILD_DIR = build
 TEMPLATES_DIR = templates
 CHEATSHEETS_DIR = cheatsheets
+STYLES_DIR = assets/styles
 
 # Найти все .tex файлы в директории cheatsheets
 # Исключаем файлы внутри каталогов topics/ (части тем), собираем только верхнеуровневые .tex
@@ -35,11 +36,11 @@ templates: $(TEMPLATE_PDFS)
 %.pdf: %.tex
 	@echo "Сборка $<..."
 	@mkdir -p $(BUILD_DIR)
-	$(LATEX) -output-directory=$(BUILD_DIR) -interaction=nonstopmode $<
+	TEXINPUTS=$(abspath $(STYLES_DIR)):$${TEXINPUTS} $(LATEX) -output-directory=$(BUILD_DIR) -interaction=nonstopmode $<
 	@if [ -f $(BUILD_DIR)/$(basename $(notdir $<)).aux ]; then \
 		$(BIBTEX) $(BUILD_DIR)/$(basename $(notdir $<)); \
-		$(LATEX) -output-directory=$(BUILD_DIR) -interaction=nonstopmode $<; \
-		$(LATEX) -output-directory=$(BUILD_DIR) -interaction=nonstopmode $<; \
+		TEXINPUTS=$(abspath $(STYLES_DIR)):$${TEXINPUTS} $(LATEX) -output-directory=$(BUILD_DIR) -interaction=nonstopmode $<; \
+		TEXINPUTS=$(abspath $(STYLES_DIR)):$${TEXINPUTS} $(LATEX) -output-directory=$(BUILD_DIR) -interaction=nonstopmode $<; \
 	fi
 	@cp $(BUILD_DIR)/$(basename $(notdir $<)).pdf $(dir $@)
 	@echo "Готово: $@"

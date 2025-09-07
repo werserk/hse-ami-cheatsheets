@@ -33,3 +33,17 @@
 
 ## Лицензия
 MIT License.
+
+## Быстрый старт с макросами
+
+В проект добавлены пакеты стилей для ускорения вёрстки:
+
+- `assets/styles/hse-cheatsheets.sty`: базовые макросы для cheatsheet'ов.
+  - Пример: заголовок — `\HSETitle{Название}{Подзаголовок}`; колонки — `\HSETwoColsBegin ... \HSETwoColsEnd`; футер — `\HSEFooter`.
+  - Акцентный цвет: `\HSESetAccent{FF7517}` (опционально).
+
+- `assets/styles/hse-exam.sty`: макросы для экзаменационных вариантов.
+  - Титул: `\ExamVariantTitle{Вариант φ}`.
+  - Список задач: окружение `examproblems`, элементы `\problem[10]{Текст задачи}` или `\item`.
+
+Шаблоны в `templates/cheatsheets` обновлены и демонстрируют использование новых команд.
