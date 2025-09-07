@@ -15,12 +15,12 @@
 ## 📝 Варианты экзаменов
 
 ### 2024 год
-- [var-epsilon](exam-variants/2024/var-epsilon.pdf) - вариант epsilon
+- [epsilon](exam/2024/epsilon.pdf) - вариант epsilon
 
 ### 2025 год
-- [var-phi](exam-variants/2025/var-phi.pdf) - вариант phi
-- [var-varphi](exam-variants/2025/var-varphi.pdf) - вариант varphi
-- [var-omega](exam-variants/2025/var-omega.pdf) - вариант omega
+- [phi](exam/2025/phi.pdf) - вариант phi
+- [varphi](exam/2025/varphi.pdf) - вариант varphi
+- [omega](exam/2025/omega.pdf) - вариант omega
 
 ## 📋 Описание
 
@@ -35,15 +35,15 @@ differential-equations/
 ├── differential-equations.pdf          # Собранный PDF основного справочника
 ├── preparation/                        # Материалы для подготовки
 │   └── (дополнительные материалы, разборы, алгоритмы)
-└── exam-variants/                      # Варианты экзаменов
+└── exam/                               # Варианты экзаменов
     ├── 2024/
-    │   ├── var-epsilon.tex
-    │   └── var-epsilon.pdf
+    │   ├── epsilon.tex
+    │   └── epsilon.pdf
     └── 2025/
-        ├── var-phi.tex
-        ├── var-phi.pdf
-        ├── var-varphi.tex
-        ├── var-varphi.pdf
-        ├── var-omega.pdf
+        ├── phi.tex
+        ├── phi.pdf
+        ├── varphi.tex
+        ├── varphi.pdf
+        ├── omega.pdf
         └── demo-var-a.pdf, demo-var-b.pdf
 ```

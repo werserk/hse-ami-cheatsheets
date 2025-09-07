@@ -1,0 +1,89 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+\begin{document}
+
+\begin{center}
+\textbf{Вариант $\omega$}
+\end{center}
+
+\begin{enumerate}
+\item Решите нелинейную систему уравнений, предварительно найдя оба первых интеграла (их независимость подлежит проверке)
+\[
+\begin{cases}
+\dot x = z^{2}-y^{2},\\[2pt]
+\dot y = z,\\[2pt]
+\dot z = -y,
+\end{cases}
+\qquad
+\text{Система рассматривается в области } z>y>x>0.
+\]
+
+\item Решите задачу Коши для уравнения в частных производных первого порядка
+\[
+(x^{2}+y^{2})\,\frac{\partial u}{\partial x}
++2xy\,\frac{\partial u}{\partial y}
++xz\,\frac{\partial u}{\partial z}=0,
+\qquad
+\text{и } \; u=\Bigl(\frac{x}{z}\Bigr)^{2} \; \text{при } y=z.
+\]
+
+\item Пусть $P(a,b,c)$ однородный многочлен от трёх переменных. Рассмотрите уравнение второго порядка
+\[
+P\bigl(y,\,y',\,y''\bigr)=0.
+\]
+Докажите, что введение вспомогательной функции $z$, согласно формуле $y=e^{z}$, понижает порядок этого уравнения на единицу.
+
+\item Дана система разностных уравнений второго порядка
+\[
+\begin{pmatrix}
+x_{t+1}\\[2pt]
+y_{t+1}
+\end{pmatrix}
+=
+A
+\begin{pmatrix}
+x_{t}\\[2pt]
+y_{t}
+\end{pmatrix}
++
+\begin{pmatrix}
+1\\[2pt]
+-1
+\end{pmatrix},
+\qquad
+A=
+\begin{pmatrix}
+-5 & -6\\
+8 & 9
+\end{pmatrix}.
+\]
+\begin{enumerate}
+\item[а)] Найдите фундаментальную матрицу этой системы $\Phi_{t}$.
+\item[б)] Чтобы найти решение неоднородной системы, воспользуйтесь методом вариации постоянных, полагая
+\[
+\begin{pmatrix}
+x_{t}\\[2pt]
+y_{t}
+\end{pmatrix}
+=
+\Phi_{t}
+\begin{pmatrix}
+c_{1}^{\,t}\\[2pt]
+c_{2}^{\,t}
+\end{pmatrix}.
+\]
+Выпишите уравнения, которым удовлетворяют последовательности $c_{1}^{\,t}$ и $c_{2}^{\,t}$, не решая их.
+\end{enumerate}
+
+\item Решите разностное уравнение
+\[
+y_{t+2}-9y_{t}=(5t-8)\,2^{t}+3^{t}.
+\]
+\end{enumerate}
+
+\end{document}
