@@ -1,15 +1,12 @@
-\subsection{Неоднородные линейные разностные уравнения}\label{subsec:inhomogeneous}
+\subsection{Неоднородные линейные разностные уравнения}\label{sec:inhomogeneous}
 
-\begin{center}
-\fbox{\parbox{0.9\textwidth}{
-\textbf{Пример.} Решите неоднородное линейное разностное уравнение:
+\HSEExample{\example Решите неоднородное линейное разностное уравнение:
 \begin{align}
 y_{t+3} - 3y_{t+2} + 6y_{t+1} - 4y_t = 2^t + t
 \end{align}
-}}
-\end{center}
+}
 
-\textbf{Определение.} Линейное неоднородное разностное уравнение порядка $k$ с постоянными коэффициентами:
+\textbf{Определение.} \textbf{Линейное неоднородное разностное уравнение} порядка $k$ с постоянными коэффициентами:
 \begin{align}
 a_t + c_1 a_{t-1} + c_2 a_{t-2} + \dots + c_k a_{t-k} = f(t), \quad c_k \neq 0
 \end{align}
@@ -18,7 +15,7 @@ a_t + c_1 a_{t-1} + c_2 a_{t-2} + \dots + c_k a_{t-k} = f(t), \quad c_k \neq 0
 
 \textbf{Структура общего решения:} $a_t = a_t^{(h)} + a_t^{(p)}$, где:
 \begin{itemize}
-\item $a_t^{(h)}$ — общее решение однородного уравнения (см. раздел~\ref{subsec:homogeneous})
+\item $a_t^{(h)}$ — общее решение однородного уравнения (см. раздел~\ref{sec:homogeneous})
 \item $a_t^{(p)}$ — частное решение неоднородного уравнения
 \end{itemize}
 
@@ -48,12 +45,17 @@ Q_{\rho,\theta}(r) = (r - \rho e^{i\theta})(r - \rho e^{-i\theta}) = r^2 - 2\rho
 
 \textbf{Выбор формы частного решения $a_t^{(p)}$:}
 
-\textit{Обозначения:} $P_n(t)$ — полином степени $n$; $Q_n(t), R_n(t)$ — полиномы; $\lambda\in\mathbb{C}$; $s$ — кратность резонанса (кратность соответствующего множителя в $\chi$).
+\begin{NotationSection}
+\NotationEntry{P_n(t)}{полином степени $n$}
+\NotationEntry{Q_n(t), R_n(t)}{полиномы}
+\NotationEntry{\lambda\in\complex}{комплексное число}
+\NotationEntry{s}{кратность резонанса (кратность соответствующего множителя в $\chi$)}
+\end{NotationSection}
 
 \begin{table}[h!]
 \centering
 \caption{Выбор формы частного решения и проверка резонанса}
-\label{tab:particular-form}
+\tablabel{particular-form}
 \begin{tabular}{|l|l|l|}
 \hline
 \textbf{Неоднородность $f(t)$} & \textbf{Проверка резонанса} & \textbf{Базовая форма $a_t^{(p)}$} \\
@@ -71,36 +73,27 @@ $P_n(t)\,\rho^t\cos(\theta t)$ (или $\sin$) & $Q_{\rho,\theta}(r)\mid \chi(r)
 
 \textbf{Правило резонанса:} если проверка даёт резонанс кратности $s$, домножьте базовую форму на $t^{s}$.
 
-\begin{center}
-\fbox{\parbox{0.92\textwidth}{
-\textbf{Алгоритм решения неоднородного уравнения.}
-\begin{enumerate}
-\item \textbf{Однородная часть.} Найти $a_t^{(h)}$ методом характеристических корней (см. раздел~\ref{subsec:homogeneous}).
+\HSEAlgorithm{\textbf{Алгоритм решения неоднородного уравнения.}
+\begin{ProblemSteps}
+\item \textbf{Однородная часть.} Найти $a_t^{(h)}$ методом характеристических корней (см. раздел~\ref{sec:homogeneous}).
 \item \textbf{Форма частного решения.} По таблице~\ref{tab:particular-form} выбрать форму $a_t^{(p)}$ с учётом правила резонанса.
 \item \textbf{Подстановка.} Подставить $a_t^{(p)}$ в исходное неоднородное уравнение и найти неопределённые коэффициенты.
 \item \textbf{Общее решение.} $a_t = a_t^{(h)} + a_t^{(p)}$.
 \item \textbf{Начальные условия.} Подставить $k$ заданных значений и найти константы в $a_t^{(h)}$.
-\end{enumerate}
-}}
-\end{center}
+\end{ProblemSteps}
+}
 
 \bigskip
 
-\begin{center}
-\fbox{\parbox{0.92\textwidth}{
-\textbf{Пример.} Решите разностное уравнение третьего порядка с постоянными коэффициентами:
+\HSEExample{\example Решите разностное уравнение третьего порядка с постоянными коэффициентами:
 \[
 y_{t+3} - 3y_{t+2} + 6y_{t+1} - 4y_t = 2^t + t
 \]
-Найти общее решение $y_t$.
-}}
-\end{center}
+Найти общее решение $y_t$.}
 
 \bigskip
 
-\begin{center}
-\fbox{\parbox{0.92\textwidth}{
-\noindent\textbf{Решение.}
+\textbf{Решение.}
 
 \paragraph{1) Однородная часть.}
 Характеристический многочлен:
@@ -131,16 +124,16 @@ y_t^{(p)} = \alpha\,2^t + At^2 + Bt.
 \paragraph{3) Подстановка и определение коэффициентов.}
 Обозначим линейный оператор:
 \[
-\mathcal{L}[y_t] = y_{t+3} - 3y_{t+2} + 6y_{t+1} - 4y_t.
+\linop[y_t] = y_{t+3} - 3y_{t+2} + 6y_{t+1} - 4y_t.
 \]
 
-Для экспоненты: $\mathcal{L}[2^t] = \chi(2)\,2^t = 4\cdot2^t \Rightarrow 4\alpha\,2^t = 2^t$, значит $\alpha = \tfrac{1}{4}$.
+Для экспоненты: $\linop[2^t] = \chi(2)\,2^t = 4\cdot2^t \Rightarrow 4\alpha\,2^t = 2^t$, значит $\alpha = \tfrac{1}{4}$.
 
 Для полинома $At^2 + Bt$ прямой подсчёт даёт:
 \[
-\mathcal{L}[At^2 + Bt] = 6A\,t + (3A + 3B).
+\linop[At^2 + Bt] = 6A\,t + (3A + 3B).
 \]
-Требуем $\mathcal{L}[At^2 + Bt] = t$, откуда
+Требуем $\linop[At^2 + Bt] = t$, откуда
 \[
 6A = 1 \Rightarrow A = \tfrac{1}{6}, \qquad 3A + 3B = 0 \Rightarrow B = -\tfrac{1}{6}.
 \]
@@ -157,5 +150,3 @@ y_t = C_1 + 2^t\Big(C_2\cos\tfrac{\pi t}{3} + C_3\sin\tfrac{\pi t}{3}\Big)
 }
 \]
 (константы $C_1, C_2, C_3$ находятся по начальным условиям).
-}}
-\end{center}

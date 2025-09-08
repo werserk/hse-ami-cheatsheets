@@ -29,9 +29,17 @@ jobs:
         run: |
           find . -name "*.tex" -not -path "./templates/*" | while read file; do
             echo "Checking $file..."
-            if ! latexmk -pdf -interaction=nonstopmode -halt-on-error "$file"; then
+            file_dir=$(dirname "$file")
+            file_name=$(basename "$file")
+            if [[ "$file_dir" != "." ]]; then
+              cd "$file_dir"
+            fi
+            if ! latexmk -pdf -interaction=nonstopmode -halt-on-error -output-directory=../../build "$file_name"; then
               echo "❌ Compilation failed for $file"
               exit 1
+            fi
+            if [[ "$file_dir" != "." ]]; then
+              cd - > /dev/null
             fi
           done
 

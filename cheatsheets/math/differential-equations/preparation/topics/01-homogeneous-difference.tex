@@ -1,15 +1,12 @@
-\subsection{Однородные линейные разностные уравнения}\label{subsec:homogeneous}
+\subsection{Однородные линейные разностные уравнения}\label{sec:homogeneous}
 
-\begin{center}
-\fbox{\parbox{0.9\textwidth}{
-\textbf{Пример.} Решите однородное линейное разностное уравнение:
+\HSEExample{\example Решите однородное линейное разностное уравнение:
 \begin{align}
 y_{t+3} - 3y_{t+2} + 6y_{t+1} - 4y_t = 0
 \end{align}
-}}
-\end{center}
+}
 
-\textbf{Определение.} Линейное однородное разностное уравнение порядка $k$ с постоянными коэффициентами:
+\textbf{Определение.} \textbf{Линейное однородное разностное уравнение} порядка $k$ с постоянными коэффициентами:
 \begin{align}
 a_t + c_1 a_{t-1} + c_2 a_{t-2} + \dots + c_k a_{t-k} = 0, \quad c_k \neq 0
 \end{align}
@@ -23,12 +20,14 @@ r^t (1 + c_1 r^{-1} + c_2 r^{-2} + \dots + c_k r^{-k}) = 0 \iff r^k + c_1 r^{k-1
 
 т.е. характеристический многочлен $\chi(r) = r^k + c_1 r^{k-1} + \dots + c_k$. Его корни целиком описывают форму общего решения.
 
-\textit{Обозначения:} $p_j(t), q_j(t)$ — полиномы по $t$ степени $\le j$.
+\begin{NotationSection}
+\NotationEntry{p_j(t), q_j(t)}{полиномы по $t$ степени $\le j$}
+\end{NotationSection}
 
 \begin{table}[h!]
 \centering
 \caption{Выбор формы решения по типу корней характеристического многочлена}
-\label{tab:form-choices}
+\tablabel{form-choices}
 \begin{tabular}{|l|l|}
 \hline
 \textbf{Условия на корни} & \textbf{Вклад в решение} \\
@@ -53,19 +52,16 @@ a_t = \sum_{j} p_{m_j-1}(t)\, r_j^{\,t}
 
 \textbf{Начальные условия.} Подставляем $t = 0, 1, \dots, k - 1$ в общий вид, решаем линейную систему на $\alpha$-коэффициенты.
 
-\begin{center}
-\fbox{\parbox{0.9\textwidth}{
-\textbf{Алгоритм.}
-\begin{enumerate}
+\HSEAlgorithm{\textbf{Алгоритм решения однородных разностных уравнений.}
+\begin{ProblemSteps}
 \item \textbf{Нормализация.} Привести уравнение к виду $a_t+\sum_{j=1}^{k} c_j a_{t-j}=0$, $c_k\neq 0$.
 \item \textbf{Характеристический многочлен.} Записать $\chi(r)=r^{k}+c_1 r^{k-1}+\dots+c_k$.
 \item \textbf{Корни и кратности.} Найти корни $r$ и их кратности $m$ (\,$\sum m = k$\,).
 \item \textbf{Общий вид решения (см.~таблицу~\ref{tab:form-choices}).}
 Для каждого корня/пары взять соответствующий вклад из таблицы и сложить их.
 \item \textbf{Подгонка под начальные условия.} Подставить $k$ заданных значений подряд и решить линейную систему для постоянных.
-\end{enumerate}
-}}
-\end{center}
+\end{ProblemSteps}
+}
 
 % Ссылки на задачи: добавьте URL/refs сюда
 % Например: Сборник И. Иванов, гл. 2; задачи 1-20.

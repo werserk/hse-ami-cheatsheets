@@ -55,7 +55,10 @@ check_compilation() {
         cd "$file_dir" || return 1
     fi
 
-    if latexmk -pdf -interaction=nonstopmode -halt-on-error "$file_name" > /dev/null 2>&1; then
+    # Use latexmk with output directory to keep temp files organized
+    # Create build directory if it doesn't exist
+    mkdir -p ../../../build
+    if latexmk -pdf -interaction=nonstopmode -halt-on-error -output-directory=../../../build "$file_name" > /dev/null 2>&1; then
         print_status "SUCCESS" "LaTeX compilation successful"
         # Return to original directory
         if [[ "$file_dir" != "." ]]; then

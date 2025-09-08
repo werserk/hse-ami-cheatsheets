@@ -49,10 +49,11 @@
 \newcommand{\rationals}{\mathbb{Q}}       % Rational numbers
 
 % Common operators (extend as needed)
-\DeclareMathOperator{\grad}{grad}
-\DeclareMathOperator{\divergence}{div}
-\DeclareMathOperator{\curl}{curl}
-\DeclareMathOperator{\laplacian}{\Delta}
+% Math operators commonly used (only if not already defined)
+\@ifundefined{grad}{\DeclareMathOperator{\grad}{grad}}{}
+\@ifundefined{divergence}{\DeclareMathOperator{\divergence}{div}}{}
+\@ifundefined{curl}{\DeclareMathOperator{\curl}{curl}}{}
+\@ifundefined{laplacian}{\DeclareMathOperator{\laplacian}{\Delta}}{}
 \DeclareMathOperator{\trace}{tr}
 \DeclareMathOperator{\rank}{rank}
 \DeclareMathOperator{\nullity}{nullity}
@@ -67,6 +68,12 @@
 % =============================================================================
 % CONTENT STRUCTURE MACROS
 % =============================================================================
+
+% HSE-specific content blocks (compatible with existing hse-cheatsheets.sty)
+\@ifundefined{HSEDefinition}{\newcommand{\HSEDefinition}[1]{\HSEBox{Определение}{#1}}}{}
+\@ifundefined{HSEExample}{\newcommand{\HSEExample}[1]{\HSEBox{Пример}{#1}}}{}
+\@ifundefined{HSEAlgorithm}{\newcommand{\HSEAlgorithm}[1]{\HSEBox{Алгоритм}{#1}}}{}
+\@ifundefined{HSENote}{\newcommand{\HSENote}[1]{\HSEBox{Замечание}{#1}}}{}
 
 % Problem structure components
 \NewDocumentCommand{\ProblemCondition}{m}{%
@@ -133,7 +140,7 @@
 
 % Reference commands with proper prefixes
 \newcommand{\secref}[1]{\ref{sec:#1}}
-\newcommand{\eqref}[1]{\eqref{eq:#1}}
+\@ifundefined{eqref}{\newcommand{\eqref}[1]{\ref{eq:#1}}}{}
 \newcommand{\figref}[1]{\ref{fig:#1}}
 \newcommand{\thmref}[1]{\ref{thm:#1}}
 \newcommand{\exref}[1]{\ref{ex:#1}}
@@ -147,7 +154,7 @@
 % Code block with language specification
 \NewDocumentCommand{\CodeBlock}{m m}{%
   \begin{verbatim}
-# RUN: #2
+\# RUN: #2
 #1
   \end{verbatim}
 }
@@ -160,7 +167,7 @@
 % =============================================================================
 
 % Standard table environment with booktabs
-\NewDocumentEnvironment{StandardTable}{O{h!} m m}{%
+\NewDocumentEnvironment{StandardTable}{O{h!} m m m}{%
   \begin{table}[#1]
   \centering
   \caption{#2}
