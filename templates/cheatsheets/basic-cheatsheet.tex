@@ -13,16 +13,14 @@
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{hyperref}
+\usepackage{hse-cheatsheets}
 
 % Настройка страницы
 \geometry{margin=1cm}
 \setlength{\columnsep}{1cm}
 \setlength{\columnseprule}{0.5pt}
 
-% Акцентный цвет
-\definecolor{accent}{HTML}{FF7517}
-% Цвета ссылок
-\hypersetup{colorlinks=true, linkcolor=accent, urlcolor=accent, citecolor=accent}
+% Опционально: \HSESetAccent{FF7517}
 
 % Настройка заголовков (без акцентного цвета)
 \titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
@@ -39,26 +37,11 @@
 \begin{document}
 
 % Заголовок
-\begin{center}
-    {\Huge\bfseries Название Cheatsheet}\\[0.5cm]
-    {\large Краткое описание темы}\\[0.3cm]
-    \vspace{0.3cm}
-    \rule{\textwidth}{1pt}
-\end{center}
+\HSETitle{Название Cheatsheet}{Краткое описание темы}
 
-% Опционально: перед сборкой можно определить список вкладчиков, например:
-% \newcommand{\contributors}{Ivan Petrov; Botkin DS; @nick}
-% По умолчанию оставлено пустым
-\providecommand{\contributors}{}
-% Отображение вкладчиков или прочерка, если пусто
-\newcommand{\contributorsDisplay}{%
-  \if\relax\detokenize{\contributors}\relax
-    ---
-  \else
-    \texttt{\contributors}
-  \fi}
+% Опционально: \newcommand{\contributors}{Ivan Petrov; Botkin DS; @nick}
 
-\begin{multicols}{2}
+\HSETwoColsBegin
 
 \section{Основные понятия}
 
@@ -116,9 +99,9 @@ $c$ & 299,792,458 м/с \\
 \subsection{Примечания}
 Дополнительные замечания и комментарии...
 
-\end{multicols}
+\HSETwoColsEnd
 
-% Футер: by werserk (ссылка, акцентный цвет) + contributors
-{\noindent \href{https://werserk.com}{\textcolor{accent}{\textbf{by werserk}}} \hfill contributors: \contributorsDisplay}
+% Футер: by werserk + contributors
+\HSEFooter
 
 \end{document}
