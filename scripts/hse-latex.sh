@@ -105,14 +105,33 @@ build_file() {
         fi
     fi
 
-    # Build with latexmk (output to current directory, not build directory)
-    if latexmk -pdf $LATEX_OPTIONS "$file_name.tex"; then
-        print_status "SUCCESS" "Successfully built $file_name.pdf"
+    # Create a temporary build directory for this file
+    local temp_build_dir="$BUILD_DIR/$(basename "$file_dir")_$file_name"
+    mkdir -p "$temp_build_dir"
+
+    # Build with latexmk (output to temp build directory)
+    if latexmk -pdf -output-directory="$temp_build_dir" $LATEX_OPTIONS "$file_name.tex"; then
+        # Copy PDF back to original location
+        if [[ -f "$temp_build_dir/$file_name.pdf" ]]; then
+            cp "$temp_build_dir/$file_name.pdf" "$file_name.pdf"
+            print_status "SUCCESS" "Successfully built $file_name.pdf"
+        else
+            print_status "ERROR" "PDF file not found after build"
+            # Return to original directory
+            cd "$original_dir" || true
+            return 1
+        fi
+
+        # Clean up temporary build directory
+        rm -rf "$temp_build_dir"
+
         # Return to original directory
         cd "$original_dir" || true
         return 0
     else
         print_status "ERROR" "Failed to build $file_name.tex"
+        # Clean up temporary build directory on failure
+        rm -rf "$temp_build_dir"
         # Return to original directory
         cd "$original_dir" || true
         return 1
@@ -161,8 +180,16 @@ clean_files() {
         while IFS= read -r -d '' file; do
             rm -f "$file"
             cleaned=$((cleaned + 1))
-        done < <(find . -name "$pattern" -print0)
+        done < <(find . -name "$pattern" -not -path "./build/*" -print0)
     done
+
+    # Also clean any remaining temporary files in build directory
+    if [[ -d "$BUILD_DIR" ]]; then
+        find "$BUILD_DIR" -type f -name "*.aux" -o -name "*.log" -o -name "*.fls" -o -name "*.out" -o -name "*.toc" -o -name "*.fdb_latexmk" -o -name "*.synctex.gz" -o -name "*.bbl" -o -name "*.blg" -o -name "*.idx" -o -name "*.ind" -o -name "*.ilg" -o -name "*.nav" -o -name "*.snm" -o -name "*.vrb" -o -name "*.run.xml" -o -name "*.bcf" -o -name "*.maf" -o -name "*.mtc" -o -name "*.mtc0" -o -name "*.slf" -o -name "*.slt" -o -name "*.stc" -o -name "*.thm" -o -name "*.xdy" | while read -r file; do
+            rm -f "$file"
+            cleaned=$((cleaned + 1))
+        done
+    fi
 
     print_status "SUCCESS" "Cleaned $cleaned temporary files"
 }
