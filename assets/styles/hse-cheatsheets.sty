@@ -84,3 +84,28 @@
 \setlist[enumerate]{leftmargin=*,noitemsep,topsep=0pt}
 
 
+% --- Unified content blocks and helpers ---
+% Generic titled box centered with adjustable width
+% Usage: \HSEBox[0.92\textwidth]{Title}{content}
+\NewDocumentCommand{\HSEBox}{O{0.92\textwidth} m m}{%
+  \begin{center}
+    \fbox{\parbox{#1}{\textbf{#2}\par #3}}
+  \end{center}%
+}
+
+% Specialized boxes
+\NewDocumentCommand{\HSETldr}{m}{\HSEBox{TL;DR}{#1}}
+\NewDocumentCommand{\HSEExample}{m}{\HSEBox{Пример}{#1}}
+\NewDocumentCommand{\HSEAlgorithm}{m}{\HSEBox{Алгоритм}{#1}}
+\NewDocumentCommand{\HSEDefinition}{m}{\HSEBox{Определение}{#1}}
+\NewDocumentCommand{\HSENote}{m}{\HSEBox{Замечание}{#1}}
+
+% Steps list with Russian labels: Шаг 1., Шаг 2., ...
+% Optional enumitem options can be passed: \begin{HSESteps}[resume]
+\NewDocumentEnvironment{HSESteps}{ O{} }{%
+  \begin{enumerate}[label=\textbf{Шаг~\arabic*:}, #1]
+}{\end{enumerate}}
+
+% Inline term highlighter for first-use definitions
+\NewDocumentCommand{\Term}{m}{\textbf{#1}}
+
