@@ -14,6 +14,9 @@ STYLES_DIR = assets/styles
 # Исключаем файлы внутри каталогов topics/ (части тем), собираем только верхнеуровневые .tex
 TEX_FILES = $(shell find $(CHEATSHEETS_DIR) -name "*.tex" -not -path "*/topics/*")
 
+# Найти все файлы topics/ для отслеживания зависимостей
+TOPICS_FILES = $(shell find $(CHEATSHEETS_DIR) -path "*/topics/*.tex")
+
 # Найти все .tex файлы в директории templates
 # Исключаем файлы внутри каталогов topics/ (части тем)
 TEMPLATE_FILES = $(shell find $(TEMPLATES_DIR) -name "*.tex" -not -path "*/topics/*")
@@ -36,16 +39,22 @@ templates: $(TEMPLATE_PDFS)
 	@echo "📋 Шаблоны готовы!"
 
 # Правило для сборки PDF из LaTeX (пишем PDF рядом с .tex)
-%.pdf: %.tex FORCE
+%.pdf: %.tex $(TOPICS_FILES) FORCE
 	@if [ -f "$@" ]; then \
 		PDF_MTIME=$$(stat -c %Y "$@" 2>/dev/null || echo "0"); \
 		TEX_MTIME=$$(stat -c %Y "$<" 2>/dev/null || echo "0"); \
+		NEED_COMPILE=0; \
 		if [ "$$TEX_MTIME" -gt "$$PDF_MTIME" ]; then \
-			echo "Обновление: $@"; \
+			echo "Обновление: $@ (изменен основной .tex)"; \
 			NEED_COMPILE=1; \
 		else \
-			echo "Без изменений: $@"; \
-			NEED_COMPILE=0; \
+			TOPICS_MTIME=$$(find $(CHEATSHEETS_DIR) -path "*/topics/*.tex" -exec stat -c %Y {} \; 2>/dev/null | sort -n | tail -1 || echo "0"); \
+			if [ "$$TOPICS_MTIME" -gt "$$PDF_MTIME" ]; then \
+				echo "Обновление: $@ (изменены файлы topics/)"; \
+				NEED_COMPILE=1; \
+			else \
+				echo "Без изменений: $@"; \
+			fi; \
 		fi; \
 	else \
 		echo "Создание: $@"; \
@@ -85,7 +94,7 @@ clean:
 # Очистка PDF, созданных из .tex
 clean-pdf:
 	@echo "🗑️  Удаление PDF файлов..."
-	@find . -name "*.tex" -exec sh -c 'f="{}"; pdf="${f%.tex}.pdf"; [ -f "$$pdf" ] && echo "Удаление: $$pdf" && rm -f "$$pdf"' \;
+	@find . -name "*.tex" -exec sh -c 'f="$$1"; pdf="$${f%.tex}.pdf"; [ -f "$$pdf" ] && echo "Удаление: $$pdf" && rm -f "$$pdf"' _ {} \;
 	@echo "✅ PDF файлы удалены"
 
 # Показать справку
