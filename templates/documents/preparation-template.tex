@@ -1,0 +1,132 @@
+% preparation-template.tex — Template for preparation materials
+% Project: HSE AMI Cheatsheets
+% Author: werserk
+% Version: 2.0
+%
+% This template is specifically designed for preparation materials with modular content
+
+% =============================================================================
+% DOCUMENT CLASS AND BASIC PACKAGES
+% =============================================================================
+
+\documentclass[11pt,a4paper]{article}
+
+% Basic LaTeX packages
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+
+% =============================================================================
+% UNIFIED STYLING SYSTEM
+% =============================================================================
+
+% Load the unified styling system
+\usepackage{../../assets/styles/hse-unified}
+
+% =============================================================================
+% PREPARATION-SPECIFIC CONFIGURATION
+% =============================================================================
+
+% Geometry settings for preparation materials
+\usepackage{geometry}
+\geometry{margin=1.8cm}
+
+% Page style
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[L]{\textbf{by werserk}}
+\fancyfoot[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+% =============================================================================
+% DOCUMENT METADATA
+% =============================================================================
+
+% Document title and subtitle (customize these)
+\newcommand{\DocumentTitle}{Подготовка: Название предмета}
+\newcommand{\DocumentSubtitle}{Полная версия с разборами тем и ссылками}
+
+% Contributors (optional)
+\newcommand{\contributors}{}
+
+% Topics base path (customize as needed)
+\newcommand{\topicsBase}{preparation/topics}
+
+% =============================================================================
+% DOCUMENT CONTENT
+% =============================================================================
+
+\begin{document}
+
+% Document title
+\HSETitle{\DocumentTitle}{\DocumentSubtitle}
+
+\vspace{1cm}
+
+% Table of contents
+{
+    \hypersetup{linkcolor=black}
+    \tableofcontents
+}
+
+\newpage
+
+% =============================================================================
+% MODULAR CONTENT INCLUSION
+% =============================================================================
+
+% Include topic files (customize as needed)
+% Each topic should be a separate .tex file in the topics/ directory
+% Use descriptive filenames with leading zeros for ordering
+
+% \input{\topicsBase/00-introduction}
+% \input{\topicsBase/01-basic-concepts}
+% \input{\topicsBase/02-methods}
+% \input{\topicsBase/03-examples}
+% \input{\topicsBase/04-practice}
+
+% =============================================================================
+% EXAMPLE TOPIC STRUCTURE
+% =============================================================================
+
+\section{Введение в предмет}\seclabel{introduction}
+
+\HSEDefinition{\Term{Предмет} — краткое определение предмета и его основных понятий.}
+
+\begin{NotationSection}
+\NotationEntry{x_t}{последовательность значений}
+\NotationEntry{f(x)}{функция от переменной x}
+\NotationEntry{\reals}{множество действительных чисел}
+\end{NotationSection}
+
+\subsection{Основные понятия}\seclabel{basic-concepts}
+
+\HSEExample{\example Решите простое уравнение $y_{t+1} = 2y_t$.
+
+\textbf{Решение:}
+\begin{ProblemSteps}
+\item Запишем характеристическое уравнение: $\lambda = 2$
+\item Общее решение: $y_t = C \cdot 2^t$
+\end{ProblemSteps}
+
+\textbf{Ответ:} $y_t = C \cdot 2^t$, где $C \in \reals$.}
+
+\subsection{Методы решения}\seclabel{solution-methods}
+
+\HSEAlgorithm{\textbf{Алгоритм решения.}
+\begin{ProblemSteps}
+\item Шаг 1: Анализ уравнения
+\item Шаг 2: Поиск характеристических корней
+\item Шаг 3: Запись общего решения
+\item Шаг 4: Определение констант из начальных условий
+\end{ProblemSteps}
+}
+
+% =============================================================================
+% FOOTER
+% =============================================================================
+
+\HSEFooter
+
+\end{document}

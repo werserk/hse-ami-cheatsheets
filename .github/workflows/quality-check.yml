@@ -1,0 +1,145 @@
+name: Quality Check
+
+on:
+  pull_request:
+    paths:
+      - "**/*.tex"
+      - "**/*.md"
+      - "**/*.sty"
+      - "**/*.yaml"
+  push:
+    branches: [main, dev]
+
+jobs:
+  quality-check:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        include:
+          - name: "LaTeX Compilation"
+            check: "build"
+          - name: "Style Check"
+            check: "style"
+          - name: "Quality Check"
+            check: "quality"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup LaTeX
+        uses: dante-ev/docker-texlive-full@v1
+        with:
+          texlive-version: 2023
+
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y chktex inotify-tools
+
+      - name: Make scripts executable
+        run: |
+          chmod +x scripts/hse-latex.sh
+
+      - name: LaTeX Compilation Check
+        if: matrix.check == 'build'
+        run: |
+          echo "🔨 Checking LaTeX compilation..."
+          ./scripts/hse-latex.sh build
+          echo "✅ All LaTeX documents compiled successfully"
+
+      - name: Style Check
+        if: matrix.check == 'style'
+        run: |
+          echo "🔍 Checking LaTeX style..."
+          ./scripts/hse-latex.sh check
+          echo "✅ Style check completed"
+
+      - name: Quality Check
+        if: matrix.check == 'quality'
+        run: |
+          echo "📊 Running quality checks..."
+
+          # Check for forbidden variables
+          echo "Checking for forbidden variables..."
+          if grep -r "y_{n\|x_{n\|z_{n\|a_{n\|b_{n\|c_{n" . --include="*.tex" --exclude-dir=templates; then
+            echo "❌ Found forbidden variable 'n' in time indices"
+            exit 1
+          fi
+          echo "✅ No forbidden variables found"
+
+          # Check for informal language
+          echo "Checking for informal language..."
+          if grep -r -i "надо\|нужно\|доказ" . --include="*.tex" --exclude-dir=templates; then
+            echo "❌ Found informal language"
+            echo "Use 'требуется' instead of 'надо'"
+            echo "Use 'должно быть' instead of 'нужно'"
+            echo "Use 'доказательство' instead of 'доказ'"
+            exit 1
+          fi
+          echo "✅ No informal language found"
+
+          # Check label consistency
+          echo "Checking label consistency..."
+          find . -name "*.tex" -not -path "./templates/*" | while read -r file; do
+            echo "Checking labels in $file..."
+            labels=$(grep -o '\\label{[^}]*}' "$file" | sed 's/\\label{//;s/}//')
+            refs=$(grep -o '\\ref{[^}]*}' "$file" | sed 's/\\ref{//;s/}//')
+
+            for ref in $refs; do
+              if ! echo "$labels" | grep -q "^$ref$"; then
+                echo "❌ Reference '$ref' in $file has no corresponding label"
+                exit 1
+              fi
+            done
+          done
+          echo "✅ All references have corresponding labels"
+
+          # Check notation standards
+          echo "Checking notation standards..."
+          if grep -r '\\mathbb{[^RNCZQ]}' . --include="*.tex" --exclude-dir=templates; then
+            echo "❌ Found non-standard \\mathbb usage"
+            exit 1
+          fi
+          echo "✅ Notation standards check passed"
+
+      - name: Generate quality report
+        run: |
+          echo "# Quality Check Report" > quality-report.md
+          echo "**Date**: $(date)" >> quality-report.md
+          echo "**Status**: ✅ All checks passed" >> quality-report.md
+          echo "" >> quality-report.md
+          echo "## Checks performed:" >> quality-report.md
+          echo "- LaTeX compilation" >> quality-report.md
+          echo "- Style checking" >> quality-report.md
+          echo "- Forbidden variables check" >> quality-report.md
+          echo "- Informal language check" >> quality-report.md
+          echo "- Label consistency check" >> quality-report.md
+          echo "- Notation standards check" >> quality-report.md
+          echo "" >> quality-report.md
+          echo "## Project Statistics:" >> quality-report.md
+          echo "- LaTeX files: $(find . -name "*.tex" | wc -l)" >> quality-report.md
+          echo "- PDF files: $(find . -name "*.pdf" | wc -l)" >> quality-report.md
+          echo "- Style files: $(find . -name "*.sty" | wc -l)" >> quality-report.md
+
+      - name: Upload quality report
+        uses: actions/upload-artifact@v3
+        with:
+          name: quality-report
+          path: quality-report.md
+
+      - name: Comment PR with results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('quality-report.md', 'utf8');
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: report
+            });
