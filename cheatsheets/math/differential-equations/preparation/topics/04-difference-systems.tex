@@ -42,7 +42,17 @@ $\mathbf{x}_{t+1} = A\mathbf{x}_t$, где $A = \begin{pmatrix} 4 & 1 \\ 0 & 2 \
 
 \textbf{Теорема.} Если $A$ диагонализуема, то $A = S\Lambda S^{-1}$, где $\Lambda = \text{diag}(\lambda_1, \ldots, \lambda_n)$ — диагональная матрица собственных значений, $S = [\mathbf{v}_1, \ldots, \mathbf{v}_n]$ — матрица собственных векторов.
 
-\HSEAlgorithm{\textbf{Алгоритм диагонализации.}\begin{enumerate}\item Характеристический многочлен: $\chi_A(\lambda) = \det(\lambda I - A)$.\item Собственные значения: решить $\chi_A(\lambda) = 0$.\item Собственные векторы: для каждого $\lambda_i$ решить $(A - \lambda_i I)\mathbf{v}_i = \mathbf{0}$.\item Проверка диагонализуемости: $\det S \neq 0$.\item Диагонализация: $A = S\Lambda S^{-1}$.\item Возведение в степень: $A^t = S\Lambda^t S^{-1}$.\item Решение: $\mathbf{x}_t = A^t\mathbf{x}_0$.\end{enumerate}}
+\HSEAlgorithm[Алгоритм диагонализации]{
+\begin{enumerate}
+\item Характеристический многочлен: $\chi_A(\lambda) = \det(\lambda I - A)$.
+\item Собственные значения: решить $\chi_A(\lambda) = 0$.
+\item Собственные векторы: для каждого $\lambda_i$ решить $(A - \lambda_i I)\mathbf{v}_i = \mathbf{0}$.
+\item Проверка диагонализуемости: $\det S \neq 0$.
+\item Диагонализация: $A = S\Lambda S^{-1}$.
+\item Возведение в степень: $A^t = S\Lambda^t S^{-1}$.
+\item Решение: $\mathbf{x}_t = A^t\mathbf{x}_0$.
+\end{enumerate}
+}
 
 \textbf{Пример.} Та же система. Решение: \; $A = \begin{pmatrix} 4 & 1 \\ 0 & 2 \end{pmatrix}$.\\
 \textbf{Шаг 1.} Характеристический многочлен:
@@ -78,7 +88,15 @@ $$\mathbf{x}_t = A^t\mathbf{x}_0 = \begin{pmatrix} 4^t & \frac{4^t - 2^t}{2} \\ 
 
 \textbf{Ключевая идея:} используем биномиальную формулу для $(I + \lambda^{-1}N)^t$.
 
-\HSEAlgorithm{\textbf{Алгоритм Жордановой формы.}\begin{enumerate}\item Собственное значение $\lambda$.\item Нильпотентная матрица $N = A - \lambda I$.\item Индекс нильпотентности: $N^m=0$.\item Формула: $A^t = \lambda^t \sum_{k=0}^{m-1} \binom{t}{k} (\lambda^{-1}N)^k$.\item Решение: $\mathbf{x}_t = A^t\mathbf{x}_0$.\end{enumerate}}
+\HSEAlgorithm[Алгоритм Жордановой формы]{
+\begin{enumerate}
+\item Собственное значение $\lambda$.
+\item Нильпотентная матрица $N = A - \lambda I$.
+\item Индекс нильпотентности: $N^m=0$.
+\item Формула: $A^t = \lambda^t \sum_{k=0}^{m-1} \binom{t}{k} (\lambda^{-1}N)^k$.
+\item Решение: $\mathbf{x}_t = A^t\mathbf{x}_0$.
+\end{enumerate}
+}
 
 \textbf{Пример.} Система $\begin{cases} x_{t+1} = 2x_t + y_t \\ y_{t+1} = 2y_t \end{cases}$. Для $A = \begin{pmatrix} 2 & 1 \\ 0 & 2 \end{pmatrix}$\\
 \textbf{Шаг 1.} Собственное значение:
@@ -110,7 +128,14 @@ A^t = \rho^t \begin{pmatrix} \cos(t\theta) & -\sin(t\theta) \\ \sin(t\theta) & \
 
 \textbf{Ключевая идея:} комплексные корни соответствуют повороту с масштабированием в вещественном пространстве.
 
-\HSEAlgorithm{\textbf{Алгоритм для комплексной пары.}\begin{enumerate}\item Проверка: $(\operatorname{tr}A)^2 - 4\det A < 0$.\item $\rho = \sqrt{\det A}$, $\cos\theta = \frac{\operatorname{tr}A}{2\rho}$.\item $A^t = \rho^t \begin{pmatrix} \cos(t\theta) & -\sin(t\theta) \\ \sin(t\theta) & \cos(t\theta) \end{pmatrix}$.\item Решение: $\mathbf{x}_t = A^t\mathbf{x}_0$.\end{enumerate}}
+\HSEAlgorithm[Алгоритм для комплексной пары]{
+\begin{enumerate}
+\item Проверка: $(\operatorname{tr}A)^2 - 4\det A < 0$.
+\item $\rho = \sqrt{\det A}$, $\cos\theta = \frac{\operatorname{tr}A}{2\rho}$.
+\item $A^t = \rho^t \begin{pmatrix} \cos(t\theta) & -\sin(t\theta) \\ \sin(t\theta) & \cos(t\theta) \end{pmatrix}$.
+\item Решение: $\mathbf{x}_t = A^t\mathbf{x}_0$.
+\end{enumerate}
+}
 
 \textbf{Пример.} $A = \begin{pmatrix} 1 & -1 \\ 1 & 1 \end{pmatrix}$\\
 \textbf{Шаг 1.} Проверка условия комплексности:
@@ -138,7 +163,14 @@ $$= (\sqrt{2})^t \begin{pmatrix} \cos\left(\frac{\pi t}{4}\right) \\ \sin\left(\
 
 \textbf{Ключевая идея:} используем тождество $\chi_A(A) = 0$ для построения рекуррентного соотношения на степени матрицы.
 
-\HSEAlgorithm{\textbf{Алгоритм Кэли–Гамильтона (2×2).}\begin{enumerate}\item $\chi_A(\lambda) = \lambda^2 - (\operatorname{tr}A)\lambda + \det A$.\item Рекуррентное: $A^{t+2} = (\operatorname{tr}A)A^{t+1} - (\det A)A^t$.\item Представление: $A^t = \alpha_t A + \beta_t I$.\item Решить на $\alpha_t,\beta_t$ и получить $\mathbf{x}_t$.\end{enumerate}}
+\HSEAlgorithm[Алгоритм Кэли–Гамильтона (2×2)]{
+\begin{enumerate}
+\item $\chi_A(\lambda) = \lambda^2 - (\operatorname{tr}A)\lambda + \det A$.
+\item Рекуррентное: $A^{t+2} = (\operatorname{tr}A)A^{t+1} - (\det A)A^t$.
+\item Представление: $A^t = \alpha_t A + \beta_t I$.
+\item Решить на $\alpha_t,\beta_t$ и получить $\mathbf{x}_t$.
+\end{enumerate}
+}
 
 \textbf{Пример.} Для $A = \begin{pmatrix} 3 & 2 \\ -2 & -1 \end{pmatrix}$\\
 \textbf{Шаг 1.} Характеристический многочлен:
