@@ -1,0 +1,157 @@
+% cheatsheet-template.tex — Template for cheatsheets
+% Project: HSE AMI Cheatsheets
+% Author: werserk
+% Version: 2.0
+%
+% This template is specifically designed for cheatsheets with two-column layout
+
+% =============================================================================
+% DOCUMENT CLASS AND BASIC PACKAGES
+% =============================================================================
+
+\documentclass[10pt,landscape,a4paper]{article}
+
+% Basic LaTeX packages
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+
+% =============================================================================
+% UNIFIED STYLING SYSTEM
+% =============================================================================
+
+% Load the unified styling system
+\usepackage{../../assets/styles/hse-unified}
+
+% =============================================================================
+% CHEATSHEET-SPECIFIC CONFIGURATION
+% =============================================================================
+
+% Geometry settings for cheatsheets
+\usepackage{geometry}
+\geometry{margin=1cm}
+\setlength{\columnsep}{1cm}
+\setlength{\columnseprule}{0.5pt}
+
+% Page style - no page numbers for cheatsheets
+\pagestyle{empty}
+
+% =============================================================================
+% DOCUMENT METADATA
+% =============================================================================
+
+% Document title and subtitle (customize these)
+\newcommand{\DocumentTitle}{Название Cheatsheet}
+\newcommand{\DocumentSubtitle}{Краткое описание темы}
+
+% Contributors (optional)
+\newcommand{\contributors}{}
+
+% Accent color (optional, defaults to FF7517)
+% \HSESetAccent{FF7517}
+
+% =============================================================================
+% DOCUMENT CONTENT
+% =============================================================================
+
+\begin{document}
+
+% Document title
+\HSETitle{\DocumentTitle}{\DocumentSubtitle}
+
+% Two-column layout for cheatsheets
+\HSETwoColsBegin
+
+% =============================================================================
+% LEFT COLUMN
+% =============================================================================
+
+\section{Основные понятия}
+
+\subsection{Определения}
+\begin{itemize}
+    \item \textbf{Понятие 1:} Определение...
+    \item \textbf{Понятие 2:} Определение...
+\end{itemize}
+
+\subsection{Формулы}
+\begin{align}
+    E &= mc^2 \\
+    F &= ma \\
+    \int_a^b f(x) dx &= F(b) - F(a)
+\end{align}
+
+\subsection{Таблица данных}
+\begin{center}
+\small
+\begin{tabular}{@{}ll@{}}
+\toprule
+Параметр & Значение \\
+\midrule
+$\pi$ & 3.14159... \\
+$e$ & 2.71828... \\
+$c$ & 299,792,458 м/с \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Практические примеры}
+
+\subsection{Пример 1}
+Описание примера...
+
+\subsection{Пример 2}
+Описание примера...
+
+% =============================================================================
+% RIGHT COLUMN
+% =============================================================================
+
+\section{Дополнительные формулы}
+
+\subsection{Важные константы}
+\begin{itemize}
+    \item $\pi \approx 3.14159$
+    \item $e \approx 2.71828$
+    \item $c = 299,792,458$ м/с
+    \item $h = 6.626 \times 10^{-34}$ Дж·с
+\end{itemize}
+
+\subsection{Методы решения}
+\begin{enumerate}
+    \item Метод 1: Описание
+    \item Метод 2: Описание
+    \item Метод 3: Описание
+\end{enumerate}
+
+\subsection{Полезные тождества}
+\begin{align}
+    \sin^2 x + \cos^2 x &= 1 \\
+    e^{i\pi} + 1 &= 0 \\
+    \sum_{k=1}^n k &= \frac{n(n+1)}{2}
+\end{align}
+
+\section{Общие замечания}
+
+\subsection{Применение}
+Краткое описание области применения...
+
+\subsection{Ограничения}
+Важные ограничения и условия...
+
+\subsection{Ссылки}
+\begin{itemize}
+    \item Дополнительная литература
+    \item Полезные ресурсы
+\end{itemize}
+
+% End two-column layout
+\HSETwoColsEnd
+
+% =============================================================================
+% FOOTER
+% =============================================================================
+
+\HSEFooter
+
+\end{document}

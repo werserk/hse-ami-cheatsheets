@@ -1,18 +1,18 @@
 \documentclass[11pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
 \usepackage[russian]{babel}
 \usepackage{amsmath, amsfonts, amssymb}
+\usepackage{../../../assets/styles/hse-unified}
 \usepackage{geometry}
 \usepackage{parskip}
-\usepackage{hyperref}
 \usepackage{fancyhdr}
 
 % Команда для отображения by werserk (чёрный цвет, без ссылки)
 \newcommand{\byWerserk}{\textbf{by werserk}}
 
-% Цвета ссылок (чёрные)
-\usepackage{xcolor}
-\hypersetup{colorlinks=true, linkcolor=black, urlcolor=black, citecolor=black}
+% Установим единый цвет ссылок через пакет стилей
+\HSESetAccent{000000}
 
 \geometry{margin=1.8cm}
 \pagestyle{fancy}
@@ -26,11 +26,7 @@
 
 \begin{document}
 
-\begin{center}
-  {\Huge Подготовка: Дифференциальные уравнения}\\[0.4cm]
-  {\large Полная версия с разборами тем и ссылками}\\[0.2cm]
-  \rule{\textwidth}{0.6pt}
-\end{center}
+\HSETitle{Подготовка: Дифференциальные уравнения}{Полная версия с разборами тем и ссылками}
 
 \vspace{1cm}
 
@@ -44,8 +40,7 @@
 
 % --- Подключайте темы ниже ---
 % Примеры (создайте соответствующие файлы в preparation/topics/):
-\input{\topicsBase/01-first-order}
-\input{\topicsBase/02-second-order}
+\input{\topicsBase/00-difference-equations}
 % \input{\topicsBase/03-systems}
 % \input{\topicsBase/04-numerical}
 

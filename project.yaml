@@ -1,0 +1,258 @@
+# HSE AMI Cheatsheets Project Configuration
+# This file contains centralized configuration for the entire project
+
+# =============================================================================
+# PROJECT METADATA
+# =============================================================================
+
+project:
+  name: "HSE AMI Cheatsheets"
+  version: "2.0"
+  author: "werserk"
+  description: "Unified styling system for HSE AMI Cheatsheets"
+  license: "MIT"
+
+# =============================================================================
+# STYLING CONFIGURATION
+# =============================================================================
+
+styling:
+  # Primary style file
+  primary_style: "hse-unified"
+
+  # Color scheme
+  colors:
+    accent: "FF7517"
+    link: "FF7517"
+    url: "FF7517"
+    cite: "FF7517"
+
+  # Typography
+  fonts:
+    main: "11pt"
+    cheatsheet: "10pt"
+    exam: "12pt"
+    landscape: true  # for cheatsheets
+
+  # Layout
+  geometry:
+    margin: "1.8cm"
+    cheatsheet_margin: "1cm"
+    exam_margin: "2.5cm"
+
+  # Page style
+  page_style:
+    cheatsheet: "empty"
+    exam: "plain"
+    preparation: "fancy"
+
+# =============================================================================
+# DOCUMENT TYPES
+# =============================================================================
+
+document_types:
+  cheatsheet:
+    class: "article"
+    options: ["10pt", "landscape", "a4paper"]
+    template: "cheatsheet-template.tex"
+    style: "hse-unified"
+    geometry: "cheatsheet_margin"
+    page_style: "empty"
+
+  exam:
+    class: "article"
+    options: ["12pt"]
+    template: "exam-template.tex"
+    style: "hse-unified"
+    geometry: "exam_margin"
+    page_style: "plain"
+
+  preparation:
+    class: "article"
+    options: ["11pt", "a4paper"]
+    template: "preparation-template.tex"
+    style: "hse-unified"
+    geometry: "margin"
+    page_style: "fancy"
+
+# =============================================================================
+# BUILD CONFIGURATION
+# =============================================================================
+
+build:
+  # Output directory for temporary files
+  output_dir: "build"
+
+  # LaTeX compilation settings
+  latex:
+    engine: "pdflatex"
+    interaction: "nonstopmode"
+    halt_on_error: true
+    file_line_error: true
+
+  # Cleanup settings
+  cleanup:
+    auto_clean: true
+    clean_on_build: true
+    preserve_pdf: true
+
+  # File patterns to clean
+  clean_patterns:
+    - "*.aux"
+    - "*.log"
+    - "*.out"
+    - "*.toc"
+    - "*.fls"
+    - "*.fdb_latexmk"
+    - "*.synctex.gz"
+    - "*.bbl"
+    - "*.blg"
+    - "*.idx"
+    - "*.ind"
+    - "*.ilg"
+    - "*.nav"
+    - "*.snm"
+    - "*.vrb"
+    - "*.run.xml"
+    - "*.bcf"
+    - "*.maf"
+    - "*.mtc"
+    - "*.mtc0"
+    - "*.slf"
+    - "*.slt"
+    - "*.stc"
+    - "*.thm"
+    - "*.xdy"
+
+# =============================================================================
+# QUALITY CONTROL
+# =============================================================================
+
+quality_control:
+  # Style checking
+  style_check:
+    enabled: true
+    tools: ["chktex"]
+    check_variables: true
+    check_labels: true
+    check_notation: true
+    check_terminology: true
+
+  # Forbidden patterns
+  forbidden:
+    variables: ["n"]  # No 'n' in time indices
+    informal_language: ["надо", "нужно", "доказ"]
+
+  # Required patterns
+  required:
+    time_indices: ["t", "T"]
+    formal_language: ["требуется", "должно быть", "доказательство"]
+
+# =============================================================================
+# GITHUB ACTIONS
+# =============================================================================
+
+github_actions:
+  # Workflow triggers
+  triggers:
+    pull_request:
+      paths: ["**/*.tex", "**/*.md"]
+    push:
+      branches: ["main", "dev"]
+
+  # LaTeX setup
+  latex_setup:
+    version: "2023"
+    packages: ["chktex"]
+
+  # Check settings
+  checks:
+    compilation: true
+    style: true
+    variables: true
+    labels: true
+    notation: true
+    terminology: true
+
+# =============================================================================
+# TEMPLATES
+# =============================================================================
+
+templates:
+  # Base template
+  base: "base-template.tex"
+
+  # Specialized templates
+  cheatsheet: "cheatsheet-template.tex"
+  exam: "exam-template.tex"
+  preparation: "preparation-template.tex"
+
+  # Template paths
+  paths:
+    base: "templates/"
+    styles: "assets/styles/"
+    config: "config/"
+
+# =============================================================================
+# PATHS
+# =============================================================================
+
+paths:
+  # Source directories
+  source:
+    cheatsheets: "cheatsheets/"
+    templates: "templates/"
+    styles: "assets/styles/"
+    scripts: "scripts/"
+    config: "config/"
+
+  # Build directories
+  build:
+    output: "build/"
+    temp: "build/.aux/"
+
+  # Documentation
+  docs:
+    style_guide: "style-guide.md"
+    contributing: "CONTRIBUTING.md"
+    readme: "README.md"
+
+# =============================================================================
+# SCRIPTS
+# =============================================================================
+
+scripts:
+  # Main script
+  main: "hse-latex.sh"
+
+  # Individual scripts
+  build: "build.sh"
+  clean: "clean.sh"
+  check: "check.sh"
+  watch: "watch.sh"
+
+  # Script paths
+  path: "scripts/"
+
+# =============================================================================
+# DOCUMENTATION
+# =============================================================================
+
+documentation:
+  # Main documentation files
+  files:
+    - "README.md"
+    - "CONTRIBUTING.md"
+    - "style-guide.md"
+    - "PR-REVIEW-CHECKLIST.md"
+
+  # Generated documentation
+  generated:
+    - "style-check-report.md"
+    - "build-report.md"
+
+  # Documentation standards
+  standards:
+    language: "russian"
+    format: "markdown"
+    encoding: "utf-8"

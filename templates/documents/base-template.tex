@@ -1,0 +1,168 @@
+% base-template.tex — Unified base template for all HSE AMI Cheatsheets documents
+% Project: HSE AMI Cheatsheets
+% Author: werserk
+% Version: 2.0
+%
+% This template provides a unified foundation for all document types:
+% - Cheatsheets (single and two-column)
+% - Exam variants
+% - Preparation materials
+% - Modular content
+%
+% Usage: Copy this file and customize the document class and options as needed
+
+% =============================================================================
+% DOCUMENT CLASS AND BASIC PACKAGES
+% =============================================================================
+
+% Choose appropriate document class based on document type:
+% - article: for preparation materials and exam variants
+% - article with landscape: for cheatsheets
+\documentclass[11pt,a4paper]{article}
+% For cheatsheets, use: \documentclass[10pt,landscape,a4paper]{article}
+
+% Basic LaTeX packages
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+
+% =============================================================================
+% UNIFIED STYLING SYSTEM
+% =============================================================================
+
+% Load the unified styling system
+\usepackage{../../assets/styles/hse-unified}
+
+% =============================================================================
+% DOCUMENT-SPECIFIC CONFIGURATION
+% =============================================================================
+
+% Geometry settings (customize as needed)
+\usepackage{geometry}
+\geometry{margin=1.8cm}
+% For cheatsheets: \geometry{margin=1cm}
+
+% Page style
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[L]{\textbf{by werserk}}
+\fancyfoot[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+% For cheatsheets, use: \pagestyle{empty}
+
+% =============================================================================
+% DOCUMENT METADATA
+% =============================================================================
+
+% Document title and subtitle (customize these)
+\newcommand{\DocumentTitle}{Название документа}
+\newcommand{\DocumentSubtitle}{Краткое описание}
+
+% Contributors (optional)
+\newcommand{\contributors}{}
+
+% Accent color (optional, defaults to FF7517)
+% \HSESetAccent{FF7517}
+
+% =============================================================================
+% DOCUMENT CONTENT
+% =============================================================================
+
+\begin{document}
+
+% Document title
+\HSETitle{\DocumentTitle}{\DocumentSubtitle}
+
+% Optional: Table of contents
+% {
+%     \hypersetup{linkcolor=black}
+%     \tableofcontents
+% }
+% \newpage
+
+% =============================================================================
+% MAIN CONTENT AREA
+% =============================================================================
+
+% For cheatsheets, wrap content in two-column environment:
+% \HSETwoColsBegin
+% ... content ...
+% \HSETwoColsEnd
+
+% For exam variants, use:
+% \ExamVariantTitle{Вариант А}
+% \begin{examproblems}
+% \item Задача 1
+% \item Задача 2
+% \end{examproblems}
+
+% For preparation materials, use standard sections:
+% \section{Название раздела}\seclabel{section-name}
+% ... content ...
+
+% =============================================================================
+% EXAMPLE CONTENT STRUCTURE
+% =============================================================================
+
+\section{Основные понятия}\seclabel{basic-concepts}
+
+\HSEDefinition{\Term{Ключевое понятие} — формальное определение понятия.}
+
+\begin{NotationSection}
+\NotationEntry{x_t}{последовательность значений}
+\NotationEntry{f(x)}{функция от переменной x}
+\end{NotationSection}
+
+\subsection{Примеры}\seclabel{examples}
+
+\HSEExample{\example Решите уравнение $y_{t+2} - 5y_{t+1} + 6y_t = 0$.
+
+\textbf{Решение:}
+\begin{ProblemSteps}
+\item Характеристическое уравнение: $\lambda^2 - 5\lambda + 6 = 0$
+\item Корни: $\lambda_1 = 2$, $\lambda_2 = 3$
+\item Общее решение: $y_t = C_1 \cdot 2^t + C_2 \cdot 3^t$
+\end{ProblemSteps}
+
+\textbf{Ответ:} $y_t = C_1 \cdot 2^t + C_2 \cdot 3^t$, где $C_1, C_2 \in \reals$.}
+
+\subsection{Алгоритмы}\seclabel{algorithms}
+
+\HSEAlgorithm{\textbf{Алгоритм решения.}
+\begin{ProblemSteps}
+\item Шаг 1: Описание первого шага
+\item Шаг 2: Описание второго шага
+\item Шаг 3: Описание третьего шага
+\end{ProblemSteps}
+}
+
+% =============================================================================
+% TABLES AND FORMULAS
+% =============================================================================
+
+\begin{StandardTable}[h!]{Пример таблицы}{example-table}
+{c|c|c}
+Параметр & Значение & Описание \\
+\midrule
+$\alpha$ & 0.05 & Уровень значимости \\
+$\beta$ & 0.95 & Доверительный уровень \\
+$\gamma$ & 1.4 & Коэффициент \\
+\end{StandardTable}
+
+% Mathematical formulas
+\begin{equation}\eqlabel{main-formula}
+y_t = \sum_{k=0}^{n} a_k \cdot r_k^t
+\end{equation}
+
+% =============================================================================
+% FOOTER
+% =============================================================================
+
+% For cheatsheets and preparation materials
+\HSEFooter
+
+% For exam variants, omit footer or use custom footer
+
+\end{document}

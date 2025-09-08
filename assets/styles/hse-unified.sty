@@ -1,0 +1,321 @@
+% hse-unified.sty — Simplified styling system for HSE AMI Cheatsheets
+% Project: HSE AMI Cheatsheets
+% Author: werserk
+% Version: 3.0
+%
+% Simplified and user-friendly styling system with:
+% - Minimal box usage (only for definitions and theorems)
+% - Flexible naming for algorithms, examples, etc.
+% - Clean, readable output
+% - Easy-to-use commands
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{hse-unified}[2025/01/27 v3.0 HSE simplified styling system]
+
+% =============================================================================
+% CORE PACKAGES
+% =============================================================================
+
+% Mathematical packages
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{mathtools}
+
+% Graphics and colors
+\RequirePackage{graphicx}
+\RequirePackage{xcolor}
+
+% Tables and lists
+\RequirePackage{booktabs}
+\RequirePackage{array}
+\RequirePackage{enumitem}
+\RequirePackage{tabularx}
+
+% Layout and formatting
+\RequirePackage{multicol}
+\RequirePackage{titlesec}
+\RequirePackage{parskip}
+
+% Hyperlinks and references
+\RequirePackage{hyperref}
+
+% Advanced command definitions
+\RequirePackage{xparse}
+
+% =============================================================================
+% COLOR SYSTEM
+% =============================================================================
+
+% Default accent color
+\definecolor{accent}{HTML}{FF7517}
+
+% Simple API to set accent color
+\NewDocumentCommand{\HSESetAccent}{m}{%
+  \definecolor{accent}{HTML}{#1}%
+  \hypersetup{colorlinks=true, linkcolor=accent, urlcolor=accent, citecolor=accent}%
+}
+
+% Initialize link colors
+\hypersetup{colorlinks=true, linkcolor=accent, urlcolor=accent, citecolor=accent}
+
+% =============================================================================
+% MATHEMATICAL NOTATION
+% =============================================================================
+
+% Standard mathematical sets
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\naturals}{\mathbb{N}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\integers}{\mathbb{Z}}
+\newcommand{\rationals}{\mathbb{Q}}
+
+% Math operators
+\@ifundefined{grad}{\DeclareMathOperator{\grad}{grad}}{}
+\@ifundefined{divergence}{\DeclareMathOperator{\divergence}{div}}{}
+\@ifundefined{curl}{\DeclareMathOperator{\curl}{curl}}{}
+\@ifundefined{laplacian}{\DeclareMathOperator{\laplacian}{\Delta}}{}
+\DeclareMathOperator{\trace}{tr}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\nullity}{nullity}
+
+% Linear algebra operators
+\newcommand{\linop}{\mathcal{L}}
+\newcommand{\algebra}{\mathcal{A}}
+\newcommand{\sigmafield}{\mathcal{F}}
+\newcommand{\expectation}{\mathbb{E}}
+\newcommand{\variance}{\mathbb{V}}
+
+% =============================================================================
+% CONTENT STRUCTURE MACROS
+% =============================================================================
+
+% Generic box (only for important content)
+\NewDocumentCommand{\HSEBox}{O{0.92\textwidth} m m}{%
+  \begin{center}
+    \fbox{\parbox{#1}{\textbf{#2}\par #3}}
+  \end{center}%
+}
+
+% TL;DR box
+\NewDocumentCommand{\HSETldr}{m}{\HSEBox{TL;DR}{#1}}
+
+% =============================================================================
+% LEVEL 1: STRUCTURAL ELEMENTS (with boxes)
+% =============================================================================
+
+% Definitions (with box)
+\NewDocumentCommand{\HSEDefinition}{m}{\HSEBox{Определение}{#1}}
+
+% Theorems (with box)
+\NewDocumentCommand{\HSETheorem}{m}{\HSEBox{Теорема}{#1}}
+
+% =============================================================================
+% LEVEL 2: CONCEPTUAL ELEMENTS (without boxes)
+% =============================================================================
+
+% Algorithms (flexible naming)
+\NewDocumentCommand{\HSEAlgorithm}{O{Алгоритм} m}{%
+  \textbf{#1.} #2
+}
+
+% Examples (flexible naming)
+\NewDocumentCommand{\HSEExample}{O{Пример} m}{%
+  \textbf{#1.} #2
+}
+
+% Notes (flexible naming)
+\NewDocumentCommand{\HSENote}{O{Замечание} m}{%
+  \textbf{#1.} #2
+}
+
+% =============================================================================
+% LEVEL 3: PROCEDURAL ELEMENTS
+% =============================================================================
+
+% Steps environment
+\NewDocumentEnvironment{HSESteps}{ O{} }{%
+  \begin{enumerate}[label=\textbf{Шаг~\arabic*:}, #1]
+}{\end{enumerate}}
+
+% Problem steps environment (alias for HSESteps)
+\NewDocumentEnvironment{ProblemSteps}{ O{} }{%
+  \begin{enumerate}[label=\textbf{Шаг~\arabic*:}, #1]
+}{\end{enumerate}}
+
+% Problem structure components
+\NewDocumentCommand{\ProblemCondition}{m}{%
+  \textbf{Условие:} #1
+}
+
+\NewDocumentCommand{\ProblemSolution}{m}{%
+  \textbf{Решение:} #1
+}
+
+\NewDocumentCommand{\ProblemAnswer}{m}{%
+  \textbf{Ответ:} #1
+}
+
+\NewDocumentCommand{\ProblemRemark}{m}{%
+  \textbf{Замечание:} #1
+}
+
+% =============================================================================
+% LEVEL 4: AUXILIARY ELEMENTS
+% =============================================================================
+
+% Comments and interpretations
+\NewDocumentCommand{\HSEComment}{m}{%
+  \textit{Комментарий:} #1
+}
+
+\NewDocumentCommand{\HSEInterpretation}{m}{%
+  \textit{Интерпретация:} #1
+}
+
+% Inline term highlighter
+\NewDocumentCommand{\Term}{m}{\textbf{#1}}
+
+% =============================================================================
+% LABELING CONVENTIONS
+% =============================================================================
+
+% Standard label prefixes
+\newcommand{\seclabel}[1]{\label{sec:#1}}
+\newcommand{\eqlabel}[1]{\label{eq:#1}}
+\newcommand{\figlabel}[1]{\label{fig:#1}}
+\newcommand{\thmlabel}[1]{\label{thm:#1}}
+\newcommand{\exlabel}[1]{\label{ex:#1}}
+\newcommand{\tablabel}[1]{\label{tab:#1}}
+\newcommand{\alglabel}[1]{\label{alg:#1}}
+
+% Reference commands
+\newcommand{\secref}[1]{\ref{sec:#1}}
+\@ifundefined{eqref}{\newcommand{\eqref}[1]{\ref{eq:#1}}}{}
+\newcommand{\figref}[1]{\ref{fig:#1}}
+\newcommand{\thmref}[1]{\ref{thm:#1}}
+\newcommand{\exref}[1]{\ref{ex:#1}}
+\newcommand{\tabref}[1]{\ref{tab:#1}}
+\newcommand{\algref}[1]{\ref{alg:#1}}
+
+% =============================================================================
+% NOTATION DECLARATION
+% =============================================================================
+
+% Environment for declaring new mathematical symbols
+\NewDocumentEnvironment{NotationSection}{}{%
+  \subsection*{Обозначения}
+  \begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+}{%
+  \end{itemize}
+}
+
+% Helper for notation entries
+\NewDocumentCommand{\NotationEntry}{m m}{%
+  \item $#1$ — #2
+}
+
+% =============================================================================
+% EXAM-SPECIFIC MACROS
+% =============================================================================
+
+% Exam metadata
+\newcommand{\ExamSubject}{Дифференциальные уравнения}
+\newcommand{\ExamLecturer}{Букин К.А.}
+
+\NewDocumentCommand{\SetExamSubject}{m}{\renewcommand{\ExamSubject}{#1}}
+\NewDocumentCommand{\SetExamLecturer}{m}{\renewcommand{\ExamLecturer}{#1}}
+
+% Exam variant title
+\NewDocumentCommand{\ExamVariantTitle}{m}{%
+  \begin{center}\textbf{#1}\end{center}%
+}
+
+% Problems list
+\NewDocumentEnvironment{examproblems}{}{%
+  \begin{enumerate}[leftmargin=*, label=\arabic*.]
+}{%
+  \end{enumerate}
+}
+
+% Problem with points
+\NewDocumentCommand{\problem}{O{} m}{%
+  \item \textbf{#2}%
+  \if\relax\detokenize{#1}\relax\else\hfill\textit{(#1 баллов)}\fi
+}
+
+% =============================================================================
+% LAYOUT DEFAULTS
+% =============================================================================
+
+% Section titles
+\titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+% List defaults
+\setlist[itemize]{leftmargin=*,noitemsep,topsep=0pt}
+\setlist[enumerate]{leftmargin=*,noitemsep,topsep=0pt}
+
+% =============================================================================
+% TITLE AND LAYOUT HELPERS
+% =============================================================================
+
+% Title helpers
+\NewDocumentCommand{\HSETitle}{m m}{%
+  \begin{center}
+    {\Huge\bfseries #1}\\[0.5cm]
+    {\large #2}\\[0.3cm]
+    \vspace{0.3cm}
+    \rule{\textwidth}{1pt}
+  \end{center}%
+}
+
+% Contributors
+\providecommand{\contributors}{}
+\NewDocumentCommand{\HSEContributorsDisplay}{}{%
+  \if\relax\detokenize{\contributors}\relax
+    ---
+  \else
+    \texttt{\contributors}
+  \fi
+}
+
+% Footer
+\NewDocumentCommand{\HSEFooter}{}{
+  {\noindent \href{https://werserk.com}{\textcolor{accent}{\textbf{by werserk}}} \hfill contributors: \HSEContributorsDisplay}
+}
+
+% Two-columns
+\NewDocumentCommand{\HSETwoColsBegin}{}{%
+  \begin{multicols}{2}
+}
+\NewDocumentCommand{\HSETwoColsEnd}{}{%
+  \end{multicols}
+}
+
+% =============================================================================
+% USAGE EXAMPLES
+% =============================================================================
+
+% Examples of proper usage:
+%
+% % Level 1 (with boxes)
+% \HSEDefinition{Линейное уравнение...}
+% \HSETheorem{Теорема существования...}
+%
+% % Level 2 (without boxes, flexible naming)
+% \HSEAlgorithm[Алгоритм диагонализации]{Шаг 1. Найти собственные значения...}
+% \HSEExample[Пример решения]{Решите уравнение...}
+% \HSENote[Важное замечание]{Не забывайте проверять...}
+%
+% % Level 3 (procedural)
+% \begin{HSESteps}
+% \item Первый шаг
+% \item Второй шаг
+% \end{HSESteps}
+%
+% % Level 4 (auxiliary)
+% \HSEComment{Это важно для понимания}
+% \HSEInterpretation{Решение описывает спираль}
+
+\endinput
