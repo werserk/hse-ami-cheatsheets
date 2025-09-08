@@ -115,7 +115,7 @@ help:
 	@echo "  make clean-pdf   - Удалить PDF файлы"
 	@echo ""
 	@echo "📄 Сборка конкретного файла:"
-	@echo "  make cheatsheets/math/differential-equations/preparation/main.pdf"
+	@echo "  make cheatsheets/math/differential-equations/main.pdf"
 	@echo "  make templates/cheatsheets/basic-cheatsheet.tex"
 
 # Автоматическое обновление конкретного файла
@@ -123,7 +123,7 @@ watch:
 	@if [ -z "$(FILE)" ]; then \
 		echo "❌ Используйте: make watch FILE=путь/к/файлу.tex"; \
 		echo "📝 Примеры:"; \
-		echo "   make watch FILE=cheatsheets/math/differential-equations/preparation/main.tex"; \
+		echo "   make watch FILE=cheatsheets/math/differential-equations/main.tex"; \
 		echo "   make watch FILE=templates/cheatsheets/basic-cheatsheet.tex"; \
 		exit 1; \
 	fi

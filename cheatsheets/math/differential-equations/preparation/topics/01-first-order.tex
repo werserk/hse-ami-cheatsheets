@@ -23,6 +23,8 @@ r^t (1 + c_1 r^{-1} + c_2 r^{-2} + \dots + c_k r^{-k}) = 0 \iff r^k + c_1 r^{k-1
 
 т.е. характеристический многочлен $\chi(r) = r^k + c_1 r^{k-1} + \dots + c_k$. Его корни целиком описывают форму общего решения.
 
+\textit{Обозначения:} $P_j(t), Q_j(t)$ — полиномы по $t$ степени $\le j$.
+
 \begin{table}[h!]
 \centering
 \caption{Выбор формы решения по типу корней характеристического многочлена}
@@ -31,22 +33,19 @@ r^t (1 + c_1 r^{-1} + c_2 r^{-2} + \dots + c_k r^{-k}) = 0 \iff r^k + c_1 r^{k-1
 \hline
 \textbf{Условия на корни} & \textbf{Вклад в решение} \\
 \hline
-Простой действительный корень $r\in\mathbb{R}$ &
-$\alpha\, r^{\,t}$ \\
+Действительный корень $r$ кратности $m\ge 1$ &
+$P_{m-1}(t)\, r^{\,t}$ \\
 \hline
-Действительный корень $r$ кратности $m\ge 2$ &
-$(\alpha_{0}+\alpha_{1}t+\cdots+\alpha_{m-1}t^{m-1})\, r^{\,t}$ \\
-\hline
-Комплексно-сопряжённая пара $r,\overline{r}=\rho e^{\pm i\theta}$ кратности $m$ &
-$\displaystyle \sum_{\ell=0}^{m-1} t^{\ell}\,\rho^{\,t}\big(\alpha\cos(\theta t)+\beta\sin(\theta t)\big)$ \\
+Комплексно-сопряжённая пара $\rho e^{\pm i\theta}$ кратности $s\ge 1$ &
+$\rho^{\,t}\big(P_{s-1}(t)\cos(\theta t)+Q_{s-1}(t)\sin(\theta t)\big)$ \\
 \hline
 \end{tabular}
 
 \vspace{0.5em}
 \emph{Итоговое общее решение -- сумма форм всех корней:}
 \begin{align*}
-a_t = \sum_{j} \left( \sum_{m=0}^{M_j-1} \alpha_{j,m}\, t^m\, r_j^t \right)
-+ \sum_{k} \left( \sum_{m=0}^{N_k-1} \rho_k^t\, t^m \left( \alpha \cos(\theta_k t) + \beta \sin(\theta_k t) \right) \right)
+a_t = \sum_{j} P_{m_j-1}(t)\, r_j^{\,t}
+\; + \sum_{k} \rho_k^{\,t}\big(P_{s_k-1}(t)\cos(\theta_k t)+Q_{s_k-1}(t)\sin(\theta_k t)\big),
 \end{align*}
 где $r_j$ — действительные корни кратности $M_j$, $\rho_k e^{\pm i\theta_k}$ — комплексно-сопряжённые корни кратности $N_k$.
 Сумма кратностей всех корней равна порядку $k$.
