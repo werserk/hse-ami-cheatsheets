@@ -42,11 +42,11 @@ fi
 cat > .git/hooks/pre-commit << 'EOF'
 #!/bin/bash
 
-# Pre-commit hook для автоматической сборки HSE LaTeX документов
-# Автор: werserk
-# Дата: $(date +%Y-%m-%d)
+set -euo pipefail
 
-echo "🔨 Pre-commit hook: Проверка и сборка LaTeX документов..."
+# Pre-commit hook для избирательной сборки только затронутых PDF
+
+echo "🔨 Pre-commit: избирательная сборка LaTeX документов..."
 
 # Цвета для вывода
 RED='\033[0;31m'
@@ -54,80 +54,80 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-# Функция для вывода сообщений
-log_info() {
-    echo -e "${GREEN}[INFO]${NC} $1"
-}
+log_info() { echo -e "${GREEN}[INFO]${NC} $1"; }
+log_warn() { echo -e "${YELLOW}[WARN]${NC} $1"; }
+log_error(){ echo -e "${RED}[ERROR]${NC} $1"; }
 
-log_warn() {
-    echo -e "${YELLOW}[WARN]${NC} $1"
-}
-
-log_error() {
-    echo -e "${RED}[ERROR]${NC} $1"
-}
-
-# Проверяем, есть ли изменения в .tex файлах
-if ! git diff --cached --name-only | grep -q '\.tex$'; then
-    log_info "Нет изменений в .tex файлах, пропускаем сборку."
-    exit 0
+# Проверяем наличие инструментов
+if ! command -v pdflatex >/dev/null 2>&1; then
+  log_error "pdflatex не найден! Установите LaTeX."
+  exit 1
+fi
+if ! command -v make >/dev/null 2>&1; then
+  log_error "make не найден! Установите make."
+  exit 1
 fi
 
-log_info "Обнаружены изменения в .tex файлах, начинаем сборку..."
-
-# Проверяем наличие LaTeX
-if ! command -v pdflatex &> /dev/null; then
-    log_error "pdflatex не найден! Установите LaTeX дистрибутив."
-    exit 1
+# Определяем изменённые .tex файлы, добавленные в индекс
+mapfile -t CHANGED_TEX < <(git diff --cached --name-only --diff-filter=ACM | grep -E '\\.tex$' || true)
+if [ ${#CHANGED_TEX[@]} -eq 0 ]; then
+  log_info "Нет изменений в .tex файлах, пропускаем сборку."
+  exit 0
 fi
 
-# Проверяем наличие make
-if ! command -v make &> /dev/null; then
-    log_error "make не найден! Установите make."
-    exit 1
-fi
-
-# Создаем директорию build если её нет
 mkdir -p build
 
-# Собираем все документы
-log_info "Сборка всех LaTeX документов..."
-if make all > build/build.log 2>&1; then
-    log_info "✅ Сборка успешно завершена!"
+declare -A TARGET_TEX_SET
 
-    # Показываем статистику
-    PDF_COUNT=$(find . -name "*.pdf" -not -path "./build/*" | wc -l)
-    log_info "Собрано PDF файлов: $PDF_COUNT"
+add_target_for_tex() {
+  local tex_file="$1"
+  # Если изменён файл внутри каталога topics/, находим родительские верхнеуровневые .tex
+  if [[ "$tex_file" == */topics/*.tex ]]; then
+    local topics_dir="$(dirname "$tex_file")"
+    local parent_dir="$(dirname "$topics_dir")"
+    # Кандидаты: любые .tex в родительской директории, исключая подкаталог topics
+    while IFS= read -r cand; do
+      TARGET_TEX_SET["$cand"]=1
+    done < <(find "$parent_dir" -maxdepth 1 -type f -name "*.tex" 2>/dev/null || true)
+  else
+    TARGET_TEX_SET["$tex_file"]=1
+  fi
+}
 
-    # Показываем размеры PDF файлов
-    if [ $PDF_COUNT -gt 0 ]; then
-        echo ""
-        log_info "Размеры PDF файлов:"
-        find . -name "*.pdf" -not -path "./build/*" -exec ls -lh {} \; | awk '{print "  " $9 " (" $5 ")"}'
-    fi
+for f in "${CHANGED_TEX[@]}"; do
+  add_target_for_tex "$f"
+done
 
-    # Добавляем PDF файлы в коммит если они изменились
-    CHANGED_PDFS=$(git diff --name-only --cached | grep '\.tex$' | sed 's/\.tex$/.pdf/')
-    if [ -n "$CHANGED_PDFS" ]; then
-        for pdf in $CHANGED_PDFS; do
-            if [ -f "$pdf" ]; then
-                log_info "Добавляем в коммит: $pdf"
-                git add "$pdf"
-            fi
-        done
-    fi
-
-else
-    log_error "❌ Ошибка при сборке LaTeX документов!"
-    echo ""
-    log_error "Лог ошибок:"
-    cat build/build.log
-    echo ""
-    log_error "Исправьте ошибки и попробуйте снова."
-    exit 1
+if [ ${#TARGET_TEX_SET[@]} -eq 0 ]; then
+  log_warn "Не найдены целевые .tex для сборки."
+  exit 0
 fi
 
-log_info "🎉 Pre-commit hook завершен успешно!"
+log_info "Целей для сборки: ${#TARGET_TEX_SET[@]}"
+
+BUILD_FAILED=0
+for target_tex in "${!TARGET_TEX_SET[@]}"; do
+  pdf_file="${target_tex%.tex}.pdf"
+  log_info "Сборка: $pdf_file"
+  if make "$pdf_file" > build/build.log 2>&1; then
+    if [ -f "$pdf_file" ]; then
+      git add "$pdf_file"
+    fi
+  else
+    BUILD_FAILED=1
+    echo "" >&2
+    log_error "Ошибка сборки для: $target_tex" >&2
+    echo "----- build/build.log -----" >&2
+    cat build/build.log >&2 || true
+    echo "---------------------------" >&2
+  fi
+done
+
+if [ "$BUILD_FAILED" -ne 0 ]; then
+  exit 1
+fi
+
+log_info "Готово. Обновлены и добавлены связанные PDF."
 exit 0
 EOF
 
@@ -162,8 +162,8 @@ log_info "🎉 Настройка Git hooks завершена!"
 echo ""
 log_info "Теперь при каждом коммите будет автоматически:"
 echo "  1. Проверяться наличие изменений в .tex файлах"
-echo "  2. Собираться все LaTeX документы"
-echo "  3. Добавляться обновленные PDF файлы в коммит"
+echo "  2. Собираться только связанные с ними PDF (без make all)"
+echo "  3. Добавляться обновленные связанные PDF в коммит"
 echo "  4. Предотвращаться коммиты с ошибками сборки"
 echo ""
 log_info "Для тестирования выполните:"
