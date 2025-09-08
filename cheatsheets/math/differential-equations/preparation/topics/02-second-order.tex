@@ -83,3 +83,79 @@ $P_n(t)\,\rho^t\cos(\theta t)$ (или $\sin$) & $Q_{\rho,\theta}(r)\mid \chi(r)
 \end{enumerate}
 }}
 \end{center}
+
+\bigskip
+
+\begin{center}
+\fbox{\parbox{0.92\textwidth}{
+\textbf{Пример.} Решите разностное уравнение третьего порядка с постоянными коэффициентами:
+\[
+y_{t+3} - 3y_{t+2} + 6y_{t+1} - 4y_t = 2^t + t
+\]
+Найти общее решение $y_t$.
+}}
+\end{center}
+
+\bigskip
+
+\begin{center}
+\fbox{\parbox{0.92\textwidth}{
+\noindent\textbf{Решение.}
+
+\paragraph{1) Однородная часть.}
+Характеристический многочлен:
+\[
+\chi(r)=r^3-3r^2+6r-4=(r-1)(r^2-2r+4),
+\]
+корни: $r_1=1$, $r_{2,3}=1\pm i\sqrt{3}=2e^{\pm i\pi/3}$.
+
+Отсюда
+\[
+y_t^{(h)} = C_1 + 2^t\Big(C_2\cos\tfrac{\pi t}{3} + C_3\sin\tfrac{\pi t}{3}\Big).
+\]
+
+\paragraph{2) Частное решение $y_t^{(p)}$.}
+Правая часть $f(t) = 2^t + t$ — сумма двух типов.
+
+\textit{Экспонента $2^t$:} $\chi(2) = 8 - 12 + 12 - 4 = 4 \neq 0 \Rightarrow$ резонанса нет, берём $y^{(p)}_{(1)} = \alpha\,2^t$.
+
+\textit{Полином $t$:} $\chi(1) = 0$ (кратность $1$) $\Rightarrow$ резонанс порядка $s=1$. Базовая форма для $P_1(t)$ — $At+B$, домножаем на $t$:
+\[
+y^{(p)}_{(2)} = t(At+B) = At^2 + Bt.
+\]
+Итого
+\[
+y_t^{(p)} = \alpha\,2^t + At^2 + Bt.
+\]
+
+\paragraph{3) Подстановка и определение коэффициентов.}
+Обозначим линейный оператор:
+\[
+\mathcal{L}[y_t] = y_{t+3} - 3y_{t+2} + 6y_{t+1} - 4y_t.
+\]
+
+Для экспоненты: $\mathcal{L}[2^t] = \chi(2)\,2^t = 4\cdot2^t \Rightarrow 4\alpha\,2^t = 2^t$, значит $\alpha = \tfrac{1}{4}$.
+
+Для полинома $At^2 + Bt$ прямой подсчёт даёт:
+\[
+\mathcal{L}[At^2 + Bt] = 6A\,t + (3A + 3B).
+\]
+Требуем $\mathcal{L}[At^2 + Bt] = t$, откуда
+\[
+6A = 1 \Rightarrow A = \tfrac{1}{6}, \qquad 3A + 3B = 0 \Rightarrow B = -\tfrac{1}{6}.
+\]
+Следовательно,
+\[
+y_t^{(p)} = \frac{1}{4}\,2^t + \frac{t^2 - t}{6}.
+\]
+
+\paragraph{4) Общее решение.}
+\[
+\boxed{
+y_t = C_1 + 2^t\Big(C_2\cos\tfrac{\pi t}{3} + C_3\sin\tfrac{\pi t}{3}\Big)
++ \frac{1}{4}\,2^t + \frac{t^2 - t}{6}
+}
+\]
+(константы $C_1, C_2, C_3$ находятся по начальным условиям).
+}}
+\end{center}

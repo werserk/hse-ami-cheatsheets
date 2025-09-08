@@ -24,6 +24,9 @@ fi
 
 TARGET="$1"
 STYLES_DIR="assets/styles"
+ROOT_DIR="$(pwd)"
+AUX_ROOT_DIR="$ROOT_DIR/build/.aux"
+mkdir -p "$AUX_ROOT_DIR"
 
 if [ "$TARGET" = "all" ]; then
     echo -e "${BLUE}Автоматическая пересборка всех LaTeX файлов...${NC}"
@@ -34,6 +37,8 @@ if [ "$TARGET" = "all" ]; then
     find . -name "*.tex" -not -path "*/topics/*" | while read -r TEX_FILE; do
         TEX_DIR=$(dirname "$TEX_FILE")
         TEX_BASENAME=$(basename "$TEX_FILE" .tex)
+        AUX_DIR="$AUX_ROOT_DIR/$TEX_DIR"
+        mkdir -p "$AUX_DIR"
 
         echo -e "${GREEN}Обработка:${NC} $TEX_FILE"
 
@@ -41,7 +46,7 @@ if [ "$TARGET" = "all" ]; then
         cd "$TEX_DIR"
 
         # Запуск latexmk в режиме непрерывной пересборки
-        env TEXINPUTS="$(pwd)/../../$STYLES_DIR":${TEXINPUTS} latexmk -pdf -pvc -quiet "$TEX_BASENAME.tex" &
+        env TEXINPUTS="$(pwd)/../../$STYLES_DIR":${TEXINPUTS} latexmk -pdf -pvc -quiet -auxdir="$AUX_DIR" -emulate-aux-dir "$TEX_BASENAME.tex" &
         LATEXMK_PIDS="$LATEXMK_PIDS $!"
 
         # Возврат в корневую директорию
@@ -59,6 +64,8 @@ else
     TEX_FILE="$TARGET"
     TEX_DIR=$(dirname "$TEX_FILE")
     TEX_BASENAME=$(basename "$TEX_FILE" .tex)
+    AUX_DIR="$AUX_ROOT_DIR/$TEX_DIR"
+    mkdir -p "$AUX_DIR"
 
     if [ ! -f "$TEX_FILE" ]; then
         echo -e "${RED}Файл не найден:${NC} $TEX_FILE"
@@ -73,5 +80,5 @@ else
     cd "$TEX_DIR"
 
     # Запуск latexmk в режиме непрерывной пересборки
-    env TEXINPUTS="$(pwd)/../../$STYLES_DIR":${TEXINPUTS} latexmk -pdf -pvc -quiet "$TEX_BASENAME.tex"
+    env TEXINPUTS="$(pwd)/../../$STYLES_DIR":${TEXINPUTS} latexmk -pdf -pvc -quiet -auxdir="$AUX_DIR" -emulate-aux-dir "$TEX_BASENAME.tex"
 fi

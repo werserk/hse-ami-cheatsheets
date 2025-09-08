@@ -68,6 +68,8 @@ templates: $(TEMPLATE_PDFS)
 			env TEXINPUTS=$(abspath $(STYLES_DIR)):$${TEXINPUTS} $(LATEX) -interaction=nonstopmode "$(notdir $<)" > /dev/null 2>&1; \
 			env TEXINPUTS=$(abspath $(STYLES_DIR)):$${TEXINPUTS} $(LATEX) -interaction=nonstopmode "$(notdir $<)" > /dev/null 2>&1; \
 		fi; \
+		# Удаляем побочные файлы рядом с исходником, оставляя только PDF \
+		cd "$(@D)" && rm -f *.aux *.log *.out *.toc *.lof *.lot *.fls *.fdb_latexmk *.synctex.gz *.bbl *.blg *.idx *.ind *.ilg *.lol > /dev/null 2>&1 || true; \
 	fi
 
 # Очистка временных файлов

@@ -43,6 +43,10 @@ PDF_FILE="${TEX_FILE%.tex}.pdf"
 TEX_DIR=$(dirname "$TEX_FILE")
 TEX_BASENAME=$(basename "$TEX_FILE" .tex)
 STYLES_DIR="assets/styles"
+ROOT_DIR="$(pwd)"
+AUX_ROOT_DIR="$ROOT_DIR/build/.aux"
+mkdir -p "$AUX_ROOT_DIR/$TEX_DIR"
+AUX_DIR="$AUX_ROOT_DIR/$TEX_DIR"
 
 # Проверка существования файла
 if [ ! -f "$TEX_FILE" ]; then
@@ -62,8 +66,10 @@ build_latex() {
     cd "$TEX_DIR"
 
     # Сборка с latexmk
-    if env TEXINPUTS="$(pwd)/../../$STYLES_DIR":${TEXINPUTS} latexmk -pdf -quiet "$TEX_BASENAME.tex"; then
+    if env TEXINPUTS="$(pwd)/../../$STYLES_DIR":${TEXINPUTS} latexmk -pdf -quiet -auxdir="$AUX_DIR" -emulate-aux-dir "$TEX_BASENAME.tex"; then
         print_success "PDF обновлен: $(basename "$PDF_FILE")"
+        # Очистка побочных файлов (на случай, если что-то осталось в исходной папке)
+        latexmk -c -quiet -auxdir="$AUX_DIR" -emulate-aux-dir "$TEX_BASENAME.tex" > /dev/null 2>&1 || true
     else
         print_error "Ошибка сборки LaTeX"
     fi
