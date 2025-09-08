@@ -1,0 +1,250 @@
+% style.tex — Formalized style guide with macros and instructions
+% Project: HSE AMI Cheatsheets
+% Author: werserk
+% Version: 1.0
+
+% This file contains formalized style rules and macros for consistent
+% document formatting across the HSE AMI Cheatsheets project.
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{style}[2025/01/27 v1.0 HSE AMI Cheatsheets Style Guide]
+
+% =============================================================================
+% CORE REQUIREMENTS
+% =============================================================================
+
+% Required packages for style compliance
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{mathtools}
+\RequirePackage{booktabs}
+\RequirePackage{enumitem}
+\RequirePackage{xparse}
+
+% =============================================================================
+% VARIABLE NAMING CONVENTIONS
+% =============================================================================
+
+% Time indices: ONLY t or T (NO n allowed)
+% Usage: \timeIndex{t} or \timeIndex{T}
+\NewDocumentCommand{\timeIndex}{m}{#1}
+
+% Discrete step: k (only in local reasoning with annotation)
+% Usage: \discreteStep{k} with comment
+\NewDocumentCommand{\discreteStep}{m}{#1}
+
+% Dimensions: m, d, N (use only when necessary)
+% Usage: \dimension{m}, \dimension{d}, \dimension{N}
+\NewDocumentCommand{\dimension}{m}{#1}
+
+% =============================================================================
+% MATHEMATICAL NOTATION STANDARDS
+% =============================================================================
+
+% Standard mathematical sets
+\newcommand{\reals}{\mathbb{R}}           % Real numbers
+\newcommand{\naturals}{\mathbb{N}}        % Natural numbers
+\newcommand{\complex}{\mathbb{C}}         % Complex numbers
+\newcommand{\integers}{\mathbb{Z}}        % Integers
+\newcommand{\rationals}{\mathbb{Q}}       % Rational numbers
+
+% Common operators (extend as needed)
+\DeclareMathOperator{\grad}{grad}
+\DeclareMathOperator{\divergence}{div}
+\DeclareMathOperator{\curl}{curl}
+\DeclareMathOperator{\laplacian}{\Delta}
+\DeclareMathOperator{\trace}{tr}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\nullity}{nullity}
+
+% Linear algebra operators
+\newcommand{\linop}{\mathcal{L}}          % Linear operator
+\newcommand{\algebra}{\mathcal{A}}        % Algebra
+\newcommand{\sigmafield}{\mathcal{F}}     % Sigma-field
+\newcommand{\expectation}{\mathbb{E}}     % Expectation
+\newcommand{\variance}{\mathbb{V}}        % Variance
+
+% =============================================================================
+% CONTENT STRUCTURE MACROS
+% =============================================================================
+
+% Problem structure components
+\NewDocumentCommand{\ProblemCondition}{m}{%
+  \textbf{Условие:} #1
+}
+
+\NewDocumentCommand{\ProblemHint}{m}{%
+  \textbf{Подсказка:} #1
+}
+
+\NewDocumentCommand{\ProblemSolution}{m}{%
+  \textbf{Решение:} #1
+}
+
+\NewDocumentCommand{\ProblemAnswer}{m}{%
+  \textbf{Ответ:} #1
+}
+
+\NewDocumentCommand{\ProblemRemark}{m}{%
+  \textbf{Замечание:} #1
+}
+
+% Steps environment with Russian labels
+\NewDocumentEnvironment{ProblemSteps}{ O{} }{%
+  \begin{enumerate}[label=\textbf{Шаг~\arabic*:}, #1]
+}{\end{enumerate}}
+
+% =============================================================================
+% TERMINOLOGY AND LANGUAGE STANDARDS
+% =============================================================================
+
+% Standard Russian mathematical terms
+\newcommand{\proof}{\textbf{Доказательство:}}
+\newcommand{\example}{\textbf{Пример:}}
+\newcommand{\exercise}{\textbf{Упражнение:}}
+\newcommand{\remark}{\textbf{Замечание:}}
+\newcommand{\definition}{\textbf{Определение:}}
+\newcommand{\theorem}{\textbf{Теорема:}}
+\newcommand{\lemma}{\textbf{Лемма:}}
+\newcommand{\corollary}{\textbf{Следствие:}}
+
+% Formal language helpers
+\newcommand{\required}{\textbf{требуется}}
+\newcommand{\mustbe}{\textbf{должно быть}}
+\newcommand{\necessary}{\textbf{необходимо}}
+\newcommand{\sufficient}{\textbf{достаточно}}
+
+% Avoid informal language
+% Use \required instead of "надо"
+% Use \mustbe instead of "нужно"
+
+% =============================================================================
+% LABELING CONVENTIONS
+% =============================================================================
+
+% Standard label prefixes
+\newcommand{\seclabel}[1]{\label{sec:#1}}
+\newcommand{\eqlabel}[1]{\label{eq:#1}}
+\newcommand{\figlabel}[1]{\label{fig:#1}}
+\newcommand{\thmlabel}[1]{\label{thm:#1}}
+\newcommand{\exlabel}[1]{\label{ex:#1}}
+\newcommand{\tablabel}[1]{\label{tab:#1}}
+\newcommand{\alglabel}[1]{\label{alg:#1}}
+
+% Reference commands with proper prefixes
+\newcommand{\secref}[1]{\ref{sec:#1}}
+\newcommand{\eqref}[1]{\eqref{eq:#1}}
+\newcommand{\figref}[1]{\ref{fig:#1}}
+\newcommand{\thmref}[1]{\ref{thm:#1}}
+\newcommand{\exref}[1]{\ref{ex:#1}}
+\newcommand{\tabref}[1]{\ref{tab:#1}}
+\newcommand{\algref}[1]{\ref{alg:#1}}
+
+% =============================================================================
+% CODE FORMATTING STANDARDS
+% =============================================================================
+
+% Code block with language specification
+\NewDocumentCommand{\CodeBlock}{m m}{%
+  \begin{verbatim}
+# RUN: #2
+#1
+  \end{verbatim}
+}
+
+% Inline code
+\newcommand{\code}[1]{\texttt{#1}}
+
+% =============================================================================
+% TABLE FORMATTING STANDARDS
+% =============================================================================
+
+% Standard table environment with booktabs
+\NewDocumentEnvironment{StandardTable}{O{h!} m m}{%
+  \begin{table}[#1]
+  \centering
+  \caption{#2}
+  \label{tab:#3}
+  \begin{tabular}{#4}
+  \toprule
+}{%
+  \bottomrule
+  \end{tabular}
+  \end{table}
+}
+
+% =============================================================================
+% NOTATION DECLARATION ENVIRONMENT
+% =============================================================================
+
+% Environment for declaring new mathematical symbols
+\NewDocumentEnvironment{NotationSection}{}{%
+  \subsection*{Обозначения}
+  \begin{itemize}[leftmargin=*,noitemsep,topsep=0pt]
+}{%
+  \end{itemize}
+}
+
+% Helper for notation entries
+\NewDocumentCommand{\NotationEntry}{m m}{%
+  \item $#1$ — #2
+}
+
+% =============================================================================
+% QUALITY CONTROL MACROS
+% =============================================================================
+
+% Check for forbidden variable usage
+\newcommand{\checkVariables}{%
+  % This would be implemented as a script
+  % For now, just a reminder comment
+  % TODO: Implement variable checking
+}
+
+% Validate label consistency
+\newcommand{\validateLabels}{%
+  % This would be implemented as a script
+  % For now, just a reminder comment
+  % TODO: Implement label validation
+}
+
+% =============================================================================
+% STYLE COMPLIANCE INSTRUCTIONS
+% =============================================================================
+
+% Instructions for style compliance
+\newcommand{\StyleInstructions}{%
+  \begin{itemize}
+    \item Используйте только \texttt{t} или \texttt{T} для индексов времени
+    \item Объявляйте новые символы в разделе «Обозначения»
+    \item Структурируйте задачи: Условие → Решение → Ответ
+    \item Используйте формальную терминологию
+    \item Проверяйте соответствие меток и ссылок
+  \end{itemize}
+}
+
+% =============================================================================
+% DOCUMENTATION
+% =============================================================================
+
+% This package provides:
+% 1. Standardized variable naming (timeIndex, discreteStep, dimension)
+% 2. Mathematical notation standards (reals, naturals, complex, etc.)
+% 3. Content structure macros (ProblemCondition, ProblemSolution, etc.)
+% 4. Labeling conventions (seclabel, eqlabel, etc.)
+% 5. Code formatting standards (CodeBlock, code)
+% 6. Table formatting standards (StandardTable)
+% 7. Notation declaration environment (NotationSection)
+% 8. Quality control reminders (checkVariables, validateLabels)
+
+% Usage:
+% \usepackage{style}
+%
+% In document:
+% \timeIndex{t} for time indices
+% \reals, \naturals, \complex for standard sets
+% \ProblemCondition{...} for problem structure
+% \seclabel{name} for section labels
+% \CodeBlock{code}{language} for code blocks
+
+\endinput

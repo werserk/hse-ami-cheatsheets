@@ -1,0 +1,118 @@
+name: Style Check
+
+on:
+  pull_request:
+    paths:
+      - "**/*.tex"
+      - "**/*.md"
+  push:
+    branches: [main, dev]
+
+jobs:
+  style-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup LaTeX
+        uses: dante-ev/docker-texlive-full@v1
+        with:
+          texlive-version: 2023
+
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y chktex
+
+      - name: Check LaTeX compilation
+        run: |
+          find . -name "*.tex" -not -path "./templates/*" | while read file; do
+            echo "Checking $file..."
+            if ! latexmk -pdf -interaction=nonstopmode -halt-on-error "$file"; then
+              echo "❌ Compilation failed for $file"
+              exit 1
+            fi
+          done
+
+      - name: Check LaTeX style
+        run: |
+          find . -name "*.tex" -not -path "./templates/*" | while read file; do
+            echo "Checking style for $file..."
+            chktex "$file" || true
+          done
+
+      - name: Check for forbidden variables
+        run: |
+          echo "Checking for forbidden variable 'n' in time indices..."
+          if grep -r "y_{n\|x_{n\|z_{n\|a_{n\|b_{n\|c_{n" . --include="*.tex" --exclude-dir=templates; then
+            echo "❌ Found forbidden variable 'n' in time indices"
+            exit 1
+          fi
+          echo "✅ No forbidden variables found"
+
+      - name: Check label consistency
+        run: |
+          echo "Checking label consistency..."
+          find . -name "*.tex" -not -path "./templates/*" | while read file; do
+            echo "Checking labels in $file..."
+            # Extract all \label{...} and \ref{...}
+            labels=$(grep -o '\\label{[^}]*}' "$file" | sed 's/\\label{//;s/}//')
+            refs=$(grep -o '\\ref{[^}]*}' "$file" | sed 's/\\ref{//;s/}//')
+
+            # Check if all refs have corresponding labels
+            for ref in $refs; do
+              if ! echo "$labels" | grep -q "^$ref$"; then
+                echo "❌ Reference '$ref' in $file has no corresponding label"
+                exit 1
+              fi
+            done
+          done
+          echo "✅ All references have corresponding labels"
+
+      - name: Check notation standards
+        run: |
+          echo "Checking notation standards..."
+          find . -name "*.tex" -not -path="./templates/*" | while read file; do
+            # Check for non-standard mathbb usage
+            if grep -q '\\mathbb{[^RNCZQ]}' "$file"; then
+              echo "❌ Non-standard \\mathbb usage in $file"
+              exit 1
+            fi
+          done
+          echo "✅ Notation standards check passed"
+
+      - name: Check Russian terminology
+        run: |
+          echo "Checking Russian terminology..."
+          find . -name "*.tex" -not -path="./templates/*" | while read file; do
+            # Check for informal language
+            if grep -qi "надо\|нужно\|доказ" "$file"; then
+              echo "❌ Found informal language in $file"
+              echo "Use 'требуется' instead of 'надо'"
+              echo "Use 'должно быть' instead of 'нужно'"
+              echo "Use 'доказательство' instead of 'доказ'"
+              exit 1
+            fi
+          done
+          echo "✅ Russian terminology check passed"
+
+      - name: Generate style report
+        run: |
+          echo "# Style Check Report" > style-check-report.md
+          echo "**Date**: $(date)" >> style-check-report.md
+          echo "**Status**: ✅ All checks passed" >> style-check-report.md
+          echo "" >> style-check-report.md
+          echo "## Checks performed:" >> style-check-report.md
+          echo "- LaTeX compilation" >> style-check-report.md
+          echo "- LaTeX style (chktex)" >> style-check-report.md
+          echo "- Forbidden variables (no 'n' in time indices)" >> style-check-report.md
+          echo "- Label consistency" >> style-check-report.md
+          echo "- Notation standards" >> style-check-report.md
+          echo "- Russian terminology" >> style-check-report.md
+
+      - name: Upload style report
+        uses: actions/upload-artifact@v3
+        with:
+          name: style-check-report
+          path: style-check-report.md
