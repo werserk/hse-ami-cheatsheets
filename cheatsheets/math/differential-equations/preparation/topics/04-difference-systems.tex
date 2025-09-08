@@ -1,207 +1,155 @@
 \subsection{Системы разностных уравнений}\label{subsec:systems}
 
-% Заметим, что матрица явно не указана. Однако справа находятся её элементы. Запишем в матричном виде:
-\textbf{Пример.} Решите систему разностных уравнений:
-$\begin{cases} x_{t+1} = 4x_t + y_t \\ y_{t+1} = 2y_t \end{cases}$, с начальными условиями $\mathbf{x}_0 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.\\
-\textit{Заметим, что матрица явно не указана. Однако справа находятся её элементы. Запишем в матричном виде:} \\
-$\mathbf{x}_{t+1} = A\mathbf{x}_t$, где $A = \begin{pmatrix} 4 & 1 \\ 0 & 2 \end{pmatrix}$, \; $\mathbf{x}_t = \begin{pmatrix} x_t \\ y_t \end{pmatrix}$.\\
-Здесь $A$ — это матрица коэффициентов системы.
-
-\HSEDefinition{Система линейных разностных уравнений первого порядка с постоянными коэффициентами: $\mathbf{x}_{t+1} = A\mathbf{x}_t$, где задано $\mathbf{x}_0$, $A \in \mathbb{R}^{n \times n}$, $\mathbf{x}_t \in \mathbb{R}^n$. Цель: найти $\mathbf{x}_t = A^t\mathbf{x}_0$.}
-
-\textbf{Идея решения:} возведение матрицы $A$ в степень $t$. Для этого используем спектральное разложение матрицы.
-
-\textit{Обозначения:} $\lambda_i$ — собственные значения, $\mathbf{v}_i$ — собственные векторы, $\chi_A(\lambda) = \det(\lambda I - A)$ — характеристический многочлен.
-
-\begin{table}[h!]
-\centering
-\caption{Выбор метода решения по типу собственных значений}
-\label{tab:method-selection}
-\begin{tabular}{|l|l|}
-\hline
-\textbf{Условия на собственные значения} & \textbf{Рекомендуемый метод} \\
-\hline
-Разные действительные корни, полный базис собственных векторов & Диагонализация \\
-\hline
-Повторный корень, недостаточно собственных векторов & Жорданова форма \\
-\hline
-Комплексно-сопряжённая пара & Реальный блок поворота \\
-\hline
-Матрица $2 \times 2$ (любой случай) & Кэли–Гамильтон \\
-\hline
-\end{tabular}
-\end{table}
-
-\bigskip
-\hrule
-\bigskip
-
-\subsubsection*{1. Диагонализация}
-
-\textbf{Условие применения:} матрица $A$ имеет $n$ линейно независимых собственных векторов (диагонализуема).
-
-\textbf{Теорема.} Если $A$ диагонализуема, то $A = S\Lambda S^{-1}$, где $\Lambda = \text{diag}(\lambda_1, \ldots, \lambda_n)$ — диагональная матрица собственных значений, $S = [\mathbf{v}_1, \ldots, \mathbf{v}_n]$ — матрица собственных векторов.
-
-\HSEAlgorithm[Алгоритм диагонализации]{
-\begin{enumerate}
-\item Характеристический многочлен: $\chi_A(\lambda) = \det(\lambda I - A)$.
-\item Собственные значения: решить $\chi_A(\lambda) = 0$.
-\item Собственные векторы: для каждого $\lambda_i$ решить $(A - \lambda_i I)\mathbf{v}_i = \mathbf{0}$.
-\item Проверка диагонализуемости: $\det S \neq 0$.
-\item Диагонализация: $A = S\Lambda S^{-1}$.
-\item Возведение в степень: $A^t = S\Lambda^t S^{-1}$.
-\item Решение: $\mathbf{x}_t = A^t\mathbf{x}_0$.
-\end{enumerate}
-}
-
-\textbf{Пример.} Та же система. Решение: \; $A = \begin{pmatrix} 4 & 1 \\ 0 & 2 \end{pmatrix}$.\\
-\textbf{1. Характеристический многочлен:}
-$$\chi_A(\lambda) = \det(\lambda I - A) = \det\begin{pmatrix} \lambda-4 & -1 \\ 0 & \lambda-2 \end{pmatrix} = (\lambda-4)(\lambda-2) = \lambda^2 - 6\lambda + 8$$
-\textbf{2. Собственные значения:} $\lambda^2 - 6\lambda + 8 = 0 \Rightarrow \lambda_1 = 4, \lambda_2 = 2$\\
-\textbf{3. Собственные векторы:}
-\begin{itemize}
-\item Для $\lambda_1 = 4$: $(A - 4I)\mathbf{v}_1 = \mathbf{0}$:
-$$\begin{pmatrix} 0 & 1 \\ 0 & -2 \end{pmatrix}\begin{pmatrix} v_{11} \\ v_{12} \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix} \Rightarrow v_{12} = 0$$
-Выбираем $\mathbf{v}_1 = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$
-\item Для $\lambda_2 = 2$: $(A - 2I)\mathbf{v}_2 = \mathbf{0}$:
-$$\begin{pmatrix} 2 & 1 \\ 0 & 0 \end{pmatrix}\begin{pmatrix} v_{21} \\ v_{22} \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix} \Rightarrow 2v_{21} + v_{22} = 0$$
-Выбираем $\mathbf{v}_2 = \begin{pmatrix} 1 \\ -2 \end{pmatrix}$
-\end{itemize}
-\textbf{4. Матрицы диагонализации:}
-$$S = \begin{pmatrix} 1 & 1 \\ 0 & -2 \end{pmatrix}, \quad \Lambda = \begin{pmatrix} 4 & 0 \\ 0 & 2 \end{pmatrix}$$
-$$S^{-1} = \frac{1}{\det S}\begin{pmatrix} -2 & -1 \\ 0 & 1 \end{pmatrix} = \frac{1}{-2}\begin{pmatrix} -2 & -1 \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} 1 & \frac{1}{2} \\ 0 & -\frac{1}{2} \end{pmatrix}$$
-\textbf{5. Возведение в степень:}
-$$A^t = S\Lambda^t S^{-1} = \begin{pmatrix} 1 & 1 \\ 0 & -2 \end{pmatrix}\begin{pmatrix} 4^t & 0 \\ 0 & 2^t \end{pmatrix}\begin{pmatrix} 1 & \frac{1}{2} \\ 0 & -\frac{1}{2} \end{pmatrix}$$
-$$= \begin{pmatrix} 1 & 1 \\ 0 & -2 \end{pmatrix}\begin{pmatrix} 4^t & \frac{4^t}{2} \\ 0 & -\frac{2^t}{2} \end{pmatrix} = \begin{pmatrix} 4^t & \frac{4^t - 2^t}{2} \\ 0 & 2^t \end{pmatrix}$$
-\textbf{6. Решение системы:}
-$$\mathbf{x}_t = A^t\mathbf{x}_0 = \begin{pmatrix} 4^t & \frac{4^t - 2^t}{2} \\ 0 & 2^t \end{pmatrix}\begin{pmatrix} 1 \\ 1 \end{pmatrix} = \begin{pmatrix} 4^t + \frac{4^t - 2^t}{2} \\ 2^t \end{pmatrix} = \begin{pmatrix} \frac{3 \cdot 4^t - 2^t}{2} \\ 2^t \end{pmatrix}$$
-
-\bigskip
-\hrule
-\bigskip
-
-\subsubsection*{2. Жорданова форма (повторный корень)}
-
-\textbf{Условие применения:} матрица $A$ имеет повторное собственное значение, но недостаточно собственных векторов для диагонализации.
-
-\textbf{Теорема.} Если $A$ имеет единственное собственное значение $\lambda$ кратности $n$, то $A = \lambda I + N$, где $N$ — нильпотентная матрица ($N^m = 0$ для некоторого $m \leq n$).
-
-\textbf{Ключевая идея:} используем биномиальную формулу для $(I + \lambda^{-1}N)^t$.
-
-\HSEAlgorithm[Алгоритм Жордановой формы]{
-\begin{enumerate}
-\item Собственное значение $\lambda$.
-\item Нильпотентная матрица $N = A - \lambda I$.
-\item Индекс нильпотентности: $N^m=0$.
-\item Формула: $A^t = \lambda^t \sum_{k=0}^{m-1} \binom{t}{k} (\lambda^{-1}N)^k$.
-\item Решение: $\mathbf{x}_t = A^t\mathbf{x}_0$.
-\end{enumerate}
-}
-
-\textbf{Пример.} Система $\begin{cases} x_{t+1} = 2x_t + y_t \\ y_{t+1} = 2y_t \end{cases}$. Для $A = \begin{pmatrix} 2 & 1 \\ 0 & 2 \end{pmatrix}$\\
-\textbf{1. Собственное значение:}
-$$\chi_A(\lambda) = \det(\lambda I - A) = \det\begin{pmatrix} \lambda-2 & -1 \\ 0 & \lambda-2 \end{pmatrix} = (\lambda-2)^2 = 0 \Rightarrow \lambda = 2 \text{ (кратности 2)}$$
-\textbf{2. Нильпотентная матрица:}
-$$N = A - \lambda I = \begin{pmatrix} 2 & 1 \\ 0 & 2 \end{pmatrix} - 2\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}$$
-\textbf{3. Индекс нильпотентности:}
-$$N^2 = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}\begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix} = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix} = 0 \Rightarrow m = 2$$
-\textbf{4. Применение формулы Жордана:}
-$$A^t = \lambda^t \sum_{k=0}^{m-1} \binom{t}{k} (\lambda^{-1}N)^k = 2^t \sum_{k=0}^{1} \binom{t}{k} \left(\frac{1}{2}N\right)^k$$
-$$= 2^t \left[ \binom{t}{0} \left(\frac{1}{2}N\right)^0 + \binom{t}{1} \left(\frac{1}{2}N\right)^1 \right]$$
-$$= 2^t \left[ I + t \cdot \frac{1}{2}N \right] = 2^t \left[ \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} + \frac{t}{2}\begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix} \right]$$
-$$= 2^t \begin{pmatrix} 1 & \frac{t}{2} \\ 0 & 1 \end{pmatrix}$$
-\textbf{5. Решение системы:}
-$$\mathbf{x}_t = A^t\mathbf{x}_0 = 2^t \begin{pmatrix} 1 & \frac{t}{2} \\ 0 & 1 \end{pmatrix}\begin{pmatrix} 1 \\ 1 \end{pmatrix} = 2^t \begin{pmatrix} 1 + \frac{t}{2} \\ 1 \end{pmatrix}$$
-
-\bigskip
-\hrule
-\bigskip
-
-\subsubsection*{3. Комплексная пара (реальный блок)}
-
-\textbf{Условие применения:} матрица $A$ $2 \times 2$ имеет комплексно-сопряжённые собственные значения $\lambda = \rho e^{\pm i\theta}$.
-
-\textbf{Теорема.} Для матрицы $A$ $2 \times 2$ с комплексными корнями $\lambda = \rho e^{\pm i\theta}$ справедливо:
+\textbf{Пример (вход в тему).} Решите систему:
 \[
-A^t = \rho^t \begin{pmatrix} \cos(t\theta) & -\sin(t\theta) \\ \sin(t\theta) & \cos(t\theta) \end{pmatrix}
+\begin{cases}
+x_{t+1} = 4x_t + y_t,\\
+y_{t+1} = 2y_t,
+\end{cases}
+\qquad \mathbf{x}_0=\binom{1}{1}.
+\]
+Запишем в матричном виде: \(\ \mathbf{x}_{t+1}=A\mathbf{x}_t,\ \ A=\begin{pmatrix}4&1\\[2pt]0&2\end{pmatrix},\ \ \mathbf{x}_t=\binom{x_t}{y_t}.\)
+
+\HSEDefinition{(Общий вид) Линейная система разностных уравнений первого порядка:}
+\[
+\boxed{\ \mathbf{x}_{t+1}=A\mathbf{x}_t+\mathbf{f}_t\ },\qquad
+A\in\mathbb{R}^{n\times n},\ \ \mathbf{x}_t\in\mathbb{R}^n,\ \ \mathbf{f}_t\in\mathbb{R}^n.
+\]
+\emph{Цель:} найти \(\mathbf{x}_t\). Обозначим фундаментальную матрицу однородной части \(\Phi_t:=A^t\).
+
+\HSEBox{Базовые формулы (запомнить!)}{
+\[
+\boxed{\ \mathbf{x}_t=\underbrace{A^t\mathbf{x}_0}_{\text{однородная часть}}+\underbrace{\sum_{k=0}^{t-1}A^{\,t-1-k}\,\mathbf{f}_k}_{\text{неоднородная свёртка}}\ }\quad (t\ge1).
+\]
+Частный случай \(\mathbf{f}_t\equiv\mathbf{b}\) (постоянный вектор):
+\[
+\boxed{\ \mathbf{x}_t=A^t\mathbf{x}_0+\Big(\sum_{k=0}^{t-1}A^k\Big)\mathbf{b}\ }=
+\begin{cases}
+A^t\mathbf{x}_0+(I-A^t)(I-A)^{-1}\mathbf{b}, & I-A\ \text{обратима},\\[4pt]
+A^t\mathbf{x}_0+\text{(резонанс при }\lambda=1), & \text{иначе (см. ниже)}.
+\end{cases}
+\]
+}
+
+\paragraph{Дерево выбора метода для \(A^t\) (одинаково для однородных/неоднородных)}
+\begin{itemize}
+  \item Разные действительные корни \(\Rightarrow\) \textbf{Диагонализация}.
+  \item Повторный корень, недостаточно собственных векторов \(\Rightarrow\) \textbf{Жордан}: \(A=\lambda I+N,\ N^m=0\).
+  \item Комплексная пара \(\Rightarrow\) \textbf{Реальный поворот–масштаб}.
+  \item Матрица \(2\times 2\) (любой случай) \(\Rightarrow\) часто быстрее \textbf{Кэли–Гамильтон}.
+\end{itemize}
+
+\subsubsection*{0. Неоднородные сразу: вариация постоянных (универсально)}
+\HSEAlgorithm[Алгоритм вариации постоянных]{
+\begin{enumerate}
+  \item Найти \(\Phi_t=A^t\) (любой из разделов 1–4 ниже).
+  \item Положить \(\mathbf{x}_t=\Phi_t\,\mathbf{c}_t\). Тогда \(\Phi_{t+1}\mathbf{c}_{t+1}=A\Phi_t\mathbf{c}_t+\mathbf{f}_t=\Phi_{t+1}\mathbf{c}_t+\mathbf{f}_t\).
+  \item Получаем рекурренту на параметры: \(\boxed{\,\mathbf{c}_{t+1}-\mathbf{c}_t=\Phi_{t+1}^{-1}\mathbf{f}_t\,}\).
+  \item Отсюда \(\ \mathbf{c}_t=\mathbf{c}_0+\sum_{k=0}^{t-1}\Phi_{k+1}^{-1}\mathbf{f}_k,\ \ \mathbf{c}_0=\mathbf{x}_0\).
+  \item Итог: \(\boxed{\,\mathbf{x}_t=\Phi_t\mathbf{x}_0+\sum_{k=0}^{t-1}\Phi_t\Phi_{k+1}^{-1}\mathbf{f}_k
+  =A^t\mathbf{x}_0+\sum_{k=0}^{t-1}A^{\,t-1-k}\mathbf{f}_k\,}\).
+\end{enumerate}
+}
+\noindent\emph{Однородный случай} \(\mathbf{f}_t\equiv0\) получается автоматом: просто исчезает шаг 3 и суммирование.
+
+\paragraph{Шорткаты по правой части (быстрое \(y^{(p)}\) как в скаляре)}
+\begin{itemize}
+  \item \(\mathbf{f}_t\equiv\mathbf{b}\). Если \(I-A\) обратима: \(\mathbf{x}^{(p)}=\mathbf{x}_*\) постоянно, где \((I-A)\mathbf{x}_*=\mathbf{b}\).
+  \item \(\mathbf{f}_t=\lambda^t\mathbf{b}\). Пробуем \(\boxed{\ \mathbf{x}^{(p)}_t=\lambda^t\mathbf{y}\ }\). Если \(\det(\lambda I-A)\neq0\), то \((\lambda I-A)\mathbf{y}=\mathbf{b}\).
+        Если \(\det(\lambda I-A)=0\) (\textbf{резонанс}), умножаем на \(t\): \(\mathbf{x}^{(p)}_t=t\,\lambda^t\mathbf{y}\) (для кратности \(1\)); при большей кратности — \(t^s\lambda^t\).
+\end{itemize}
+
+\bigskip\hrule\bigskip
+
+\subsubsection*{1. Диагонализация (разные действительные корни)}
+\textbf{Алгоритм.}
+\(A=S\Lambda S^{-1},\ \Lambda=\mathrm{diag}(\lambda_i)\Rightarrow \boxed{A^t=S\Lambda^t S^{-1}},\ \Lambda^t=\mathrm{diag}(\lambda_i^t).\)
+
+\textbf{Мини-пример.} \(A=\begin{psmallmatrix}4&1\\0&2\end{psmallmatrix}\Rightarrow
+A^t=\begin{psmallmatrix}4^t&\tfrac{4^t-2^t}{2}\\[2pt]0&2^t\end{psmallmatrix}.\)
+Тогда для \(\mathbf{f}_t=\lambda^t\mathbf{b}\) можно либо свёрткой, либо шорткатом: найти \(\mathbf{y}\) из \((\lambda I-A)\mathbf{y}=\mathbf{b}\).
+
+\bigskip\hrule\bigskip
+
+\subsubsection*{2. Жордан (повторный корень, недостаёт базиса)}
+Если \(A=\lambda I+N,\ N^m=0\), то
+\[
+\boxed{\,A^t=\lambda^{\,t}\sum_{k=0}^{m-1}\binom{t}{k}\big(\lambda^{-1}N\big)^k\,}.
+\]
+Часто \(m=2\): \(A^t=\lambda^t\big(I+\tfrac{t}{\lambda}N\big)\).
+
+\textbf{Мини-пример.} \(A=\begin{psmallmatrix}2&1\\0&2\end{psmallmatrix}\Rightarrow A^t=2^t\begin{psmallmatrix}1&\tfrac t2\\0&1\end{psmallmatrix}.\)
+Для \(\mathbf{f}_t\equiv\mathbf{b}\): \(\sum_{k=0}^{t-1}A^k\) удобно считать той же формулой (бином по \(N\)).
+
+\bigskip\hrule\bigskip
+
+\subsubsection*{3. Комплексная пара (реальный поворот–масштаб)}
+Если собственные \(\lambda=\rho e^{\pm i\theta}\) (для \(2\times2\): \((\operatorname{tr}A)^2-4\det A<0\)), то
+\[
+\boxed{\,A^t=\rho^t\begin{pmatrix}\cos t\theta&-\sin t\theta\\ \sin t\theta&\cos t\theta\end{pmatrix}\,}
+\quad\text{(после приведения к блоку)}.
+\]
+Далее применяем общую свёртку или шорткаты по \(\mathbf{f}_t\).
+
+\bigskip\hrule\bigskip
+
+\subsubsection*{4. Кэли–Гамильтон (особенно быстро для \(2\times2\))}
+Если \(\chi_A(\lambda)=\lambda^2-(\operatorname{tr}A)\lambda+\det A\), то
+\[
+\boxed{\,A^{t+2}=(\operatorname{tr}A)A^{t+1}-(\det A)A^{t}\,}.
+\]
+Ищем \(A^t=\alpha_t A+\beta_t I\) и решаем скалярную рекурренту (начальные \(\alpha_0{=}0,\beta_0{=}1;\ \alpha_1{=}1,\beta_1{=}0\)).
+Готовые формулы: при \(\lambda_{1}\neq\lambda_{2}\),
+\(\ \alpha_t=\frac{\lambda_1^t-\lambda_2^t}{\lambda_1-\lambda_2},\
+\beta_t=\frac{\lambda_1\lambda_2^t-\lambda_2\lambda_1^t}{\lambda_1-\lambda_2};\)
+при \(\lambda_1=\lambda_2=\lambda\): \(\ \alpha_t=t\lambda^{t-1},\ \beta_t=(1-t)\lambda^t.\)
+
+\bigskip\hrule\bigskip
+
+\subsubsection*{5. Готовый полноценный пример (неоднородный, все шаги)}
+
+\paragraph{Геометрическая правая часть без резонанса.}
+\[
+\mathbf{x}_{t+1}=A\mathbf{x}_t+3^t\mathbf{b},\qquad
+A=\begin{pmatrix}4&1\\ 0&2\end{pmatrix},\ \ \mathbf{b}=\binom{0}{1},\ \ \mathbf{x}_0=\binom{x_0}{y_0}.
 \]
 
-\textbf{Ключевая идея:} комплексные корни соответствуют повороту с масштабированием в вещественном пространстве.
+\textbf{Метод 1 (быстрый шорткат «экспонента»).}
+Пробуем частное решение вида \(\mathbf{x}^{(p)}_t=3^t\mathbf{y}\).
+Подставляем:
+\[
+3^{t+1}\mathbf{y}=A(3^t\mathbf{y})+3^t\mathbf{b}
+\ \Leftrightarrow\
+(3I-A)\mathbf{y}=\mathbf{b}.
+\]
+Проверка нерезонансности: \(\det(3I-A)=\det\begin{psmallmatrix}-1&-1\\ 0&1\end{psmallmatrix}\neq0\).
+Решаем \((3I-A)\mathbf{y}=\mathbf{b}\):
+\[
+\begin{pmatrix}-1&-1\\ 0&1\end{pmatrix}\binom{y_1}{y_2}=\binom{0}{1}
+\ \Rightarrow\ y_2=1,\; -y_1-y_2=0\Rightarrow y_1=-1.
+\]
+Значит \(\ \boxed{\ \mathbf{y}=\binom{-1}{\ 1}\ }\) и
+\[
+\boxed{\ \mathbf{x}^{(p)}_t=3^t\binom{-1}{\ 1}\ }.
+\]
+\emph{Общий вид решения:} \(\mathbf{x}_t=A^t\mathbf{C}+3^t\binom{-1}{1}\).
+\emph{Подбор \(\mathbf{C}\) по начальному условию:} \(\mathbf{x}_0=\mathbf{C}+1\cdot\binom{-1}{1}\Rightarrow \mathbf{C}=\mathbf{x}_0-\binom{-1}{1}\).
+Итог:
+\[
+\boxed{\ \mathbf{x}_t=A^t\!\left(\mathbf{x}_0-\binom{-1}{1}\right)+3^t\binom{-1}{1}\ }.
+\]
 
-\HSEAlgorithm[Алгоритм для комплексной пары]{
-\begin{enumerate}
-\item Проверка: $(\operatorname{tr}A)^2 - 4\det A < 0$.
-\item $\rho = \sqrt{\det A}$, $\cos\theta = \frac{\operatorname{tr}A}{2\rho}$.
-\item $A^t = \rho^t \begin{pmatrix} \cos(t\theta) & -\sin(t\theta) \\ \sin(t\theta) & \cos(t\theta) \end{pmatrix}$.
-\item Решение: $\mathbf{x}_t = A^t\mathbf{x}_0$.
-\end{enumerate}
-}
-
-\textbf{Пример.} $A = \begin{pmatrix} 1 & -1 \\ 1 & 1 \end{pmatrix}$\\
-\textbf{1. Проверка условия комплексности:}
-$$\operatorname{tr}A = 1 + 1 = 2, \quad \det A = 1 \cdot 1 - (-1) \cdot 1 = 2$$
-$$(\operatorname{tr}A)^2 - 4\det A = 2^2 - 4 \cdot 2 = 4 - 8 = -4 < 0 \Rightarrow \text{комплексные корни}$$
-\textbf{2. Вычисление параметров:}
-$$\rho = \sqrt{\det A} = \sqrt{2}$$
-$$\cos\theta = \frac{\operatorname{tr}A}{2\rho} = \frac{2}{2\sqrt{2}} = \frac{1}{\sqrt{2}} = \frac{\sqrt{2}}{2} \Rightarrow \theta = \frac{\pi}{4}$$
-\textbf{3. Применение формулы:}
-$$A^t = \rho^t \begin{pmatrix} \cos(t\theta) & -\sin(t\theta) \\ \sin(t\theta) & \cos(t\theta) \end{pmatrix} = (\sqrt{2})^t \begin{pmatrix} \cos\left(\frac{\pi t}{4}\right) & -\sin\left(\frac{\pi t}{4}\right) \\ \sin\left(\frac{\pi t}{4}\right) & \cos\left(\frac{\pi t}{4}\right) \end{pmatrix}$$
-\textbf{4. Решение системы (с начальными условиями $\mathbf{x}_0 = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$):}
-$$\mathbf{x}_t = A^t\mathbf{x}_0 = (\sqrt{2})^t \begin{pmatrix} \cos\left(\frac{\pi t}{4}\right) & -\sin\left(\frac{\pi t}{4}\right) \\ \sin\left(\frac{\pi t}{4}\right) & \cos\left(\frac{\pi t}{4}\right) \end{pmatrix}\begin{pmatrix} 1 \\ 0 \end{pmatrix}$$
-$$= (\sqrt{2})^t \begin{pmatrix} \cos\left(\frac{\pi t}{4}\right) \\ \sin\left(\frac{\pi t}{4}\right) \end{pmatrix}$$
-\textit{Интерпретация:} Решение описывает спираль с радиусом $(\sqrt{2})^t$ и углом поворота $\frac{\pi t}{4}$ на каждом шаге.
-
-\bigskip
-\hrule
-\bigskip
-
-\subsubsection*{4. Кэли–Гамильтон (универсальный метод)}
-
-\textbf{Условие применения:} универсальный метод для матриц любого размера, особенно удобен для $2 \times 2$.
-
-\textbf{Теорема Кэли–Гамильтона.} Матрица $A$ удовлетворяет своему характеристическому уравнению: $\chi_A(A) = 0$.
-
-\textbf{Ключевая идея:} используем тождество $\chi_A(A) = 0$ для построения рекуррентного соотношения на степени матрицы.
-
-\HSEAlgorithm[Алгоритм Кэли–Гамильтона (2×2)]{
-\begin{enumerate}
-\item $\chi_A(\lambda) = \lambda^2 - (\operatorname{tr}A)\lambda + \det A$.
-\item Рекуррентное: $A^{t+2} = (\operatorname{tr}A)A^{t+1} - (\det A)A^t$.
-\item Представление: $A^t = \alpha_t A + \beta_t I$.
-\item Решить на $\alpha_t,\beta_t$ и получить $\mathbf{x}_t$.
-\end{enumerate}
-}
-
-\textbf{Пример.} Для $A = \begin{pmatrix} 3 & 2 \\ -2 & -1 \end{pmatrix}$\\
-\textbf{1. Характеристический многочлен:}
-$$\chi_A(\lambda) = \det(\lambda I - A) = \det\begin{pmatrix} \lambda-3 & -2 \\ 2 & \lambda+1 \end{pmatrix} = (\lambda-3)(\lambda+1) - (-2) \cdot 2$$
-$$= \lambda^2 - 2\lambda - 3 + 4 = \lambda^2 - 2\lambda + 1 = (\lambda-1)^2$$
-\textbf{2. Рекуррентное соотношение:}
-По теореме Кэли-Гамильтона: $\chi_A(A) = A^2 - 2A + I = 0$, откуда $A^2 = 2A - I$\\
-Умножая на $A^t$: $A^{t+2} = 2A^{t+1} - A^t$\\
-\textbf{3. Представление $A^t$:}
-Ищем $A^t = \alpha_t A + \beta_t I$ для некоторых $\alpha_t, \beta_t$\\
-Из рекуррентного соотношения: $\alpha_{t+2} = 2\alpha_{t+1} - \alpha_t$ с начальными условиями:
-\begin{itemize}
-\item $t=0$: $A^0 = I = \alpha_0 A + \beta_0 I \Rightarrow \alpha_0 = 0, \beta_0 = 1$
-\item $t=1$: $A^1 = A = \alpha_1 A + \beta_1 I \Rightarrow \alpha_1 = 1, \beta_1 = 0$
-\end{itemize}
-Решение рекуррентного уравнения: $\alpha_t = t$, $\beta_t = 1-t$\\
-\textbf{4. Итоговая формула:}
-$$A^t = tA + (1-t)I = t\begin{pmatrix} 3 & 2 \\ -2 & -1 \end{pmatrix} + (1-t)\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$$
-$$= \begin{pmatrix} 3t & 2t \\ -2t & -t \end{pmatrix} + \begin{pmatrix} 1-t & 0 \\ 0 & 1-t \end{pmatrix} = \begin{pmatrix} 2t+1 & 2t \\ -2t & 1-2t \end{pmatrix}$$
-\textbf{5. Решение системы (с начальными условиями $\mathbf{x}_0 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$):}
-$$\mathbf{x}_t = A^t\mathbf{x}_0 = \begin{pmatrix} 2t+1 & 2t \\ -2t & 1-2t \end{pmatrix}\begin{pmatrix} 1 \\ 1 \end{pmatrix} = \begin{pmatrix} 2t+1 + 2t \\ -2t + 1-2t \end{pmatrix} = \begin{pmatrix} 4t + 1 \\ 1 - 4t \end{pmatrix}$$
-
-\HSEBox{Общий алгоритм решения систем разностных уравнений}{\begin{enumerate}\item Анализ матрицы: $\operatorname{tr}A$, $\det A$, $\chi_A(\lambda)$.\item Выбор метода по типу спектра.\item Получить $A^t$ соответствующим методом.\item Решить $\mathbf{x}_t = A^t\mathbf{x}_0$.\item Проверка: $A^0=I$, $A^1=A$.\end{enumerate}}
-
-\textbf{Полезные проверки:}
-\begin{itemize}
-\item \textbf{Начальные условия:} $A^0 = I$, $A^1 = A$.
-\item \textbf{Жорданова форма:} если $A = \lambda I + N$, проверить $N^m = 0$.
-\item \textbf{Комплексная пара:} $\det A = \rho^2$, $\text{tr}\,A = 2\rho\cos\theta$.
-\item \textbf{Биномиальные коэффициенты:} не забыть $\binom{t}{k}$ в формуле Жордана.
-\end{itemize}
-
-% Ссылки на задачи: добавьте URL/refs сюда
-% Например: Сборник И. Иванов, гл. 3; задачи 1-15.
+\textbf{Явный вид через \(A^t\).}
+Здесь
+\[
+A^t=\begin{pmatrix}4^t&\dfrac{4^t-2^t}{2}\\[4pt]0&2^t\end{pmatrix}.
+\]
+Отсюда (покомпонентно)
+\[
+\boxed{
+\begin{aligned}
+x_t&=4^t\!\Big(x_0+1\Big)+\frac{4^t-2^t}{2}\,\Big(y_0-1\Big)-3^t,\\[2pt]
+y_t&=2^t\,\Big(y_0-1\Big)+3^t.
+\end{aligned}}
+\]
+\emph{Проверка:} подстановка в \(\mathbf{x}_{t+1}=A\mathbf{x}_t+3^t\mathbf{b}\) даёт тождества.
