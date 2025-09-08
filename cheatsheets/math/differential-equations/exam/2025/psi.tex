@@ -8,28 +8,28 @@
 \begin{document}
 
 \begin{center}
-\textbf{Вариант $\varphi$}
+\textbf{Вариант $\psi$}
 \end{center}
 
 \begin{enumerate}
 \item Решите нелинейную систему уравнений, предварительно найдя оба первых интеграла (их независимость подлежит проверке)
 \[
 \begin{cases}
-\dot x = y,\\[2pt]
-\dot y = -x,\\[2pt]
-\dot z = y^{2} - x^{2},
+\dot x = z^{2}-y^{2},\\[2pt]
+\dot y = z,\\[2pt]
+\dot z = -y,
 \end{cases}
 \qquad
-\text{Система рассматривается в области } y > x > z > 0.
+\text{Система рассматривается в области } z>y>x>0.
 \]
 
 \item Решите задачу Коши для уравнения в частных производных первого порядка
 \[
-x\,\frac{\partial u}{\partial x}
-+ 2y\,\frac{\partial u}{\partial y}
-+ \bigl(x^{2}y+z\bigr)\,\frac{\partial u}{\partial z}=0,
+xy\,\frac{\partial u}{\partial x}
+- x^{2}\,\frac{\partial u}{\partial y}
++ yz\,\frac{\partial u}{\partial z}=0,
 \qquad
-u = x^{3}\ \text{при}\ z = x.
+\text{и } \; u = x \; \text{при } z = x^{2}+y^{2}.
 \]
 
 \item Пусть $P(a,b,c)$ однородный многочлен от трёх переменных. Рассмотрите уравнение второго порядка
@@ -56,14 +56,14 @@ y_{t}
 -1
 \end{pmatrix},
 \qquad
-A=
+A=\frac12
 \begin{pmatrix}
-0 & -1\\
--1 & 0
+-1 & 3\\
+3 & -1
 \end{pmatrix}.
 \]
 \begin{enumerate}
-\item[а)] Найдите фундаментальную матрицу этой системы $\Phi_{t}$.
+\item[а)] Найдите фундаментальную матрицу этой системы $\Phi_t$.
 \item[б)] Чтобы найти решение неоднородной системы, воспользуйтесь методом вариации постоянных, полагая
 \[
 \begin{pmatrix}
@@ -82,7 +82,7 @@ c_{2}^{\,t}
 
 \item Решите разностное уравнение
 \[
-y_{t+2}+2y_{t+1}-3y_{t}=25t \cdot 2^{t}+4.
+y_{t+2}-y_{t}=(8t+10)(-3)^{t}+6.
 \]
 \end{enumerate}
 
