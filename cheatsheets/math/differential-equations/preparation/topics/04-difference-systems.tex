@@ -1,6 +1,13 @@
 \subsection{Системы разностных уравнений}\label{subsec:systems}
 
-\HSEExample{\textbf{Пример.} Решите систему разностных уравнений: $\begin{cases} x_{t+1} = 4x_t + y_t \\ y_{t+1} = 2y_t \end{cases}$, с начальными условиями $\mathbf{x}_0 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.}
+% Заметим, что матрица явно не указана. Однако справа находятся её элементы. Запишем в матричном виде:
+\HSEExample{
+    \textbf{Пример.} Решите систему разностных уравнений:
+    $\begin{cases} x_{t+1} = 4x_t + y_t \\ y_{t+1} = 2y_t \end{cases}$, с начальными условиями $\mathbf{x}_0 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$.\\
+    \textit{Заметим, что матрица явно не указана. Однако справа находятся её элементы. Запишем в матричном виде:} \\
+    $\mathbf{x}_{t+1} = A\mathbf{x}_t$, где $A = \begin{pmatrix} 4 & 1 \\ 0 & 2 \end{pmatrix}$, \; $\mathbf{x}_t = \begin{pmatrix} x_t \\ y_t \end{pmatrix}$.\\
+    Здесь $A$ — это матрица коэффициентов системы.
+}
 
 \HSEDefinition{Система линейных разностных уравнений первого порядка с постоянными коэффициентами: $\mathbf{x}_{t+1} = A\mathbf{x}_t$, где задано $\mathbf{x}_0$, $A \in \mathbb{R}^{n \times n}$, $\mathbf{x}_t \in \mathbb{R}^n$. Цель: найти $\mathbf{x}_t = A^t\mathbf{x}_0$.}
 
@@ -39,7 +46,28 @@
 
 \HSEAlgorithm{\textbf{Алгоритм диагонализации.}\begin{enumerate}\item Характеристический многочлен: $\chi_A(\lambda) = \det(\lambda I - A)$.\item Собственные значения: решить $\chi_A(\lambda) = 0$.\item Собственные векторы: для каждого $\lambda_i$ решить $(A - \lambda_i I)\mathbf{v}_i = \mathbf{0}$.\item Проверка диагонализуемости: $\det S \neq 0$.\item Диагонализация: $A = S\Lambda S^{-1}$.\item Возведение в степень: $A^t = S\Lambda^t S^{-1}$.\item Решение: $\mathbf{x}_t = A^t\mathbf{x}_0$.\end{enumerate}}
 
-\HSEExample{\textbf{Пример.} Та же система. Решение: \; $A = \begin{pmatrix} 4 & 1 \\ 0 & 2 \end{pmatrix}$. Найдём собственные значения и векторы, построим $S,\Lambda, S^{-1}$ и получим $A^t = \begin{pmatrix} 4^t & \frac{4^t - 2^t}{2} \\ 0 & 2^t \end{pmatrix}$, откуда $\mathbf{x}_t = \begin{pmatrix} \frac{3 \cdot 4^t - 2^t}{2} \\ 2^t \end{pmatrix}$.}
+\HSEExample{\textbf{Пример.} Та же система. Решение: \; $A = \begin{pmatrix} 4 & 1 \\ 0 & 2 \end{pmatrix}$.\\
+\textbf{Шаг 1.} Характеристический многочлен:
+$$\chi_A(\lambda) = \det(\lambda I - A) = \det\begin{pmatrix} \lambda-4 & -1 \\ 0 & \lambda-2 \end{pmatrix} = (\lambda-4)(\lambda-2) = \lambda^2 - 6\lambda + 8$$
+\textbf{Шаг 2.} Собственные значения: $\lambda^2 - 6\lambda + 8 = 0 \Rightarrow \lambda_1 = 4, \lambda_2 = 2$\\
+\textbf{Шаг 3.} Собственные векторы:
+\begin{itemize}
+\item Для $\lambda_1 = 4$: $(A - 4I)\mathbf{v}_1 = \mathbf{0}$:
+$$\begin{pmatrix} 0 & 1 \\ 0 & -2 \end{pmatrix}\begin{pmatrix} v_{11} \\ v_{12} \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix} \Rightarrow v_{12} = 0$$
+Выбираем $\mathbf{v}_1 = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$
+\item Для $\lambda_2 = 2$: $(A - 2I)\mathbf{v}_2 = \mathbf{0}$:
+$$\begin{pmatrix} 2 & 1 \\ 0 & 0 \end{pmatrix}\begin{pmatrix} v_{21} \\ v_{22} \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix} \Rightarrow 2v_{21} + v_{22} = 0$$
+Выбираем $\mathbf{v}_2 = \begin{pmatrix} 1 \\ -2 \end{pmatrix}$
+\end{itemize}
+\textbf{Шаг 4.} Матрицы диагонализации:
+$$S = \begin{pmatrix} 1 & 1 \\ 0 & -2 \end{pmatrix}, \quad \Lambda = \begin{pmatrix} 4 & 0 \\ 0 & 2 \end{pmatrix}$$
+$$S^{-1} = \frac{1}{\det S}\begin{pmatrix} -2 & -1 \\ 0 & 1 \end{pmatrix} = \frac{1}{-2}\begin{pmatrix} -2 & -1 \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} 1 & \frac{1}{2} \\ 0 & -\frac{1}{2} \end{pmatrix}$$
+\textbf{Шаг 5.} Возведение в степень:
+$$A^t = S\Lambda^t S^{-1} = \begin{pmatrix} 1 & 1 \\ 0 & -2 \end{pmatrix}\begin{pmatrix} 4^t & 0 \\ 0 & 2^t \end{pmatrix}\begin{pmatrix} 1 & \frac{1}{2} \\ 0 & -\frac{1}{2} \end{pmatrix}$$
+$$= \begin{pmatrix} 1 & 1 \\ 0 & -2 \end{pmatrix}\begin{pmatrix} 4^t & \frac{4^t}{2} \\ 0 & -\frac{2^t}{2} \end{pmatrix} = \begin{pmatrix} 4^t & \frac{4^t - 2^t}{2} \\ 0 & 2^t \end{pmatrix}$$
+\textbf{Шаг 6.} Решение системы:
+$$\mathbf{x}_t = A^t\mathbf{x}_0 = \begin{pmatrix} 4^t & \frac{4^t - 2^t}{2} \\ 0 & 2^t \end{pmatrix}\begin{pmatrix} 1 \\ 1 \end{pmatrix} = \begin{pmatrix} 4^t + \frac{4^t - 2^t}{2} \\ 2^t \end{pmatrix} = \begin{pmatrix} \frac{3 \cdot 4^t - 2^t}{2} \\ 2^t \end{pmatrix}$$
+}
 
 \bigskip
 \hrule
@@ -55,7 +83,21 @@
 
 \HSEAlgorithm{\textbf{Алгоритм Жордановой формы.}\begin{enumerate}\item Собственное значение $\lambda$.\item Нильпотентная матрица $N = A - \lambda I$.\item Индекс нильпотентности: $N^m=0$.\item Формула: $A^t = \lambda^t \sum_{k=0}^{m-1} \binom{t}{k} (\lambda^{-1}N)^k$.\item Решение: $\mathbf{x}_t = A^t\mathbf{x}_0$.\end{enumerate}}
 
-\HSEExample{\textbf{Пример.} Система $\begin{cases} x_{t+1} = 2x_t + y_t \\ y_{t+1} = 2y_t \end{cases}$. Для $A = \begin{pmatrix} 2 & 1 \\ 0 & 2 \end{pmatrix}$ имеем $\lambda=2$, $N=\begin{pmatrix}0 & 1 \\ 0 & 0\end{pmatrix}$, $m=2$, поэтому $A^t = 2^t\begin{pmatrix} 1 & t/2 \\ 0 & 1 \end{pmatrix}$ и $\mathbf{x}_t = 2^t \begin{pmatrix} 1 + t/2 \\ 1 \end{pmatrix}$.}
+\HSEExample{\textbf{Пример.} Система $\begin{cases} x_{t+1} = 2x_t + y_t \\ y_{t+1} = 2y_t \end{cases}$. Для $A = \begin{pmatrix} 2 & 1 \\ 0 & 2 \end{pmatrix}$\\
+\textbf{Шаг 1.} Собственное значение:
+$$\chi_A(\lambda) = \det(\lambda I - A) = \det\begin{pmatrix} \lambda-2 & -1 \\ 0 & \lambda-2 \end{pmatrix} = (\lambda-2)^2 = 0 \Rightarrow \lambda = 2 \text{ (кратности 2)}$$
+\textbf{Шаг 2.} Нильпотентная матрица:
+$$N = A - \lambda I = \begin{pmatrix} 2 & 1 \\ 0 & 2 \end{pmatrix} - 2\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}$$
+\textbf{Шаг 3.} Индекс нильпотентности:
+$$N^2 = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}\begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix} = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix} = 0 \Rightarrow m = 2$$
+\textbf{Шаг 4.} Применение формулы Жордана:
+$$A^t = \lambda^t \sum_{k=0}^{m-1} \binom{t}{k} (\lambda^{-1}N)^k = 2^t \sum_{k=0}^{1} \binom{t}{k} \left(\frac{1}{2}N\right)^k$$
+$$= 2^t \left[ \binom{t}{0} \left(\frac{1}{2}N\right)^0 + \binom{t}{1} \left(\frac{1}{2}N\right)^1 \right]$$
+$$= 2^t \left[ I + t \cdot \frac{1}{2}N \right] = 2^t \left[ \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} + \frac{t}{2}\begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix} \right]$$
+$$= 2^t \begin{pmatrix} 1 & \frac{t}{2} \\ 0 & 1 \end{pmatrix}$$
+\textbf{Шаг 5.} Решение системы:
+$$\mathbf{x}_t = A^t\mathbf{x}_0 = 2^t \begin{pmatrix} 1 & \frac{t}{2} \\ 0 & 1 \end{pmatrix}\begin{pmatrix} 1 \\ 1 \end{pmatrix} = 2^t \begin{pmatrix} 1 + \frac{t}{2} \\ 1 \end{pmatrix}$$
+}
 
 \bigskip
 \hrule
@@ -74,7 +116,20 @@ A^t = \rho^t \begin{pmatrix} \cos(t\theta) & -\sin(t\theta) \\ \sin(t\theta) & \
 
 \HSEAlgorithm{\textbf{Алгоритм для комплексной пары.}\begin{enumerate}\item Проверка: $(\operatorname{tr}A)^2 - 4\det A < 0$.\item $\rho = \sqrt{\det A}$, $\cos\theta = \frac{\operatorname{tr}A}{2\rho}$.\item $A^t = \rho^t \begin{pmatrix} \cos(t\theta) & -\sin(t\theta) \\ \sin(t\theta) & \cos(t\theta) \end{pmatrix}$.\item Решение: $\mathbf{x}_t = A^t\mathbf{x}_0$.\end{enumerate}}
 
-\HSEExample{\textbf{Пример.} $A = \begin{pmatrix} 1 & -1 \\ 1 & 1 \end{pmatrix}$: $(\operatorname{tr}A)^2-4\det A = -4 < 0$, $\rho=\sqrt{2}$, $\theta=\pi/4$. Тогда $A^t = (\sqrt{2})^t R(t\theta)$ и $\mathbf{x}_t = (\sqrt{2})^t \begin{pmatrix} \cos\tfrac{\pi t}{4} \\ \sin\tfrac{\pi t}{4} \end{pmatrix}$.}
+\HSEExample{\textbf{Пример.} $A = \begin{pmatrix} 1 & -1 \\ 1 & 1 \end{pmatrix}$\\
+\textbf{Шаг 1.} Проверка условия комплексности:
+$$\operatorname{tr}A = 1 + 1 = 2, \quad \det A = 1 \cdot 1 - (-1) \cdot 1 = 2$$
+$$(\operatorname{tr}A)^2 - 4\det A = 2^2 - 4 \cdot 2 = 4 - 8 = -4 < 0 \Rightarrow \text{комплексные корни}$$
+\textbf{Шаг 2.} Вычисление параметров:
+$$\rho = \sqrt{\det A} = \sqrt{2}$$
+$$\cos\theta = \frac{\operatorname{tr}A}{2\rho} = \frac{2}{2\sqrt{2}} = \frac{1}{\sqrt{2}} = \frac{\sqrt{2}}{2} \Rightarrow \theta = \frac{\pi}{4}$$
+\textbf{Шаг 3.} Применение формулы:
+$$A^t = \rho^t \begin{pmatrix} \cos(t\theta) & -\sin(t\theta) \\ \sin(t\theta) & \cos(t\theta) \end{pmatrix} = (\sqrt{2})^t \begin{pmatrix} \cos\left(\frac{\pi t}{4}\right) & -\sin\left(\frac{\pi t}{4}\right) \\ \sin\left(\frac{\pi t}{4}\right) & \cos\left(\frac{\pi t}{4}\right) \end{pmatrix}$$
+\textbf{Шаг 4.} Решение системы (с начальными условиями $\mathbf{x}_0 = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$):
+$$\mathbf{x}_t = A^t\mathbf{x}_0 = (\sqrt{2})^t \begin{pmatrix} \cos\left(\frac{\pi t}{4}\right) & -\sin\left(\frac{\pi t}{4}\right) \\ \sin\left(\frac{\pi t}{4}\right) & \cos\left(\frac{\pi t}{4}\right) \end{pmatrix}\begin{pmatrix} 1 \\ 0 \end{pmatrix}$$
+$$= (\sqrt{2})^t \begin{pmatrix} \cos\left(\frac{\pi t}{4}\right) \\ \sin\left(\frac{\pi t}{4}\right) \end{pmatrix}$$
+\textit{Интерпретация:} Решение описывает спираль с радиусом $(\sqrt{2})^t$ и углом поворота $\frac{\pi t}{4}$ на каждом шаге.
+}
 
 \bigskip
 \hrule
@@ -90,7 +145,27 @@ A^t = \rho^t \begin{pmatrix} \cos(t\theta) & -\sin(t\theta) \\ \sin(t\theta) & \
 
 \HSEAlgorithm{\textbf{Алгоритм Кэли–Гамильтона (2×2).}\begin{enumerate}\item $\chi_A(\lambda) = \lambda^2 - (\operatorname{tr}A)\lambda + \det A$.\item Рекуррентное: $A^{t+2} = (\operatorname{tr}A)A^{t+1} - (\det A)A^t$.\item Представление: $A^t = \alpha_t A + \beta_t I$.\item Решить на $\alpha_t,\beta_t$ и получить $\mathbf{x}_t$.\end{enumerate}}
 
-\HSEExample{\textbf{Пример.} Для $A = \begin{pmatrix} 3 & 2 \\ -2 & -1 \end{pmatrix}$: $\chi_A(\lambda) = (\lambda-1)^2$, откуда $A^{t+2}=2A^{t+1}-A^t$, $A^t = tA + (1-t)I$, и $\mathbf{x}_t = \begin{pmatrix} 4t + 1 \\ 1 - 4t \end{pmatrix}$.}
+\HSEExample{\textbf{Пример.} Для $A = \begin{pmatrix} 3 & 2 \\ -2 & -1 \end{pmatrix}$\\
+\textbf{Шаг 1.} Характеристический многочлен:
+$$\chi_A(\lambda) = \det(\lambda I - A) = \det\begin{pmatrix} \lambda-3 & -2 \\ 2 & \lambda+1 \end{pmatrix} = (\lambda-3)(\lambda+1) - (-2) \cdot 2$$
+$$= \lambda^2 - 2\lambda - 3 + 4 = \lambda^2 - 2\lambda + 1 = (\lambda-1)^2$$
+\textbf{Шаг 2.} Рекуррентное соотношение:
+По теореме Кэли-Гамильтона: $\chi_A(A) = A^2 - 2A + I = 0$, откуда $A^2 = 2A - I$\\
+Умножая на $A^t$: $A^{t+2} = 2A^{t+1} - A^t$\\
+\textbf{Шаг 3.} Представление $A^t$:
+Ищем $A^t = \alpha_t A + \beta_t I$ для некоторых $\alpha_t, \beta_t$\\
+Из рекуррентного соотношения: $\alpha_{t+2} = 2\alpha_{t+1} - \alpha_t$ с начальными условиями:
+\begin{itemize}
+\item $t=0$: $A^0 = I = \alpha_0 A + \beta_0 I \Rightarrow \alpha_0 = 0, \beta_0 = 1$
+\item $t=1$: $A^1 = A = \alpha_1 A + \beta_1 I \Rightarrow \alpha_1 = 1, \beta_1 = 0$
+\end{itemize}
+Решение рекуррентного уравнения: $\alpha_t = t$, $\beta_t = 1-t$\\
+\textbf{Шаг 4.} Итоговая формула:
+$$A^t = tA + (1-t)I = t\begin{pmatrix} 3 & 2 \\ -2 & -1 \end{pmatrix} + (1-t)\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$$
+$$= \begin{pmatrix} 3t & 2t \\ -2t & -t \end{pmatrix} + \begin{pmatrix} 1-t & 0 \\ 0 & 1-t \end{pmatrix} = \begin{pmatrix} 2t+1 & 2t \\ -2t & 1-2t \end{pmatrix}$$
+\textbf{Шаг 5.} Решение системы (с начальными условиями $\mathbf{x}_0 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$):
+$$\mathbf{x}_t = A^t\mathbf{x}_0 = \begin{pmatrix} 2t+1 & 2t \\ -2t & 1-2t \end{pmatrix}\begin{pmatrix} 1 \\ 1 \end{pmatrix} = \begin{pmatrix} 2t+1 + 2t \\ -2t + 1-2t \end{pmatrix} = \begin{pmatrix} 4t + 1 \\ 1 - 4t \end{pmatrix}$$
+}
 
 \HSEBox{Общий алгоритм решения систем разностных уравнений}{\begin{enumerate}\item Анализ матрицы: $\operatorname{tr}A$, $\det A$, $\chi_A(\lambda)$.\item Выбор метода по типу спектра.\item Получить $A^t$ соответствующим методом.\item Решить $\mathbf{x}_t = A^t\mathbf{x}_0$.\item Проверка: $A^0=I$, $A^1=A$.\end{enumerate}}
 
