@@ -12,7 +12,7 @@
 
 | Предмет | Лектор |
 |---------|--------|
-| **[Дифференциальные уравнения](cheatsheets/math/differential-equations/)** | Букин Кирилл Александрович |
+| **[Дифференциальные уравнения](cheatsheets/math/differential-equations/main.pdf)** | Букин Кирилл Александрович |
 
 ### Программирование
 *Материалы пока не добавлены*
@@ -56,7 +56,7 @@ MIT License.
 
 ```bash
 # Автоматическое обновление конкретного файла
-make watch FILE=cheatsheets/math/differential-equations/preparation/main.tex
+make watch FILE=cheatsheets/math/differential-equations/main.tex
 
 # Автоматическое обновление всех файлов
 make watch-all
@@ -72,13 +72,13 @@ make watch-all
 
 ```bash
 # Через скрипт для конкретного файла
-./scripts/auto-latexmk.sh cheatsheets/math/differential-equations/preparation/main.tex
+./scripts/auto-latexmk.sh cheatsheets/math/differential-equations/main.tex
 
 # Через скрипт для всех файлов
 ./scripts/auto-latexmk.sh all
 
 # Через inotify (более гибкий вариант)
-./scripts/watch-latex.sh cheatsheets/math/differential-equations/preparation/main.tex
+./scripts/watch-latex.sh cheatsheets/math/differential-equations/main.tex
 ```
 
 ### Особенности
