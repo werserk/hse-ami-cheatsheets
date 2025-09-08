@@ -1,98 +1,85 @@
-\section{Неоднородные линейные разностные уравнения}\label{sec:inhomogeneous}
+\section{Минимальное ЛОУ: метод аннигиляторов}\label{sec:min-lre}
 
 \begin{center}
-\fbox{\parbox{0.9\textwidth}{
-\textbf{Пример.} Решите неоднородное линейное разностное уравнение:
-\begin{align}
-y_{t+3} - 3y_{t+2} + 6y_{t+1} - 4y_t = 2^t + t
-\end{align}
-}}
-\end{center}
-
-\textbf{Определение.} Линейное неоднородное разностное уравнение порядка $k$ с постоянными коэффициентами:
-\begin{align}
-a_t + c_1 a_{t-1} + c_2 a_{t-2} + \dots + c_k a_{t-k} = f(t), \quad c_k \neq 0
-\end{align}
-
-где $f(t)$ — заданная функция (неоднородность).
-
-\textbf{Структура общего решения:} $a_t = a_t^{(h)} + a_t^{(p)}$, где:
-\begin{itemize}
-\item $a_t^{(h)}$ — общее решение однородного уравнения (см. раздел~\ref{sec:homogeneous})
-\item $a_t^{(p)}$ — частное решение неоднородного уравнения
-\end{itemize}
-
-\textbf{Метод неопределённых коэффициентов для $a_t^{(p)}$.}
-
-Пусть характеристический многочлен однородного уравнения:
-\[
-\chi(r) = r^k + c_1 r^{k-1} + \dots + c_k
-\quad \text{и} \quad
-\chi(r) = \prod_i (r-r_i)^{m_i} \prod_\ell Q_{\rho_\ell, \theta_\ell}(r)^{s_\ell},
-\]
-где
-\[
-Q_{\rho,\theta}(r) = (r - \rho e^{i\theta})(r - \rho e^{-i\theta}) = r^2 - 2\rho \cos\theta \, r + \rho^2.
-\]
-
-\textbf{Правило «множитель $\to$ вклад» (однородная часть):}
-
-\begin{itemize}
-\item Линейный $(r-r_0)^m \;\Rightarrow\; \sum_{j=0}^{m-1} \alpha_j t^j r_0^t.$
-
-\item Квадратный $Q_{\rho,\theta}(r)^s \;\Rightarrow\;
-\rho^t \Bigl( \sum_{j=0}^{s-1} t^j \bigl(a_j \cos(\theta t) + b_j \sin(\theta t)\bigr)\Bigr).$
-\end{itemize}
-
-\textbf{Итог:} $a_t^{(h)}$ — сумма всех таких вкладов по всем множителям $\chi$.
-
-\textbf{Выбор формы частного решения $a_t^{(p)}$:}
-
-\textit{Обозначения:} $P_n(t)$ — полином степени $n$; $Q_n(t), R_n(t)$ — полиномы; $\lambda\in\mathbb{C}$; $s$ — кратность резонанса (кратность соответствующего множителя в $\chi$).
-
-\begin{table}[h!]
-\centering
-\caption{Выбор формы частного решения и проверка резонанса}
-\label{tab:particular-form}
-\begin{tabular}{|l|l|l|}
-\hline
-\textbf{Неоднородность $f(t)$} & \textbf{Проверка резонанса} & \textbf{Базовая форма $a_t^{(p)}$} \\
-\hline
-$P_n(t)\,\lambda^t$ & $\chi(\lambda)=0?$ & $Q_n(t)\,\lambda^t$ \\
-\hline
-$\rho^t\cos(\theta t)$, $\rho^t\sin(\theta t)$ & $Q_{\rho,\theta}(r)\mid \chi(r)?$ & $\rho^t\big(A\cos(\theta t)+B\sin(\theta t)\big)$ \\
-\hline
-$P_n(t)\,\rho^t\cos(\theta t)$ (или $\sin$) & $Q_{\rho,\theta}(r)\mid \chi(r)?$ & $\rho^t\big(Q_n(t)\cos(\theta t)+R_n(t)\sin(\theta t)\big)$ \\
-\hline
-Чистый полином $P_n(t)$ & $\chi(1)=0?$ & $Q_n(t)$ \\
-\hline
-\end{tabular}
-\end{table}
-
-\textbf{Правило резонанса:} если проверка даёт резонанс кратности $s$, домножьте базовую форму на $t^{s}$.
-
-\begin{center}
-\fbox{\parbox{0.9\textwidth}{
-\textbf{Алгоритм решения неоднородного уравнения.}
+\fbox{\parbox{0.92\textwidth}{
+\textbf{TL;DR:} минимальное ЛОУ (минимальная однородная линейная рекуррент с постоянными коэффициентами), которое имеет данные последовательности в качестве решений, строится так:
 \begin{enumerate}
-\item \textbf{Однородная часть.} Найти $a_t^{(h)}$ методом характеристических корней (см. раздел~\ref{sec:homogeneous}).
-\item \textbf{Форма частного решения.} По таблице~\ref{tab:particular-form} выбрать форму $a_t^{(p)}$ с учётом правила резонанса.
-\item \textbf{Подстановка.} Подставить $a_t^{(p)}$ в исходное неоднородное уравнение и найти неопределённые коэффициенты.
-\item \textbf{Общее решение.} $a_t = a_t^{(h)} + a_t^{(p)}$.
-\item \textbf{Начальные условия.} Подставить $k$ заданных значений и найти константы в $a_t^{(h)}$.
+\item к каждой заданной последовательности приписать аннигилятор (многочлен от $E$);
+\item взять НОК этих аннигиляторов как многочлен $L(\lambda)$;
+\item развернуть $L(E)\,y=0$ в явную рекурренту. Степень $L$ — минимальный порядок.
 \end{enumerate}
 }}
 \end{center}
 
+\section*{Методика (детерминированно)}
+
+Пусть даны частные решения $y^{(1)},\ldots,y^{(m)}$.
+
+\subsection*{Шаг 1. Атом $\to$ аннигилятор}
+Для каждой последовательности выпиши минимальный аннигилирующий многочлен:
+\begin{table}[h!]
+\centering
+\caption{Атом $\to$ аннигилятор}
+\label{tab:atom-to-annihilator}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Атом (последовательность)} & \textbf{Минимальный аннигилятор $L(\lambda)$} \\
+\hline
+$r^t$ & $(\lambda - r)$ \\
+\hline
+$t^k r^t$ & $(\lambda - r)^{k+1}$ \\
+\hline
+$\rho^t \cos(\omega t)$, $\rho^t \sin(\omega t)$ & $Q_{\rho,\omega}(\lambda)=\lambda^2-2\rho\cos\omega\,\lambda+\rho^2$ \\
+\hline
+$t^k \, \rho^t \, \cos/\sin(\omega t)$ & $Q_{\rho,\omega}(\lambda)^{k+1}$ \\
+\hline
+$t^k$ & $(\lambda-1)^{k+1}$ \\
+\hline
+$(-1)^t$ & $(\lambda+1)$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection*{Шаг 2. Собрать общий аннигилятор}
+Возьмём НОК (наименьший общий кратный) всех многочленов из шага 1:
+\[
+ L(\lambda)=\operatorname{lcm}\big(L_1(\lambda),\ldots,L_m(\lambda)\big).
+\]
+При одинаковых базах/частотах выбирается максимальная кратность (а не сумма).
+
+\subsection*{Шаг 3. Развернуть в рекуррент}
+Если $L(\lambda)=\lambda^k+c_1\lambda^{k-1}+\cdots+c_k$, то искомое уравнение:
+\[
+ \boxed{\,y_{t+k}+c_1 y_{t+k-1}+\cdots+c_k y_t=0\,}.
+\]
+
+\paragraph{Минимальность.}
+Любой многочлен $P(E)$, который зануляет все данные последовательности, обязан делиться на $L(E)$. Поэтому $\deg L$ — минимально возможный порядок.
+
 \bigskip
 
 \begin{center}
 \fbox{\parbox{0.92\textwidth}{
-\textbf{Пример.} Решите разностное уравнение третьего порядка с постоянными коэффициентами:
+\section*{Простой пример}
+
+Дано:
 \[
-y_{t+3} - 3y_{t+2} + 6y_{t+1} - 4y_t = 2^t + t
+y_t^{(1)}=3^t,\qquad y_t^{(2)}=(-2)^t.
 \]
-Найти общее решение $y_t$.
+
+\paragraph{Шаг 1.} Аннигиляторы: $(\lambda-3)$ и $(\lambda+2)$.
+
+\paragraph{Шаг 2.} НОК:
+\[
+(\lambda-3)(\lambda+2)=\lambda^2-\lambda-6.
+\]
+
+\paragraph{Шаг 3.} Рекуррентное соотношение (развёртка):
+\[
+\boxed{\,y_{t+2}-y_{t+1}-6y_t=0\,}.
+\]
+
+Проверка: последовательности $3^t$ и $(-2)^t$ действительно являются решениями; порядок $2$ минимален.
 }}
 \end{center}
 
@@ -100,62 +87,47 @@ y_{t+3} - 3y_{t+2} + 6y_{t+1} - 4y_t = 2^t + t
 
 \begin{center}
 \fbox{\parbox{0.92\textwidth}{
-\noindent\textbf{Решение.}
+\section*{Пример посложнее}
 
-\paragraph{1) Однородная часть.}
-Характеристический многочлен:
+Дано:
 \[
-\chi(r)=r^3-3r^2+6r-4=(r-1)(r^2-2r+4),
-\]
-корни: $r_1=1$, $r_{2,3}=1\pm i\sqrt{3}=2e^{\pm i\pi/3}$.
-
-Отсюда
-\[
-y_t^{(h)} = C_1 + 2^t\Big(C_2\cos\tfrac{\pi t}{3} + C_3\sin\tfrac{\pi t}{3}\Big).
+y^{(1)}_t=2^t,\qquad y^{(2)}_t=t2^t,\qquad y^{(3)}_t=(-1)^t,\qquad y^{(4)}_t=3^t\cos\frac{\pi t}{3}.
 \]
 
-\paragraph{2) Частное решение $y_t^{(p)}$.}
-Правая часть $f(t) = 2^t + t$ — сумма двух типов.
+\subsection*{Шаг 1. Аннигиляторы}
+\begin{itemize}
+  \item Для $2^t$: $(\lambda-2)$.
+  \item Для $t2^t$: $(\lambda-2)^{2}$ (кратность на 1 больше из-за множителя $t$).
+  \item Для $(-1)^t$: $(\lambda+1)$.
+  \item Для $3^t\cos\frac{\pi t}{3}$:
+  \[
+  Q_{3,\pi/3}(\lambda)=\lambda^2-2\cdot 3\cos\frac{\pi}{3}\,\lambda+3^2
+  =\lambda^2-3\lambda+9.
+  \]
+\end{itemize}
 
-\textit{Экспонента $2^t$:} $\chi(2) = 8 - 12 + 12 - 4 = 4 \neq 0 \Rightarrow$ резонанса нет, берём $y^{(p)}_{(1)} = \alpha\,2^t$.
-
-\textit{Полином $t$:} $\chi(1) = 0$ (кратность $1$) $\Rightarrow$ резонанс порядка $s=1$. Базовая форма для $P_1(t)$ — $At+B$, домножаем на $t$:
+\subsection*{Шаг 2. НОК}
+Учитываем максимальную кратность по базе $2$, значит
 \[
-y^{(p)}_{(2)} = t(At+B) = At^2 + Bt.
-\]
-Итого
-\[
-y_t^{(p)} = \alpha\,2^t + At^2 + Bt.
-\]
-
-\paragraph{3) Подстановка и определение коэффициентов.}
-Обозначим линейный оператор:
-\[
-\mathcal{L}[y_t] = y_{t+3} - 3y_{t+2} + 6y_{t+1} - 4y_t.
+L(\lambda)=(\lambda-2)^2(\lambda+1)(\lambda^2-3\lambda+9).
 \]
 
-Для экспоненты: $\mathcal{L}[2^t] = \chi(2)\,2^t = 4\cdot2^t \Rightarrow 4\alpha\,2^t = 2^t$, значит $\alpha = \tfrac{1}{4}$.
-
-Для полинома $At^2 + Bt$ прямой подсчёт даёт:
+\subsection*{Шаг 3. Развёртка}
+Сначала
 \[
-\mathcal{L}[At^2 + Bt] = 6A\,t + (3A + 3B).
+(\lambda-2)^2(\lambda+1)=(\lambda^2-4\lambda+4)(\lambda+1)=\lambda^3-3\lambda^2+4.
 \]
-Требуем $\mathcal{L}[At^2 + Bt] = t$, откуда
+Умножаем на $\lambda^2-3\lambda+9$:
 \[
-6A = 1 \Rightarrow A = \tfrac{1}{6}, \qquad 3A + 3B = 0 \Rightarrow B = -\tfrac{1}{6}.
-\]
-Следовательно,
-\[
-y_t^{(p)} = \frac{1}{4}\,2^t + \frac{t^2 - t}{6}.
+L(\lambda)=(\lambda^3-3\lambda^2+4)(\lambda^2-3\lambda+9)
+=\lambda^5-6\lambda^4+18\lambda^3-23\lambda^2-12\lambda+36.
 \]
 
-\paragraph{4) Общее решение.}
+Соответствующая рекуррентная формула (коэффициенты берём по степеням $\lambda$) будет
 \[
-\boxed{
-y_t = C_1 + 2^t\Big(C_2\cos\tfrac{\pi t}{3} + C_3\sin\tfrac{\pi t}{3}\Big)
-+ \frac{1}{4}\,2^t + \frac{t^2 - t}{6}
-}
+\boxed{\,y_{t+5}-6y_{t+4}+18y_{t+3}-23y_{t+2}-12y_{t+1}+36y_t=0\,.}
 \]
-(константы $C_1, C_2, C_3$ находятся по начальным условиям).
+
+\paragraph{Комментарий.} Это и есть минимальное ЛОУ, annihilator которого равен $L(\lambda)$.
 }}
 \end{center}
