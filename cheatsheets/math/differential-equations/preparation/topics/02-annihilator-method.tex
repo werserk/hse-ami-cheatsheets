@@ -1,4 +1,4 @@
-\section{Минимальное ЛОУ: метод аннигиляторов}\label{sec:min-lre}
+\subsection{Минимальное ЛОУ: метод аннигиляторов}\label{subsec:min-lre}
 
 \begin{center}
 \fbox{\parbox{0.92\textwidth}{
@@ -11,11 +11,11 @@
 }}
 \end{center}
 
-\section*{Методика (детерминированно)}
+\subsubsection*{Методика (детерминированно)}
 
 Пусть даны частные решения $y^{(1)},\ldots,y^{(m)}$.
 
-\subsection*{Шаг 1. Атом $\to$ аннигилятор}
+\paragraph{Шаг 1. Атом $\to$ аннигилятор}
 Для каждой последовательности выпиши минимальный аннигилирующий многочлен:
 \begin{table}[h!]
 \centering
@@ -40,14 +40,14 @@ $(-1)^t$ & $(\lambda+1)$ \\
 \end{tabular}
 \end{table}
 
-\subsection*{Шаг 2. Собрать общий аннигилятор}
+\paragraph{Шаг 2. Собрать общий аннигилятор}
 Возьмём НОК (наименьший общий кратный) всех многочленов из шага 1:
 \[
  L(\lambda)=\operatorname{lcm}\big(L_1(\lambda),\ldots,L_m(\lambda)\big).
 \]
 При одинаковых базах/частотах выбирается максимальная кратность (а не сумма).
 
-\subsection*{Шаг 3. Развернуть в рекуррент}
+\paragraph{Шаг 3. Развернуть в рекуррент}
 Если $L(\lambda)=\lambda^k+c_1\lambda^{k-1}+\cdots+c_k$, то искомое уравнение:
 \[
  \boxed{\,y_{t+k}+c_1 y_{t+k-1}+\cdots+c_k y_t=0\,}.
@@ -60,7 +60,7 @@ $(-1)^t$ & $(\lambda+1)$ \\
 
 \begin{center}
 \fbox{\parbox{0.92\textwidth}{
-\section*{Простой пример}
+\subsubsection*{Простой пример}
 
 Дано:
 \[
@@ -87,14 +87,14 @@ y_t^{(1)}=3^t,\qquad y_t^{(2)}=(-2)^t.
 
 \begin{center}
 \fbox{\parbox{0.92\textwidth}{
-\section*{Пример посложнее}
+\subsubsection*{Пример посложнее}
 
 Дано:
 \[
 y^{(1)}_t=2^t,\qquad y^{(2)}_t=t2^t,\qquad y^{(3)}_t=(-1)^t,\qquad y^{(4)}_t=3^t\cos\frac{\pi t}{3}.
 \]
 
-\subsection*{Шаг 1. Аннигиляторы}
+\subsubsection*{Шаг 1. Аннигиляторы}
 \begin{itemize}
   \item Для $2^t$: $(\lambda-2)$.
   \item Для $t2^t$: $(\lambda-2)^{2}$ (кратность на 1 больше из-за множителя $t$).
@@ -106,13 +106,13 @@ y^{(1)}_t=2^t,\qquad y^{(2)}_t=t2^t,\qquad y^{(3)}_t=(-1)^t,\qquad y^{(4)}_t=3^t
   \]
 \end{itemize}
 
-\subsection*{Шаг 2. НОК}
+\subsubsection*{Шаг 2. НОК}
 Учитываем максимальную кратность по базе $2$, значит
 \[
 L(\lambda)=(\lambda-2)^2(\lambda+1)(\lambda^2-3\lambda+9).
 \]
 
-\subsection*{Шаг 3. Развёртка}
+\subsubsection*{Шаг 3. Развёртка}
 Сначала
 \[
 (\lambda-2)^2(\lambda+1)=(\lambda^2-4\lambda+4)(\lambda+1)=\lambda^3-3\lambda^2+4.

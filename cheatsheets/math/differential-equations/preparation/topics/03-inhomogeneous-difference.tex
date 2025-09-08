@@ -1,4 +1,4 @@
-\section{Неоднородные линейные разностные уравнения}\label{sec:inhomogeneous}
+\subsection{Неоднородные линейные разностные уравнения}\label{subsec:inhomogeneous}
 
 \begin{center}
 \fbox{\parbox{0.9\textwidth}{
@@ -18,7 +18,7 @@ a_t + c_1 a_{t-1} + c_2 a_{t-2} + \dots + c_k a_{t-k} = f(t), \quad c_k \neq 0
 
 \textbf{Структура общего решения:} $a_t = a_t^{(h)} + a_t^{(p)}$, где:
 \begin{itemize}
-\item $a_t^{(h)}$ — общее решение однородного уравнения (см. раздел~\ref{sec:homogeneous})
+\item $a_t^{(h)}$ — общее решение однородного уравнения (см. раздел~\ref{subsec:homogeneous})
 \item $a_t^{(p)}$ — частное решение неоднородного уравнения
 \end{itemize}
 
@@ -75,7 +75,7 @@ $P_n(t)\,\rho^t\cos(\theta t)$ (или $\sin$) & $Q_{\rho,\theta}(r)\mid \chi(r)
 \fbox{\parbox{0.92\textwidth}{
 \textbf{Алгоритм решения неоднородного уравнения.}
 \begin{enumerate}
-\item \textbf{Однородная часть.} Найти $a_t^{(h)}$ методом характеристических корней (см. раздел~\ref{sec:homogeneous}).
+\item \textbf{Однородная часть.} Найти $a_t^{(h)}$ методом характеристических корней (см. раздел~\ref{subsec:homogeneous}).
 \item \textbf{Форма частного решения.} По таблице~\ref{tab:particular-form} выбрать форму $a_t^{(p)}$ с учётом правила резонанса.
 \item \textbf{Подстановка.} Подставить $a_t^{(p)}$ в исходное неоднородное уравнение и найти неопределённые коэффициенты.
 \item \textbf{Общее решение.} $a_t = a_t^{(h)} + a_t^{(p)}$.
@@ -159,5 +159,3 @@ y_t = C_1 + 2^t\Big(C_2\cos\tfrac{\pi t}{3} + C_3\sin\tfrac{\pi t}{3}\Big)
 (константы $C_1, C_2, C_3$ находятся по начальным условиям).
 }}
 \end{center}
-
-
