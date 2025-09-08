@@ -24,7 +24,7 @@ TEMPLATE_PDFS = $(TEMPLATE_FILES:.tex=.pdf)
 PDF_FILES = $(TEX_FILES:.tex=.pdf)
 
 # Основные цели
-.PHONY: all clean templates cheatsheets help clean-pdf FORCE
+.PHONY: all clean templates cheatsheets help clean-pdf watch watch-all FORCE
 
 # Собрать все документы
 all: templates cheatsheets
@@ -106,13 +106,38 @@ help:
 	@echo "  make cheatsheets - Собрать только cheatsheet'ы"
 	@echo "  make templates   - Собрать только шаблоны"
 	@echo ""
+	@echo "🔍 Автоматическое обновление:"
+	@echo "  make watch FILE=путь/к/файлу.tex - Автоматическая пересборка при сохранении"
+	@echo "  make watch-all   - Автоматическая пересборка всех файлов"
+	@echo ""
 	@echo "🧹 Очистка:"
 	@echo "  make clean       - Удалить временные файлы"
 	@echo "  make clean-pdf   - Удалить PDF файлы"
 	@echo ""
 	@echo "📄 Сборка конкретного файла:"
 	@echo "  make cheatsheets/math/differential-equations/preparation/main.pdf"
-	@echo "  make templates/cheatsheets/basic-cheatsheet.pdf"
+	@echo "  make templates/cheatsheets/basic-cheatsheet.tex"
+
+# Автоматическое обновление конкретного файла
+watch:
+	@if [ -z "$(FILE)" ]; then \
+		echo "❌ Используйте: make watch FILE=путь/к/файлу.tex"; \
+		echo "📝 Примеры:"; \
+		echo "   make watch FILE=cheatsheets/math/differential-equations/preparation/main.tex"; \
+		echo "   make watch FILE=templates/cheatsheets/basic-cheatsheet.tex"; \
+		exit 1; \
+	fi
+	@echo "🔍 Запуск автоматического обновления для: $(FILE)"
+	@echo "💡 Сохраняйте .tex файл (Ctrl+S) для автоматической пересборки"
+	@echo "🛑 Для выхода нажмите Ctrl+C"
+	@./scripts/auto-latexmk.sh "$(FILE)"
+
+# Автоматическое обновление всех файлов
+watch-all:
+	@echo "🔍 Запуск автоматического обновления для всех LaTeX файлов"
+	@echo "💡 Сохраняйте .tex файлы для автоматической пересборки"
+	@echo "🛑 Для выхода нажмите Ctrl+C"
+	@./scripts/auto-latexmk.sh all
 
 # Создать директорию build если её нет
 $(BUILD_DIR):
