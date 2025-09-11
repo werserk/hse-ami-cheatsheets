@@ -2,17 +2,21 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T2A]{fontenc}
 \usepackage[russian]{babel}
-\usepackage{amsmath, amsfonts, amssymb}
-\usepackage{../../../assets/styles/hse-unified}
+\usepackage{amsmath, amsfonts, amssymb, mathtools}
 \usepackage{geometry}
 \usepackage{parskip}
 \usepackage{fancyhdr}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=black,
+    citecolor=black
+}
 
 % Команда для отображения by werserk (чёрный цвет, без ссылки)
 \newcommand{\byWerserk}{\textbf{by werserk}}
 
-% Установим единый цвет ссылок через пакет стилей
-\HSESetAccent{000000}
 
 \geometry{margin=1.8cm}
 \pagestyle{fancy}
@@ -22,29 +26,39 @@
 \renewcommand{\headrulewidth}{0pt}
 
 % --- Каталог тем для этого предмета ---
-\newcommand{\topicsBase}{preparation/topics}
+\newcommand{\topicsBase}{topics}
 
 \begin{document}
 
-\HSETitle{Подготовка: Дифференциальные уравнения}{Полная версия с разборами тем и ссылками}
+% \HSETitle{Подготовка: Дифференциальные уравнения}{Полная версия с разборами тем и ссылками}
+\title{Подготовка: Дифференциальные уравнения}
+\author{Полная версия с разборами тем и ссылками}
+\maketitle
+\thispagestyle{fancy}
 
 \vspace{1cm}
 
 % --- Оглавление ---
-{
-	\hypersetup{linkcolor=black}
-	\tableofcontents
-}
+\tableofcontents
 
 \newpage
 
 % --- Подключайте темы ниже ---
-% Примеры (создайте соответствующие файлы в preparation/topics/):
-\input{\topicsBase/00-difference-equations}
-\input{\topicsBase/06-pde-first-order}
-\input{\topicsBase/07-linear-ode-second-order}
-\input{\topicsBase/05-nonlinear-2d-systems}
-% \input{\topicsBase/03-systems}
+% Примеры (создайте соответствующие файлы в topics/):
+\input{\topicsBase/01-linear-difference-equations}
+\input{\topicsBase/02-synthesis-difference-equations}
+\input{\topicsBase/03-nonlinear-2d-systems}
+\input{\topicsBase/04-linear-ode-second-order}
+\input{\topicsBase/05-pde-first-order}
+\input{\topicsBase/06-systems-difference-equations}
+\input{\topicsBase/07-nonlinear-2d-systems-linearization}
+\input{\topicsBase/08-rotating-systems-polar-coordinates}
+\input{\topicsBase/09-linear-ode-second-order-wronskian}
+\input{\topicsBase/10-nonhyperbolic-equilibria}
+\input{\topicsBase/11-periodic-coefficients-monodromy-floquet}
+\input{\topicsBase/12-mechanical-systems-potential-stability}
+\input{\topicsBase/13-pde-first-order-cauchy-problem}
+% \input{\topicsBase/07-linear-ode-second-order}
 % \input{\topicsBase/04-numerical}
 
 \end{document}

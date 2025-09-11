@@ -1,0 +1,120 @@
+\section{Вращающиеся системы и полярные координаты: \((x,y)\to(r,\theta)\), \(\dot r,\dot\theta\), классификация}
+
+\subsection*{1. Тип экзаменационной задачи (полное условие)}
+Исследовать фазовый портрет
+\[
+\begin{cases}
+\dot{x}=a\,y+x(x^{2}+y^{2}),\\
+\dot{y}=-a\,x+y(x^{2}+y^{2}),
+\end{cases}
+\]
+в окрестности \((0,0)\) для всех \(a\in\mathbb R\). \textit{Указание:} перейти в полярные координаты. Определить тип начала координат для линеаризованной системы.
+
+\subsection*{2. Универсальный алгоритм (визуальные формулы и детерминированные шаги)}
+
+\textbf{Исходные данные и обозначения (ввод).} Дана система \(\dot x=f(x,y),\ \dot y=g(x,y)\) в декартовых координатах.
+Вводим полярные координаты: \(x=r\cos\theta,\ y=r\sin\theta\), где \(r>0\).
+Вводим функции: \(H(x,y):=\frac{x f+y g}{x^{2}+y^{2}}\) — радиальная компонента; \(A(x,y):=-\,\frac{x g-y f}{x^{2}+y^{2}}\) — угловая компонента.
+Тогда \(\dot r=r\,H,\ \dot\theta=A\).
+
+\paragraph{Шаг 0.} \textbf{Перейти к полярным координатам.}\\
+Использовать формулы преобразования:
+\[
+\boxed{\ \dot r=\frac{x f+y g}{r},\qquad \dot\theta=\frac{x g-y f}{r^{2}}\ }
+\]
+или через введённые функции:
+\[
+\boxed{\ \dot r=r\,H,\quad \dot\theta=A\ }
+\]
+
+\paragraph{Шаг 1.} \textbf{Вычислить функции \(H\) и \(A\).}\\
+Найти \(H(x,y)=\frac{x f+y g}{x^{2}+y^{2}}\) и \(A(x,y)=-\,\frac{x g-y f}{x^{2}+y^{2}}\).
+
+\paragraph{Шаг 2.} \textbf{Определить порядки малости у \(r=0\).}\\
+Разложить \(H(r,\theta)=h_k(\theta)\,r^{k}+o(r^{k})\) и \(A(r,\theta)=a_0+ a_1(\theta)\,r+\dots\) при \(r\to 0\).
+
+\paragraph{Шаг 3.} \textbf{Классифицировать тип равновесия по знаку \(h_k\).}\\
+Анализировать \(\dot r=r\,H\):
+\begin{itemize}
+\item Если \(k=0\) и \(h_0\neq 0\): \(\dot r\sim h_0 r\)
+  \begin{itemize}
+  \item \(h_0<0\): устойчивый фокус
+  \item \(h_0>0\): неустойчивый фокус
+  \end{itemize}
+\item Если \(k\ge 1\): \(\dot r\sim h_k(\theta)\,r^{k+1}\) — негиперболическое равновесие
+  \begin{itemize}
+  \item \(h_k(\theta)>0\): радиальный разлёт
+  \item \(h_k(\theta)<0\): радиальное притяжение
+  \end{itemize}
+\end{itemize}
+Анализировать \(\dot\theta \sim a_0\): при \(a_0\neq 0\) — равномерное вращение (знак \(a_0\) задаёт направление).
+
+\paragraph{Шаг 4.} \textbf{Проверить линеаризацию.}\\
+Вычислить якобиан \(J(0,0)=\begin{psmallmatrix}f_x&f_y\\ g_x&g_y\end{psmallmatrix}\).
+Если \(\sigma(J)=\{\pm i a_0\}\) — центр для линейной части, устойчивость определяет \(H\).
+
+\paragraph{Шаг 5.} \textbf{Построить эскиз фазового портрета.}\\
+Нарисовать стрелки по знакам \(\operatorname{sgn}(\dot r)\) и \(\operatorname{sgn}(\dot\theta)\).
+Кривая \(\dot r=0\Leftrightarrow H=0\) — радиальные барьеры.
+
+\subsection*{3. Сопроводительные материалы (таблицы и обозначения)}
+
+\textbf{Основные формулы преобразования:}
+\[
+\boxed{\ x f+y g=r^{2}H\ },\qquad
+\boxed{\ x g-y f=-\,r^{2}A\ }.
+\]
+
+\textbf{Классификация по порядку малости \(H\):}
+\[
+H(r,\theta)\sim
+\begin{cases}
+h_0\ (\neq0) &\Rightarrow\ \dot r\sim h_0 r\ \Rightarrow\
+\begin{cases}
+h_0<0:\ \text{устойчивый фокус},\\
+h_0>0:\ \text{неустойчивый фокус},
+\end{cases}\\[6pt]
+h_k(\theta)\,r^{k},\ k\ge1 &\Rightarrow\ \dot r\sim h_k(\theta)\,r^{k+1}\ \text{(негиперболика)}
+\end{cases}
+\]
+
+\textbf{Специальный случай:} Если \(f=a\,y+x\,\Phi,\ g=-a\,x+y\,\Phi\), то
+\[
+\boxed{\ \dot r=r\,\Phi,\quad \dot\theta=-a\ }.
+\]
+
+\subsection*{4. Применение алгоритма к объявленной задаче}
+
+\[
+\begin{cases}
+\dot{x}=a\,y+x(x^{2}+y^{2}),\\
+\dot{y}=-a\,x+y(x^{2}+y^{2}),
+\end{cases}
+\]
+
+\paragraph{Шаг 0.} \textbf{Перейти к полярным координатам.}\\
+Используем формулы: \(f(x,y)=a\,y+x(x^{2}+y^{2})\), \(g(x,y)=-a\,x+y(x^{2}+y^{2})\).
+
+\paragraph{Шаг 1.} \textbf{Вычислить функции \(H\) и \(A\).}\\
+\[
+H=\frac{x(ay+xr^{2})+y(-ax+yr^{2})}{r^{2}}=\frac{ar^{2}\sin\theta\cos\theta+ar^{2}\sin\theta\cos\theta+r^{4}}{r^{2}}=r^{2}
+\]
+\[
+A=-\frac{x(-ax+yr^{2})-y(ay+xr^{2})}{r^{2}}=-\frac{-ar^{2}\cos^{2}\theta-ar^{2}\sin^{2}\theta}{r^{2}}=a
+\]
+
+\paragraph{Шаг 2.} \textbf{Определить порядки малости у \(r=0\).}\\
+\(H=r^{2}\Rightarrow k=2,\ h_2\equiv1>0\); \(A\equiv a\).
+
+\paragraph{Шаг 3.} \textbf{Классифицировать тип равновесия.}\\
+\(\dot r=r^{3}>0\) при \(r>0\Rightarrow\) радиальный разлёт (негиперболическая неустойчивость).
+\(\dot\theta=a\Rightarrow\) равномерное вращение (знак \(a\) задаёт направление).
+
+\paragraph{Шаг 4.} \textbf{Проверить линеаризацию.}\\
+\(J(0,0)=\begin{psmallmatrix}0&a\\ -a&0\end{psmallmatrix}\), \(\sigma(J)=\{\pm i a\}\Rightarrow\) центр для линейной части (\(a\neq0\)); истинная динамика — разлёт из-за \(r^{3}\).
+
+\paragraph{Шаг 5.} \textbf{Построить эскиз фазового портрета.}\\
+Эскиз: расходящиеся спирали при \(a\neq0\); при \(a=0\) — чисто радиальный разлёт (\(\dot r=r^{3},\ \dot\theta\equiv0\)).
+
+\boxed{\text{При }a\neq0\text{: расходящиеся спирали; при }a=0\text{: радиальный разлёт}}
+
