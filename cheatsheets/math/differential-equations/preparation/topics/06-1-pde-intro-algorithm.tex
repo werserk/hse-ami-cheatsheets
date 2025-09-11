@@ -1,0 +1,53 @@
+\subsection{Вводная информация и единый алгоритм}\label{sec:pde-intro-algorithm}
+
+Рассматриваем линейное ПЧП первого порядка в $\mathbb{R}^3$:
+\[
+a(x,y,z)\,u_x + b(x,y,z)\,u_y + c(x,y,z)\,u_z \;=\; 0,
+\]
+где $a,b,c$ — непрерывны. Метод характеристик приводит к ОДУ-системе
+\[
+\dot x = a(x,y,z),\quad \dot y = b(x,y,z),\quad \dot z = c(x,y,z).
+\]
+
+\HSEDefinition{\Term{Инвариант (первый интеграл)} $I(x,y,z)$ — это $C^1$-функция, постоянная вдоль характеристик, т.е.
+\[
+\frac{d}{ds}I(x(s),y(s),z(s))= \nabla I \cdot (a,b,c) = a I_x + b I_y + c I_z = 0.
+\]
+Общее решение ПЧП имеет вид $u=F(I_1,I_2)$, где $I_1,I_2$ — два независимых инварианта.}
+
+\subsubsection{Единый алгоритм (5 шагов)}
+
+\begin{enumerate}
+\item \textbf{Цель.} Распознать форму и записать \emph{характеристики}.
+
+    \textbf{Действие.} Выписать $\dot x=a,\ \dot y=b,\ \dot z=c$ и безпараметрические равенства
+    $\displaystyle \frac{dx}{a}=\frac{dy}{b}=\frac{dz}{c}$.
+
+\item \textbf{Цель.} Найти \emph{первый инвариант $I_1$}.
+
+    \textbf{Действие.} Решить одну пару, напр. $\displaystyle \frac{dy}{dx}=\frac{b}{a}$, получить семейство кривых уровня
+    $\Phi_1(x,y)=\text{const}$, положить $I_1=\Phi_1$ (или любой эквивалент).
+
+\item \textbf{Цель.} Найти \emph{второй инвариант $I_2$}.
+
+    \textbf{Действие.} Зафиксировать $I_1=\text{const}$ (т.е. связь $y=\Psi(x;I_1)$) и решить ОДУ по $z$ из
+    $\displaystyle \frac{dz}{dx}=\frac{c(x,\Psi(x;I_1),z)}{a(x,\Psi(x;I_1))}$.
+    \begin{itemize}
+    \item Если $c\equiv 0$, взять $I_2=z$.
+    \item Если $c=\alpha(x,y)\,z+\beta(x,y)$, получаем линейное ОДУ $z'=\tilde{\alpha}(x;I_1)z+\tilde{\beta}(x;I_1)$.
+    \emph{Интегрирующий множитель} $M(x;I_1)=\exp\!\big(-\int \tilde{\alpha}\,dx\big)$, и
+    \[
+    \boxed{\,I_2 = z\,M(x;I_1) - \int \tilde{\beta}(x;I_1)\,M(x;I_1)\,dx\,}
+    \]
+    — константа вдоль характеристики.
+    \item Если отделяется $z$ — разделить переменные и получить интегральный инвариант.
+    \end{itemize}
+
+\item \textbf{Цель.} Сформировать \emph{общее решение}.
+
+    \textbf{Действие.} Записать $u=F(I_1,I_2)$.
+
+\item \textbf{Цель.} Проверить \emph{независимость} $I_1,I_2$.
+
+    \textbf{Действие.} Убедиться, что $dI_1\wedge dI_2\neq 0$ (или $\nabla I_1\times \nabla I_2\neq 0$) в рабочей области.
+\end{enumerate}
