@@ -4,28 +4,45 @@
 \usepackage{amsmath,amssymb,mathtools}
 \usepackage{geometry}
 \geometry{margin=2.5cm}
-\usepackage{/home/werserk/Projects/hse-ami-cheatsheets/assets/styles/hse-unified}
+% \usepackage{../../../../../assets/styles/hse-unified}
 
 \begin{document}
 
-\ExamVariantTitle{Вариант 1 с пересдачи 1}
+\title{Вариант 1 с пересдачи 1}
+\author{}
+\date{}
+\maketitle
 
-\begin{examproblems}
+\begin{enumerate}
 \item Решите разностное уравнение
 \[
 y_{t+3} + 4y_{t+2} + 5y_{t+1} + 2y_t = 12t + 16
 \]
 с начальными условиями $y_0 = 0$, $y_1 = y_2 = 1$.
 
-\item Дана матрица
+\item Решите систему разностных уравнений
 \[
-A = \begin{pmatrix}
+\begin{pmatrix}
+x_{t+1}\\[2pt]
+y_{t+1}\\[2pt]
+z_{t+1}
+\end{pmatrix}
+=
+A
+\begin{pmatrix}
+x_{t}\\[2pt]
+y_{t}\\[2pt]
+z_{t}
+\end{pmatrix},
+\qquad
+A=
+\begin{pmatrix}
 0 & 1 & -1 \\
 1 & 0 & -1 \\
 2 & 2 & -3
-\end{pmatrix}
+\end{pmatrix},
 \]
-с собственным значением $\lambda = -1$ кратности 3.
+собственное значение имеет кратность $3$.
 
 \item Пусть функции $q(x)$ и $p(x)$ непрерывны для всех $x$ и $q(x) < 0$. $y(x)$ — нетривиальное решение уравнения
 \[
@@ -48,6 +65,6 @@ y'' + p(x)y'(x) + q(x)y(x) = 0.
 \dot{y} = \frac{y}{x - y}
 \end{cases}
 \]
-\end{examproblems}
+\end{enumerate}
 
 \end{document}
