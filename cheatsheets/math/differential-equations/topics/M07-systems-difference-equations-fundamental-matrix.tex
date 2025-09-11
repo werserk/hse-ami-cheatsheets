@@ -1,0 +1,122 @@
+\section{M7. Системы разностных \(x_{t+1}=A x_t(+b)\): фундаментальная матрица \(\Phi_t=A^t\), спектр, неоднородные случаи}
+
+\subsection*{1. Тип экзаменационной задачи (полное условие)}
+Решите систему разностных уравнений
+\[
+\begin{cases}
+x_{t+1}=2x_t+y_t+1,\\[2pt]
+y_{t+1}=-\,y_t-1,
+\end{cases}
+\qquad t\in\mathbb Z_{\ge 0},\quad
+\begin{pmatrix}x_0\\y_0\end{pmatrix}\in\mathbb R^2.
+\]
+В матричном виде: \(X_{t+1}=A X_t+b\), \(A=\begin{psmallmatrix}2&1\\0&-1\end{psmallmatrix}\), \(b=\begin{psmallmatrix}1\\-1\end{psmallmatrix}\).
+
+\subsection*{2. Универсальный алгоритм (визуальные формулы и детерминированные шаги)}
+
+\textbf{Исходные данные и обозначения (ввод).}
+Дана система \(X_{t+1}=A X_t+b_t\), \(A\in\mathbb R^{n\times n}\), \(b_t\in\mathbb R^n\). Обозначим \(\Phi_t:=A^t\) (\(\Phi_0=I\)). Спектр \(A\): \(\{\lambda_j\}\), жордановы блоки \(J_j\).
+
+\paragraph{Шаг 0.} \textbf{Стандартный вид и отделение однородной части.}\\
+Записать \(X_{t+1}-A X_t=b_t\). Для \(b_t\equiv0\): \(X_t=\Phi_t C\).
+
+\paragraph{Шаг 1.} \textbf{Спектр \(A\) и выбор ветки для \(\Phi_t\).}\\
+Найти собственные значения/кратности и выбрать: диагонализация, жордановы блоки или реальный блок для комплексной пары.
+
+\paragraph{Шаг 2.} \textbf{Построение \(\Phi_t=A^t\).}\\
+Использовать:
+\[
+\Phi_t=
+\begin{cases}
+S\Lambda^t S^{-1}, & A=S\Lambda S^{-1},\\[3pt]
+\lambda^t\sum_{k=0}^{m-1}\binom{t}{k}N^k, & A\sim J=\lambda(I+N),\ N^m=0,\\[3pt]
+\rho^t S R(\theta t) S^{-1}, & \lambda=\rho e^{\pm i\theta},\\[6pt]
+\begin{psmallmatrix}a&b\\0&d\end{psmallmatrix}^{\!t}=
+\begin{psmallmatrix}
+a^t & b\sum_{k=0}^{t-1} a^{t-1-k}d^k\\
+0 & d^t
+\end{psmallmatrix}, & \text{(верхнетреугольная }2\times2\text{)}.
+\end{cases}
+\]
+
+\paragraph{Шаг 3.} \textbf{Неоднородная часть (вариация постоянных).}\\
+\[
+X_t=\Phi_t X_0+\sum_{k=0}^{t-1}\Phi_{t-1-k}\,b_k.
+\]
+Для \(b_t\equiv b\):
+\[
+X_t=\Phi_t(X_0-X_*)+X_*,\qquad (I-A)X_*=b.
+\]
+Если \(1\in\sigma(A)\), то \((I-A)\) вырождена: использовать сумму \(\sum \Phi_{t-1-k}b\).
+
+\paragraph{Шаг 4.} \textbf{Сборка с начальным условием.}\\
+Подставить \(\Phi_t\), \(X_0\), при \(b\) константном — найденный \(X_*\).
+
+\paragraph{Шаг 5.} \textbf{Контроль по спектру.}\\
+\(|\lambda|<1\) даёт затухание по соответствующему направлению, \(|\lambda|>1\) — рост; \(\lambda=1\) требует резонансной проверки.
+
+\subsection*{3. Сопроводительные материалы (таблицы и правила)}
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Ситуация} & \textbf{Признак} & \(\boldsymbol{\Phi_t}\) \\
+\hline
+Диагонализуемая & \(A=S\Lambda S^{-1}\) & \(S\Lambda^t S^{-1}\) \\
+\hline
+Жорданов блок \(\lambda\) & \(A=SJS^{-1}\) & \(\lambda^t\sum_{k=0}^{m-1}\binom{t}{k}N^k\) \\
+\hline
+Комплексная пара & \(Q_{\rho,\theta}(A)=0\) & \(\rho^t S R(\theta t) S^{-1}\) \\
+\hline
+Верхнетреугольная \(2\times2\) & \(A=\begin{psmallmatrix}a&b\\0&d\end{psmallmatrix}\) & \(\begin{psmallmatrix}a^t&b\sum a^{t-1-k}d^k\\0&d^t\end{psmallmatrix}\) \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\(\mathbf{1\notin\sigma(A)}\) & \(\det(I-A)\ne 0\) & \(X_*=(I-A)^{-1}b,\ X_t=\Phi_t(X_0-X_*)+X_*\) \\
+\hline
+\(\mathbf{1\in\sigma(A)}\) & \(\det(I-A)=0\) & нет единств. \(X_*\);\ \(\displaystyle X_t=\Phi_t X_0+\sum_{k=0}^{t-1}\Phi_{t-1-k}b\) \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection*{4. Применение алгоритма к объявленной задаче}
+
+\paragraph{Шаг 0.} \textbf{Стандартный вид.}\\
+\(X_{t+1}=A X_t+b\), \(A=\begin{psmallmatrix}2&1\\0&-1\end{psmallmatrix}\), \(b=\begin{psmallmatrix}1\\-1\end{psmallmatrix}\).
+
+\paragraph{Шаг 1.} \textbf{Спектр и ветка.}\\
+\(\lambda_1=2,\ \lambda_2=-1\) (простые).
+
+\paragraph{Шаг 2.} \textbf{Фундаментальная матрица.}\\
+\[
+A^t=
+\begin{pmatrix}
+2^t & \displaystyle\sum_{k=0}^{t-1}2^{\,t-1-k}(-1)^k\\[6pt]
+0 & (-1)^t
+\end{pmatrix}
+=
+\begin{pmatrix}
+2^t & \dfrac{2^t-(-1)^t}{3}\\[6pt]
+0 & (-1)^t
+\end{pmatrix}.
+\]
+
+\paragraph{Шаг 3.} \textbf{Неоднородность (константная).}\\
+\(1\notin\sigma(A)\Rightarrow X_*=(I-A)^{-1}b\), где
+\[
+(I-A)^{-1}=\begin{pmatrix}-1&-\tfrac12\\[2pt]0&\tfrac12\end{pmatrix},\quad
+X_*=\begin{pmatrix}-\tfrac12\\[2pt]-\tfrac12\end{pmatrix}.
+\]
+
+\paragraph{Шаг 4.} \textbf{Сборка.}\\
+\[
+\boxed{\,X_t=A^t\bigl(X_0-X_*\bigr)+X_*\,}.
+\]
+
+\paragraph{Шаг 5.} \textbf{Контроль.}\\
+Компонента по \(\lambda=2\) растёт как \(2^t\); по \(\lambda=-1\) — ограниченная знакопеременная.
+

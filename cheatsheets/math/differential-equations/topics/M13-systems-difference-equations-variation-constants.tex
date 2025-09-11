@@ -1,0 +1,100 @@
+\section{M13. Системы разностных уравнений: вариация постоянных, задача Коши}
+
+\subsection*{1. Тип экзаменационной задачи (полное условие)}
+\textbf{Условие.}
+\[
+\begin{pmatrix} x_{t+1}\\[2pt] y_{t+1} \end{pmatrix}
+= A \begin{pmatrix} x_{t}\\[2pt] y_{t} \end{pmatrix}
++ \begin{pmatrix} 1\\[2pt] -1 \end{pmatrix}, 
+\qquad 
+A=\frac12\begin{pmatrix} -1 & 3\\[2pt] 3 & -1 \end{pmatrix}.
+\]
+(а) Найти фундаментальную матрицу \(\Phi_t\).
+(б) Полагая \(\binom{x_t}{y_t}=\Phi_t\binom{c_1^{\,t}}{c_2^{\,t}}\), выписать уравнения для \(c_1^{\,t},c_2^{\,t}\) (не решать).
+
+\subsection*{2. Универсальный алгоритм (визуальные формулы и детерминированные шаги)}
+\textbf{Исходные данные и обозначения (ввод).} \(A\in\mathbb R^{n\times n}\), \(x_t\in\mathbb R^n\), \(b_t\in\mathbb R^n\). Определяем фундаментальную матрицу: \(\Phi_t:=A^t\). Спектральное разложение: \(A=V\Lambda V^{-1}\), \(\Lambda=\operatorname{diag}(\lambda_1,\dots,\lambda_n)\).
+Спектр: \(A=V\Lambda V^{-1}\), \(\Lambda=\operatorname{diag}(\lambda_1,\dots,\lambda_n)\).
+
+\paragraph{Шаг 1.} \textbf{Спектр.}\\
+Найти \(\lambda_j\) и базис \(\{v_j\}\): \((A-\lambda_j I)v_j=0\). Критерий: \(\sum_j \dim\ker(A-\lambda_j I)=n\Rightarrow\) диагонализуемо.
+
+\paragraph{Шаг 2.} \textbf{\(A\) в степени \(t\).}\\
+\[
+A^t=V\Lambda^tV^{-1},\quad \Lambda^t=\operatorname{diag}(\lambda_1^t,\dots,\lambda_n^t).
+\]
+Если \(\lambda=\rho e^{\pm i\theta}\): на \(\mathbb R^2\) блок \(S=\begin{smallmatrix}a&-b\\ b&a\end{smallmatrix}\), \(a+ib=\lambda\), 
+\[
+S^t=\rho^t\begin{pmatrix}\cos(\theta t)&-\sin(\theta t)\\ \sin(\theta t)&\cos(\theta t)\end{pmatrix}.
+\]
+
+\paragraph{Шаг 3.} \textbf{\(\Phi_t\) и однородная система.}\\
+\[
+x_{t+1}=Ax_t\ \Rightarrow\ x_t=\Phi_t x_0,\quad \Phi_t=A^t.
+\]
+
+\paragraph{Шаг 4.} \textbf{Вариация постоянных.}\\
+Полагаем \(x_t=\Phi_t c^{\,t}\). Тогда
+\[
+\Phi_{t+1}c^{\,t+1}=\Phi_{t+1}c^{\,t}+b_t\ \Rightarrow\ 
+\boxed{\,c^{\,t+1}-c^{\,t}=\Phi_{t+1}^{-1}b_t\,}.
+\]
+Эквивалентно: \(x_t=A^t x_0+\sum_{k=0}^{t-1}A^{t-1-k}b_k\).
+
+\paragraph{Шаг 5.} \textbf{Частные случаи.}\\
+Если \(b_t\equiv b\) и \(I-A\) обратима: \(x_t=A^t(x_0-(I-A)^{-1}b)+(I-A)^{-1}b\). Если \(\lambda<0\): \(\lambda^t=(-1)^t|\lambda|^t\). Пара \(\rho e^{\pm i\theta}\): блок \(\rho^tR(\theta t)\).
+
+\subsection*{3. Сопроводительные материалы (таблицы и обозначения)}
+
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+Спектр \(A\) & Формула для \(A^t\)\\
+\hline
+\(\lambda_j\in\mathbb R\) простые & \(V\operatorname{diag}(\lambda_1^t,\dots,\lambda_n^t)V^{-1}\)\\
+\hline
+\(\rho e^{\pm i\theta}\) & \(W\bigl(\rho^t\begin{smallmatrix}\cos\theta t&-\sin\theta t\\ \sin\theta t&\cos\theta t\end{smallmatrix}\bigr)W^{-1}\)\\
+\hline
+смешанный & блочно по строкам выше\\
+\hline
+\end{tabular}
+\end{center}
+
+\[
+\Phi_t^{-1}=V\,\operatorname{diag}(\lambda_1^{-t},\dots,\lambda_n^{-t})\,V^{-1}.
+\]
+
+\subsection*{4. Применение алгоритма к объявленной задаче}
+
+\paragraph{Шаг 1.} \textbf{Спектр.}\\
+\(\widehat{A}=\begin{smallmatrix}-1&3\\ 3&-1\end{smallmatrix}\Rightarrow \sigma(\widehat{A})=\{2,-4\}\), \(v_1=(1,1)\), \(v_2=(1,-1)\).  
+\(\sigma(A)=\{1,-2\}\) (диагонализуемо).
+
+\paragraph{Шаг 2.} \textbf{\(A\) в степени \(t\).}\\
+\[
+V=\begin{pmatrix}1&1\\ 1&-1\end{pmatrix},\quad
+\Lambda=\operatorname{diag}(1,-2),\quad
+V^{-1}=\tfrac12\begin{pmatrix}1&1\\ 1&-1\end{pmatrix}.
+\]
+\[
+\Phi_t=A^t=\tfrac12\begin{pmatrix}1+(-2)^t & 1-(-2)^t\\ 1-(-2)^t & 1+(-2)^t\end{pmatrix}.
+\]
+
+\paragraph{Шаг 3.} \textbf{\(\Phi_t\) и однородная система.}\\
+\(x_t=\Phi_t x_0\).
+
+\paragraph{Шаг 4.} \textbf{Вариация постоянных.}\\
+\[
+c^{\,t+1}-c^{\,t}=\Phi_{t+1}^{-1}b,\quad
+\Phi_{t+1}^{-1}=V\operatorname{diag}\!\bigl(1,(-2)^{-(t+1)}\bigr)V^{-1}.
+\]
+\[
+\Phi_{t+1}^{-1}b=\frac12\!\begin{pmatrix}1+(-2)^{-(t+1)} & 1-(-2)^{-(t+1)}\\ 1-(-2)^{-(t+1)} & 1+(-2)^{-(t+1)}\end{pmatrix}\!\!\binom{1}{-1}
+=\binom{(-\tfrac12)^{\,t+1}}{-(-\tfrac12)^{\,t+1}}.
+\]
+\[
+\boxed{\,c_1^{\,t+1}-c_1^{\,t}=(-\tfrac12)^{\,t+1},\qquad c_2^{\,t+1}-c_2^{\,t}=-(-\tfrac12)^{\,t+1}\,}.
+\]
+
+\paragraph{Шаг 5.} \textbf{Частные случаи.}\\
+\((I-A)\) необратима (есть \(\lambda=1\)) \(\Rightarrow\) стационарная формула неприменима; используем вариацию постоянных как выше.
