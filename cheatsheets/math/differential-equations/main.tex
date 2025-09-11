@@ -3,16 +3,23 @@
 \usepackage[T2A]{fontenc}
 \usepackage[russian]{babel}
 \usepackage{amsmath, amsfonts, amssymb}
-\usepackage{../../../assets/styles/hse-unified}
+% \usepackage{../../../assets/styles/hse-unified}
 \usepackage{geometry}
 \usepackage{parskip}
 \usepackage{fancyhdr}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=black,
+    citecolor=black
+}
 
 % Команда для отображения by werserk (чёрный цвет, без ссылки)
 \newcommand{\byWerserk}{\textbf{by werserk}}
 
 % Установим единый цвет ссылок через пакет стилей
-\HSESetAccent{000000}
+% \HSESetAccent{000000}
 
 \geometry{margin=1.8cm}
 \pagestyle{fancy}
@@ -22,28 +29,29 @@
 \renewcommand{\headrulewidth}{0pt}
 
 % --- Каталог тем для этого предмета ---
-\newcommand{\topicsBase}{preparation/topics}
+\newcommand{\topicsBase}{topics}
 
 \begin{document}
 
-\HSETitle{Подготовка: Дифференциальные уравнения}{Полная версия с разборами тем и ссылками}
+% \HSETitle{Подготовка: Дифференциальные уравнения}{Полная версия с разборами тем и ссылками}
+\title{Подготовка: Дифференциальные уравнения}
+\author{Полная версия с разборами тем и ссылками}
+\maketitle
+\thispagestyle{fancy}
 
 \vspace{1cm}
 
 % --- Оглавление ---
-{
-	\hypersetup{linkcolor=black}
-	\tableofcontents
-}
+\tableofcontents
 
 \newpage
 
 % --- Подключайте темы ниже ---
-% Примеры (создайте соответствующие файлы в preparation/topics/):
+% Примеры (создайте соответствующие файлы в topics/):
 \input{\topicsBase/00-difference-equations}
-\input{\topicsBase/06-pde-first-order}
-\input{\topicsBase/07-linear-ode-second-order}
-\input{\topicsBase/05-nonlinear-2d-systems}
+% \input{\topicsBase/06-pde-first-order}
+% \input{\topicsBase/07-linear-ode-second-order}
+% \input{\topicsBase/05-nonlinear-2d-systems}
 % \input{\topicsBase/03-systems}
 % \input{\topicsBase/04-numerical}
 
