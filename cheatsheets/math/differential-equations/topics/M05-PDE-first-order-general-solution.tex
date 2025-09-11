@@ -1,0 +1,97 @@
+\section{M5. ПЧП первого порядка (общее решение): характеристики, инварианты, \(u=F(I_1,I_2)\)}
+
+\subsection*{1. Тип экзаменационной задачи (полное условие)}
+Найдите общее решение уравнения
+\[
+x\,\frac{\partial u}{\partial x} + y\,\frac{\partial u}{\partial y} + (x+y)\,z\,\frac{\partial u}{\partial z}=0,
+\quad (x,y,z)\in\mathbb R^3,\ u:\mathbb R^3\to\mathbb R\ (\text{или }\mathbb C).
+\]
+
+\subsection*{2. Универсальный алгоритм (визуальные формулы и детерминированные шаги)}
+
+\textbf{Исходные данные и обозначения (ввод).}
+Рассматривается однородное ПЧП первого порядка
+\[
+a(x,y,z)\,u_x + b(x,y,z)\,u_y + c(x,y,z)\,u_z = 0,
+\]
+где \(a,b,c\in C^1\). Вектор характеристик \(V=(a,b,c)\).
+
+\paragraph{Шаг 1.} \textbf{Записать систему характеристик.}\\
+\[
+\frac{dx}{ds}=a,\qquad \frac{dy}{ds}=b,\qquad \frac{dz}{ds}=c,
+\quad\text{или}\quad \frac{dx}{a}=\frac{dy}{b}=\frac{dz}{c}.
+\]
+
+\paragraph{Шаг 2.} \textbf{Найти первый инвариант \(I_1\) по \(\frac{dx}{a}=\frac{dy}{b}\).}\\
+Решить \(\displaystyle \frac{dy}{dx}=\frac{b}{a}\) (см. детектор D1--D5) и получить \(I_1=\text{const}\).
+
+\paragraph{Шаг 3.} \textbf{Найти второй инвариант \(I_2\).}\\
+Использовать связь с \(z\): если \(c\equiv0\Rightarrow I_2=z\); если \(c=\mu(x,y)\,z\Rightarrow I_2=z\,\exp(-\int \mu\,ds)\); если \(c=\mu(x,y)\Rightarrow I_2=z-\int \mu\,ds\).
+
+\paragraph{Шаг 4.} \textbf{Записать общее решение.}\\
+\[
+u(x,y,z)=F\big(I_1(x,y,z),\,I_2(x,y,z)\big).
+\]
+
+\paragraph{Шаг 5.} \textbf{Проверить независимость \(I_1,I_2\) и область корректности.}\\
+Требуется \(dI_1\wedge dI_2\neq0\) на рассматриваемой области.
+
+\subsection*{3. Сопроводительные материалы (таблицы и обозначения)}
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Паттерн \((a,b)\)} & \textbf{Признак} & \(\mathbf{I_1}\) \\
+\hline
+Радиальный масштаб & \(a:b=x:y\) & \(y/x\) \\
+\hline
+Вращение & \(a:b=y:-x\) & \(x^{2}+y^{2}\) \\
+\hline
+Диагональный линейный & \(a=\alpha x,\ b=\beta y\) & \(y/x^{\beta/\alpha}\) \\
+\hline
+Общий линейный & \(a=\alpha x+\beta y,\ b=\gamma x+\delta y\) & \(\eta/\xi^{\lambda_2/\lambda_1}\) через СВ \(M^\top\) \\
+\hline
+Однородность порядка \(d\) & \(a,b\) однородны степени \(d\) & \(x\,G(y/x)\) \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Вид } \(c(x,y,z)\) & \textbf{Действие} & \(\mathbf{I_2}\) \\
+\hline
+\(c\equiv 0\) & \(dz/ds=0\) & \(z\) \\
+\hline
+\(c=\mu(x,y)\,z\) & \(d\ln z/ds=\mu(x,y)\) & \(z\,e^{-\int \mu\,ds}\) \\
+\hline
+\(c=\mu(x,y)\) & \(dz/ds=\mu(x,y)\) & \(z-\int \mu\,ds\) \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection*{4. Применение алгоритма к объявленной задаче}
+
+\[
+x\,u_x + y\,u_y + (x+y)\,z\,u_z = 0.
+\]
+
+\paragraph{Шаг 1.} \textbf{Характеристики.}\\
+\(\dot x=x,\ \dot y=y,\ \dot z=(x+y)z\).
+
+\paragraph{Шаг 2.} \textbf{\(I_1\) из \(\frac{dy}{dx}=\frac{y}{x}\) (детектор: радиальный).}\\
+\(\ln y-\ln x=C \Rightarrow I_1=\dfrac{y}{x}\).
+
+\paragraph{Шаг 3.} \textbf{\(I_2\) для \(c=(x+y)z\).}\\
+\(\dfrac{d\ln z}{ds}=x+y,\ \dfrac{d(x+y)}{ds}=x+y \Rightarrow \dfrac{d}{ds}\big(\ln z-(x+y)\big)=0\).  
+Значит \(I_2=z\,e^{-(x+y)}\).
+
+\paragraph{Шаг 4.} \textbf{Общее решение.}\\
+\[
+u(x,y,z)=F\!\left(\frac{y}{x},\ z\,e^{-(x+y)}\right).
+\]
+
+\paragraph{Шаг 5.} \textbf{Независимость/область.}\\
+\(d(y/x)\wedge d(z e^{-(x+y)})\neq 0\) при \(x\neq 0\). Итог корректен на \(\{x\neq 0\}\).
+
+

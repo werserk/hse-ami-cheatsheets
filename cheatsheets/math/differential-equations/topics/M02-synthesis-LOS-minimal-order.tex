@@ -1,4 +1,4 @@
-\section{Синтез разностного уравнения по заданным решениям}
+\section{M2. Синтез ЛОС по заданным частным решениям (минимальный порядок)}
 
 \subsection*{1. Тип экзаменационной задачи (полное условие)}
 \textbf{Задача.} Построить \emph{линейное однородное разностное уравнение с постоянными коэффициентами} минимально возможного порядка, частными решениями которого являются
@@ -35,21 +35,21 @@ y_{t+N}+a_{N-1}y_{t+N-1}+\dots+a_1y_{t+1}+a_0y_t=0.
 \subsection*{3. Сопроводительные материалы (таблицы и обозначения)}
 
 \textbf{Таблица соответствий (атом \(\Rightarrow\) множитель \(\Rightarrow\) кратность):}
-\[
-\begin{array}{|c|c|c|}
+\begin{center}
+\begin{tabular}{|c|c|c|}
 \hline
 \textbf{Атом} & \textbf{Множитель} & \textbf{Кратность} \\
 \hline
-\alpha^t & (\lambda-\alpha) & 1 \\
+$\alpha^t$ & $(\lambda-\alpha)$ & $1$ \\
 \hline
-t^{s}\alpha^t & (\lambda-\alpha)^{s+1} & s+1 \\
+$t^{s}\alpha^t$ & $(\lambda-\alpha)^{s+1}$ & $s+1$ \\
 \hline
-\alpha^t\cos(\omega t), \alpha^t\sin(\omega t) & \lambda^2-2\alpha\cos\omega\,\lambda+\alpha^2 & 1 \\
+$\alpha^t\cos(\omega t),\ \alpha^t\sin(\omega t)$ & $\lambda^2-2\alpha\cos\omega\,\lambda+\alpha^2$ & $1$ \\
 \hline
-t^{s}\alpha^t\cos(\omega t), t^{s}\alpha^t\sin(\omega t) & (\lambda^2-2\alpha\cos\omega\,\lambda+\alpha^2)^{s+1} & s+1 \\
+$t^{s}\alpha^t\cos(\omega t),\ t^{s}\alpha^t\sin(\omega t)$ & $(\lambda^2-2\alpha\cos\omega\,\lambda+\alpha^2)^{s+1}$ & $s+1$ \\
 \hline
-\end{array}
-\]
+\end{tabular}
+\end{center}
 
 \textbf{Быстрые значения \(\cos\omega\):}
 \[

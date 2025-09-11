@@ -1,0 +1,100 @@
+\section{M10. Периодические коэффициенты (Флоке): монодромия, множители, сдвиг решения}
+
+\subsection*{1. Тип экзаменационной задачи (полное условие)}
+Пусть \(q:\mathbb R\to\mathbb R\) непрерывна и 1-периодична: \(q(x+1)=q(x)\).
+Пусть \(y\not\equiv0\) — решение
+\[
+y''+q(x)\,y=0,\qquad x\in\mathbb R,
+\]
+с краевыми условиями \(y(0)=0,\ y(1)=0\).
+Докажите, что существует \(C\in\mathbb R\setminus\{0\}\) такое, что
+\[
+y(x+1)=C\,y(x)\quad\forall x\in\mathbb R,
+\]
+и выразите \(C\) через \(y'(0),y'(1)\).
+
+\subsection*{2. Универсальный алгоритм (визуальные формулы и детерминированные шаги)}
+
+\textbf{Исходные данные и обозначения (ввод).}
+Система \(Y'(x)=B(x)Y(x)\), \(B(x+T)=B(x)\), либо скалярное \(y''+p(x)\,y'+q(x)\,y=0\) с периодом \(T>0\).
+\(\Phi(0)=I\), \(M=\Phi(T)\) — монодромия, её собственные числа \(\rho_j\) — множители Флоке.
+Для скаляра: \(u(0)=1,u'(0)=0;\ v(0)=0,v'(0)=1\).
+
+\paragraph{Шаг 1.} \textbf{Нормализация к системной форме.}\\
+Для скаляра перейти к \(Y'=\!B(x)Y\), \(Y=(y,y')^\top\),
+\(B(x)=\begin{psmallmatrix}0&1\\-q(x)&-p(x)\end{psmallmatrix}\), период \(T\) зафиксирован.
+
+\paragraph{Шаг 2.} \textbf{Фундаментальные решения на \([0,T]\) и монодромия \(M\).}\\
+Собрать \(M\) как
+\(
+M=\begin{psmallmatrix}u(T)&v(T)\\ u'(T)&v'(T)\end{psmallmatrix}
+\)
+(или \(\Phi'(x)=B(x)\Phi(x)\), \(\Phi(0)=I\)).
+
+\paragraph{Шаг 3.} \textbf{Инварианты: \(\det M\).}\\
+\(\det M=\exp\!\big(\int_0^T \operatorname{tr}B(x)\,dx\big)\).
+Для \(y''+p\,y'+q\,y=0\): \(\det M=\exp\!\big(-\!\int_0^T p(x)\,dx\big)\).
+Для \(y''+q\,y=0\): \(\det M=1\).
+
+\paragraph{Шаг 4.} \textbf{Множители Флоке и классификация.}\\
+\(\rho_{1,2}\) — корни \( \lambda^2-(\operatorname{tr}M)\lambda+\det M=0\), далее классифицировать по \(|\operatorname{tr}M|\) и \(\det M\).
+
+\paragraph{Шаг 5.} \textbf{Утверждение о сдвиге.}\\
+При данных \(y(0)=0,y(T)=0\) имеем \(y=\alpha v\) и \(v(T)=0\).
+По единственности задачи Коши: \(v(x+T)=v'(T)\,v(x)\).
+Следовательно,
+\[
+y(x+T)=C\,y(x),\qquad C=\frac{y'(T)}{y'(0)}=v'(T).
+\]
+
+\subsection*{3. Сопроводительные материалы (таблицы и обозначения)}
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Модель} & \(\operatorname{tr}B(x)\) & \(\det M\) \\
+\hline
+\(Y'=B(x)Y\) & \(\operatorname{tr}B(x)\) & \(\exp\!\big(\int_0^T \operatorname{tr}B\big)\) \\
+\hline
+\(y''+p\,y'+q\,y=0\) & \(-p(x)\) & \(\exp\!\big(-\!\int_0^T p\big)\) \\
+\hline
+\(y''+q\,y=0\) & \(0\) & \(1\) \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\(\det M\) & \(|\operatorname{tr}M|\) & Поведение \\
+\hline
+\(>0\) & \(<2\sqrt{\det M}\) & Комплексная пара \(\rho\): квазипериодичность \\
+\hline
+\(>0\) & \(>2\sqrt{\det M}\) & Две вещественные: рост/затухание по направлениям \\
+\hline
+\(>0\) & \(=2\sqrt{\det M}\) & Кратный множитель (\(\pm\sqrt{\det M}\)) \\
+\hline
+\end{tabular}
+\end{center}
+
+\[
+\boxed{\,\text{Если }y(0)=y(T)=0,\ \text{то }y(x+T)=C\,y(x),\ C=\dfrac{y'(T)}{y'(0)}\,}
+\]
+
+\subsection*{4. Применение алгоритма к объявленной задаче}
+
+\paragraph{Шаг 1.} Норма: \(y''+q(x)y=0\), \(T=1\).
+
+\paragraph{Шаг 2.} Базис \(u,v\), монодромия
+\(M=\begin{psmallmatrix}u(1)&v(1)\\ u'(1)&v'(1)\end{psmallmatrix}\).
+
+\paragraph{Шаг 3.} \(\det M=1\).
+
+\paragraph{Шаг 4.} \(\rho_{1,2}\) — корни \(\lambda^2-(u(1)+v'(1))\lambda+1=0\).
+
+\paragraph{Шаг 5.} Из \(y(0)=y(1)=0\Rightarrow y=\alpha v\), \(v(1)=0\).
+Тогда \(y(x+1)=v'(1)\,y(x)\), то есть
+\[
+\boxed{\,y(x+1)=C\,y(x),\quad C=\dfrac{y'(1)}{y'(0)}=v'(1)\,}.
+\]
+
