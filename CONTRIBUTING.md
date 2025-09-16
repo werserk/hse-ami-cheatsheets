@@ -9,25 +9,26 @@
 │   ├── kits/          # Наборы/болванки для быстрых заготовок (напр. modular-preparation)
 │   └── snippets/      # Небольшие примеры и сборники формул
 ├── cheatsheets/       # Готовые cheatsheet'ы
-│   ├── math/          # Математические справочники
-│   │   └── */         # Каждая тема в отдельной папке
-│   │       ├── *.tex              # LaTeX исходник
-│   │       ├── *.pdf              # Собранный PDF
-│   │       └── exam-variants/     # Варианты экзаменов
-│   │           └── YYYY/          # Год (например, 2025)
-│   │               └── name.pdf   # Стандартизированное имя (kebab-case)
-│   ├── programming/   # Программирование
-│   └── other/         # Прочие темы
+│   ├── differential-equations/    # Дифференциальные уравнения
+│   │   ├── main.tex              # Основной файл cheatsheet'а
+│   │   ├── main.pdf              # Собранный PDF
+│   │   ├── topics/               # Темы (M01-, M02-, ...)
+│   │   │   └── M##-*.tex         # Файлы тем с M-префиксом
+│   │   └── exam/                 # Варианты экзаменов
+│   │       └── YYYY/             # Год (например, 2025)
+│   │           └── name.pdf      # Стандартизированное имя (kebab-case)
+│   ├── programming/   # Программирование (планируется)
+│   └── other/         # Прочие темы (планируется)
 ├── assets/            # Общие ресурсы (изображения, стили)
 └── build/             # Временные файлы сборки (игнорируется git)
 ```
 
 ## Добавление нового cheatsheet
-1. Выберите категорию: `cheatsheets/math|programming|other/`.
-2. Создайте папку темы в kebab-case: `cheatsheets/math/your-topic/`.
-3. Скопируйте подходящий шаблон из `templates/cheatsheets/` (или болванку из `templates/kits/`) и переименуйте в `your-topic.tex`.
+1. Выберите категорию: `cheatsheets/differential-equations|programming|other/`.
+2. Для дифференциальных уравнений: добавьте тему в папку `topics/` с именем `M##-descriptive-name.tex`.
+3. Скопируйте подходящий шаблон из `templates/` и адаптируйте под структуру.
 4. Соберите: `make cheatsheets` (или `make all`).
-5. Убедитесь, что `your-topic.pdf` создан рядом с `your-topic.tex`.
+5. Убедитесь, что PDF создан корректно.
 6. Создайте Pull Request.
 
 ### Брендинг и контакты
@@ -54,15 +55,22 @@
 - Изображения — в `assets/images/` (предпочтительно векторные: SVG/PDF).
 
 Соглашения по именам и структуре:
-- Темы: каталоги в kebab-case, напр. `differential-equations`.
-- Основные файлы: `topic-name.tex` и `topic-name.pdf` рядом.
-- Экзамены: `exam-variants/YYYY/*.pdf` (имя файла — kebab-case без года).
+- Темы: файлы с M-префиксом, напр. `M01-linear-difference-equations-LOS.tex`.
+- Основные файлы: `main.tex` и `main.pdf` в корне темы.
+- Темы: в папке `topics/` с M-префиксом и описательным именем.
+- Экзамены: `exam/YYYY/*.pdf` (имя файла — kebab-case без года).
 
 Пример:
 ```
-cheatsheets/math/your-topic/
-├── your-topic.tex
-└── your-topic.pdf
+cheatsheets/differential-equations/
+├── main.tex
+├── main.pdf
+├── topics/
+│   ├── M01-linear-difference-equations-LOS.tex
+│   └── M02-synthesis-LOS-minimal-order.tex
+└── exam/
+    └── 2025/
+        └── demo-a.pdf
 ```
 
 ## Issues
